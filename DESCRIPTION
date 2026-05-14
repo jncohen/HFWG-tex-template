@@ -1,0 +1,15 @@
+Package: hfwgtex
+Title: HFWG LaTeX Template for Academic Manuscripts
+Version: 1.0.0
+Authors@R:
+    person("Joseph N.", "Cohen", role = c("aut", "cre"),
+           email = "joseph.cohen@qc.cuny.edu")
+Description: Pandoc/Quarto LaTeX template for academic manuscripts produced
+    by the Household Finance Working Group. Provides font presets for different
+    journal registers (humanities, demography, methods, hfwg), anonymization
+    support, line numbering, and two-column layout. Use hfwg_use() to
+    install the template bundle into a new project directory.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
