@@ -4,7 +4,7 @@
 % 1. ENGINE + TYPOGRAPHY
 %
 % Font presets are controlled by the 'fontset' YAML variable.
-% Valid values: humanities | demography | methods | (unset = default)
+% Valid values: humanities | demography | methods | hfwg | (unset = default)
 %
 %   fontset: humanities  -> EB Garamond         (XeLaTeX/LuaLaTeX)
 %                           mathpazo + warning  (pdfLaTeX)
@@ -12,6 +12,8 @@
 %                           TeX Gyre Termes     (pdfLaTeX)
 %   fontset: methods     -> Source Serif 4 + Fira Code (XeLaTeX/LuaLaTeX)
 %                           mathpazo + Fira Code or LM Mono (pdfLaTeX)
+%   fontset: hfwg        -> Source Serif 4 + Source Sans Pro, QC Red accent (XeLaTeX/LuaLaTeX)
+%                           mathpazo            (pdfLaTeX)
 %   (default/unset)      -> TeX Gyre Pagella    (XeLaTeX/LuaLaTeX)
 %                           mathpazo            (pdfLaTeX)
 %
@@ -34,13 +36,16 @@ $endif$
 \def\hfwgfontset@h{humanities}
 \def\hfwgfontset@d{demography}
 \def\hfwgfontset@m{methods}
+\def\hfwgfontset@w{hfwg}
 %% Boolean flags — set once here, usable everywhere without \makeatletter
 \newif\ifhfwghumanities
 \newif\ifhfwgdemography
 \newif\ifhfwgmethods
+\newif\ifhfwghfwg
 \ifx\hfwgfontset\hfwgfontset@h\hfwghumanitiestrue\else\hfwghumanitiesfalse\fi
 \ifx\hfwgfontset\hfwgfontset@d\hfwgdemographytrue\else\hfwgdemographyfalse\fi
 \ifx\hfwgfontset\hfwgfontset@m\hfwgmethodstrue\else\hfwgmethodsfalse\fi
+\ifx\hfwgfontset\hfwgfontset@w\hfwghfwgtrue\else\hfwghfwgfalse\fi
 \newcommand{\hfwgmethodscodescale}{0.90}
 
 %% --- FONT PATH (override with 'fontpath:' YAML variable for managed templates) ---
@@ -74,6 +79,11 @@ $endif$
           TeX distribution. Using Latin Modern Mono. Install the 'firacode'
           package (TeXLive: tlmgr install firacode).}%
       }
+    \fi
+    \ifhfwghfwg
+      %% hfwg: requires XeLaTeX/LuaLaTeX; mathpazo used instead under pdfLaTeX.
+      \PackageWarning{hfwgtemplate}{fontset=hfwg: Source Serif 4 + Source Sans Pro
+        require XeLaTeX/LuaLaTeX. Falling back to mathpazo under pdfLaTeX.}
     \fi
   \fi
 \else
@@ -153,11 +163,45 @@ $endif$
         FiraCode-Regular.ttf not found. Run scripts/get-fonts.sh to install
         Fira Code. Using default monospace font.}%
     }
+  \else\ifhfwghfwg
+    %% hfwg: Source Serif 4 body + Source Sans Pro headings, Queens College branding.
+    \IfFileExists{\hfwgfontsdir SourceSerif4-Regular.otf}{%
+      \setmainfont{SourceSerif4}[
+        Path           = \hfwgfontsdir,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-It,
+        BoldItalicFont = *-BoldIt,
+        Extension      = .otf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=hfwg: \hfwgfontsdir
+        SourceSerif4-Regular.otf not found. Run scripts/get-fonts.sh, or set
+        fontpath: in YAML if using a managed template. Falling back to default.}%
+      \IfFontExistsTF{TeX Gyre Pagella}{%
+        \setmainfont{TeX Gyre Pagella}%
+      }{%
+        \PackageWarning{hfwgtemplate}{TeX Gyre Pagella not found; using Latin Modern Roman.}%
+        \setmainfont{Latin Modern Roman}%
+      }%
+    }
+    \IfFileExists{\hfwgfontsdir SourceSans3-Regular.otf}{%
+      \setsansfont{SourceSans3}[
+        Path           = \hfwgfontsdir,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-It,
+        BoldItalicFont = *-BoldIt,
+        Extension      = .otf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=hfwg: \hfwgfontsdir
+        SourceSans3-Regular.otf not found. Run scripts/get-fonts.sh to install
+        Source Sans 3. Using default sans-serif font for headings.}%
+    }
   \else
     %% Default or unrecognized fontset: TeX Gyre Pagella with graceful fallback.
     \ifx\hfwgfontset\empty\else
       \PackageWarning{hfwgtemplate}{Unknown fontset value '\hfwgfontset'.
-        Valid values: humanities, demography, methods. Using default.}
+        Valid values: humanities, demography, methods, hfwg. Using default.}
     \fi
     \IfFontExistsTF{TeX Gyre Pagella}{%
       \setmainfont{TeX Gyre Pagella}%
@@ -168,7 +212,7 @@ $endif$
         Palatino-family appearance.}%
       \setmainfont{Latin Modern Roman}%
     }
-  \fi\fi\fi
+  \fi\fi\fi\fi
 \fi
 \makeatother
 
@@ -180,50 +224,59 @@ $endif$
 % 1b. COLOR PALETTE
 % Loaded early so geometry, titlesec, and hyperref can all use hfwgaccent.
 % methods:    deep tech-blue accent with lighter rule tone
+% hfwg:       Queens College Red (#E71939) accent
 % default/others: black (no visual change)
 % =======================================================
 \usepackage{xcolor}
 \ifhfwgmethods
   \definecolor{hfwgaccent}{HTML}{1B4F72}
   \definecolor{hfwgrule}{HTML}{2E86C1}
+\else\ifhfwghfwg
+  \definecolor{hfwgaccent}{HTML}{E71939}
+  \definecolor{hfwgrule}{HTML}{E71939}
 \else
   \definecolor{hfwgaccent}{HTML}{000000}
   \definecolor{hfwgrule}{HTML}{000000}
-\fi
+\fi\fi
 
 % =======================================================
 % 2. PAGE LAYOUT
 % humanities:  wider, book-like margins
 % methods:     tighter, dense technical report margins
+% hfwg:        slightly generous, branded working paper margins
 % default/demography: standard 1-inch
 % =======================================================
 \ifhfwghumanities
   \usepackage[left=1.3in,right=1.3in,top=1.1in,bottom=1.1in]{geometry}
 \else\ifhfwgmethods
   \usepackage[left=0.9in,right=0.9in,top=0.9in,bottom=0.9in]{geometry}
+\else\ifhfwghfwg
+  \usepackage[left=1.15in,right=1.15in,top=1.1in,bottom=1.1in]{geometry}
 \else
   \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
-\fi\fi
+\fi\fi\fi
 \usepackage{setspace}
 
 $if(doublespace)$
 \doublespacing
 $else$
-  %% humanities: slightly more generous leading; methods: tighter
+  %% humanities: slightly more generous leading; methods: tighter; hfwg: balanced
   \ifhfwghumanities
     \setstretch{1.55}
   \else\ifhfwgmethods
     \setstretch{1.25}
+  \else\ifhfwghfwg
+    \setstretch{1.45}
   \else
     \onehalfspacing
-  \fi\fi
+  \fi\fi\fi
 $endif$
 
 %% humanities: wider paragraph indent for book-like feel
 \ifhfwghumanities
   \setlength{\parindent}{18pt}
 \else
-  \setlength{\parindent}{15pt}
+  \setlength{\parindent}{15pt}  %% applies to methods, hfwg, demography, default
 \fi
 \setlength{\parskip}{0pt}
 
@@ -296,6 +349,7 @@ $endif$
 % humanities: small-caps, generous spacing
 % demography: bold + thin rule below (journal style)
 % methods:    bold + accent color + rule below (futuristic)
+% hfwg:       sans-serif bold + QC Red accent + rule below (branded)
 % =======================================================
 \usepackage{titlesec}
 
@@ -306,6 +360,7 @@ $endif$
 %% at the first ] it encounters. Wrapping in a command avoids nesting.
 \newcommand{\hfwgdemorule}{\titlerule[0.3pt]}
 \newcommand{\hfwgmetrule}{\color{hfwgrule}\titlerule[0.5pt]}
+\newcommand{\hfwgwgrule}{\color{hfwgrule}\titlerule[0.4pt]}
 
 $if(numbersections)$
   \setcounter{secnumdepth}{3}
@@ -331,6 +386,13 @@ $if(numbersections)$
     \titlespacing{\section}{0pt}{1.75ex plus 0.5ex}{-0.5ex}
     \titlespacing{\subsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1ex plus 0.25ex}{-0.5ex}
+  \else\ifhfwghfwg
+    \titleformat{\section}{\large\bfseries\sffamily\color{hfwgaccent}}{\thesection}{1em}{}[\hfwgwgrule\vspace{0.4em}]
+    \titleformat{\subsection}{\normalsize\bfseries\sffamily\color{hfwgaccent}}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{\thesubsubsection}{1em}{}
+    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
+    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
+    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
   \else
     \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
     \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
@@ -338,7 +400,7 @@ $if(numbersections)$
     \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
     \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \fi\fi\fi
+  \fi\fi\fi\fi
 $else$
   \setcounter{secnumdepth}{0}
   \setcounter{tocdepth}{0}
@@ -363,6 +425,13 @@ $else$
     \titlespacing{\section}{0pt}{1.75ex plus 0.5ex}{-0.5ex}
     \titlespacing{\subsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1ex plus 0.25ex}{-0.5ex}
+  \else\ifhfwghfwg
+    \titleformat{\section}{\large\bfseries\sffamily\color{hfwgaccent}}{}{0pt}{}[\hfwgwgrule\vspace{0.4em}]
+    \titleformat{\subsection}{\normalsize\bfseries\sffamily\color{hfwgaccent}}{}{0pt}{}
+    \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{}{0pt}{}
+    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
+    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
+    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
   \else
     \titleformat{\section}{\large\bfseries}{}{0pt}{}
     \titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
@@ -370,18 +439,20 @@ $else$
     \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
     \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \fi\fi\fi
+  \fi\fi\fi\fi
 $endif$
 
 % =======================================================
 % 6. HYPERREF + HEADERS/FOOTERS
 % =======================================================
-%% methods: colored links reinforce the accent palette
+%% methods + hfwg: colored links reinforce the accent palette
 \ifhfwgmethods
+  \usepackage[colorlinks=true,linkcolor=hfwgaccent,urlcolor=hfwgrule,citecolor=hfwgaccent]{hyperref}
+\else\ifhfwghfwg
   \usepackage[colorlinks=true,linkcolor=hfwgaccent,urlcolor=hfwgrule,citecolor=hfwgaccent]{hyperref}
 \else
   \usepackage[hidelinks]{hyperref}
-\fi
+\fi\fi
 
 %% PDF document metadata — populated from YAML front matter.
 %% Enables proper indexing in repositories, readers, and search engines.
@@ -556,7 +627,7 @@ $header-includes$
   \fancyfoot[C]{\thepage}
 }
 
-%% methods: tint the header rule to match the accent color palette.
+%% methods + hfwg: tint the header rule to match the accent color palette.
 %% \headrule is the fancyhdr hook that draws the line below the header;
 %% redefining it with \color{hfwgrule} keeps the rule weight unchanged
 %% while coordinating it with section rules and link colors.
@@ -565,7 +636,12 @@ $header-includes$
     {\color{hfwgrule}\hrule width\headwidth height\headrulewidth}%
     \vskip-\headrulewidth%
   }
-\fi
+\else\ifhfwghfwg
+  \renewcommand{\headrule}{%
+    {\color{hfwgrule}\hrule width\headwidth height\headrulewidth}%
+    \vskip-\headrulewidth%
+  }
+\fi\fi
 
 $if(surname)$
 $if(runningtitle)$

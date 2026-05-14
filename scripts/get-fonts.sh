@@ -14,10 +14,11 @@
 #   git commit -m "chore: add bundled font files"
 #
 # Sources:
-#   EB Garamond  — Georg Duffner & Octavio Pardo (Google Fonts / OFL 1.1)
-#   XITS         — Ali Rasti Kerdar, aliftype/xits (OFL 1.1)
-#   Source Serif — Adobe, adobe-fonts/source-serif (OFL 1.1)
-#   Fira Code    — Nikita Prokopov, tonsky/FiraCode (OFL 1.1)
+#   EB Garamond   — Georg Duffner & Octavio Pardo (Google Fonts / OFL 1.1)
+#   XITS          — Ali Rasti Kerdar, aliftype/xits (OFL 1.1)
+#   Source Serif  — Adobe, adobe-fonts/source-serif (OFL 1.1)
+#   Source Sans 3 — Adobe, adobe-fonts/source-sans (OFL 1.1)
+#   Fira Code     — Nikita Prokopov, tonsky/FiraCode (OFL 1.1)
 # =============================================================================
 
 set -euo pipefail
@@ -71,6 +72,18 @@ download "$SS_BASE/SourceSerif4-Regular.otf"    "$FONTS_DIR/SourceSerif4-Regular
 download "$SS_BASE/SourceSerif4-Bold.otf"        "$FONTS_DIR/SourceSerif4-Bold.otf"
 download "$SS_BASE/SourceSerif4-It.otf"          "$FONTS_DIR/SourceSerif4-It.otf"
 download "$SS_BASE/SourceSerif4-BoldIt.otf"      "$FONTS_DIR/SourceSerif4-BoldIt.otf"
+
+# =============================================================================
+# Source Sans 3 — fontset: hfwg (headings / sans-serif)
+# Source: adobe-fonts/source-sans, release branch (OFL 1.1)
+# Canonical: https://github.com/adobe-fonts/source-sans
+# =============================================================================
+echo "Downloading Source Sans 3 (hfwg preset, headings)..."
+SS3_BASE="https://github.com/adobe-fonts/source-sans/raw/release/OTF"
+download "$SS3_BASE/SourceSans3-Regular.otf"    "$FONTS_DIR/SourceSans3-Regular.otf"
+download "$SS3_BASE/SourceSans3-Bold.otf"        "$FONTS_DIR/SourceSans3-Bold.otf"
+download "$SS3_BASE/SourceSans3-It.otf"          "$FONTS_DIR/SourceSans3-It.otf"
+download "$SS3_BASE/SourceSans3-BoldIt.otf"      "$FONTS_DIR/SourceSans3-BoldIt.otf"
 
 # =============================================================================
 # Fira Code — fontset: methods (monospace / code blocks)

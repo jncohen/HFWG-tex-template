@@ -161,23 +161,29 @@ This produces `paper.pdf` in the same folder. If it is your first compile with T
 
 ## 5. Font presets and layout
 
-The `fontset` variable switches between typographic registers matched to common sociology journal styles.
+The `fontset` variable switches between typographic registers. Choose the one that fits your output context.
 
 ```yaml
+fontset: hfwg          # Source Serif 4 + Source Sans 3, Queens College Red accent -- HFWG working papers
 fontset: humanities    # EB Garamond -- theory, AJS, Sociological Theory
 fontset: demography    # XITS (Times-family) -- Demography, Social Forces
 fontset: methods       # Source Serif 4 + Fira Code -- SMR, computational work
-# (unset)             # TeX Gyre Pagella (Palatino-family) -- default
+# (unset)             # TeX Gyre Pagella (Palatino-family) -- plain, journal-submission ready
 ```
 
 Each preset adjusts the body font, margins, line spacing, and section heading style as a coordinated package.
 
-| Preset | Body font | Margins | Spacing | Headings |
-|---|---|---|---|---|
-| *(unset)* | Palatino-family | 1 in | 1.5x | Bold |
-| `humanities` | EB Garamond | 1.3 in | 1.55x | Small caps |
-| `demography` | XITS / Times | 1 in | 1.5x | Bold + rule |
-| `methods` | Source Serif 4 | 0.9 in | 1.25x | Bold + color + rule |
+| Preset | Body font | Headings | Margins | Spacing | Accent |
+|---|---|---|---|---|---|
+| *(unset)* | Palatino-family | Bold | 1 in | 1.5x | Black — **use for journal submissions** |
+| `hfwg` | Source Serif 4 | Sans-serif bold + QC Red rule | 1.15 in | 1.45x | Queens College Red |
+| `humanities` | EB Garamond | Small caps | 1.3 in | 1.55x | Black |
+| `demography` | XITS / Times | Bold + rule | 1 in | 1.5x | Black |
+| `methods` | Source Serif 4 | Bold + blue rule | 0.9 in | 1.25x | Deep blue |
+
+**Plain / journal-submission preset.** Omitting `fontset` (or leaving it commented out) produces a clean Palatino-family document with standard 1-inch margins, 1.5× line spacing, and no color accents. This is the format to use when submitting to journals that impose their own typesetting: the template stays out of the way.
+
+**HFWG preset.** `fontset: hfwg` is the branded working-paper format for Household Finance Working Group publications. It uses Source Serif 4 for body text, Source Sans 3 for headings, and Queens College Red (`#E71939`) for accent rules and links.
 
 **pdfLaTeX fallback.** The bundled fonts require XeLaTeX or LuaLaTeX, which R Markdown uses by default when the fonts are present. If you are using pdfLaTeX, the template falls back gracefully to TeX distribution fonts and emits a warning in the log.
 
@@ -540,7 +546,7 @@ output:
 
 | Variable | Values | Description |
 |---|---|---|
-| `fontset` | `humanities`, `demography`, `methods`, or unset | Font and layout preset |
+| `fontset` | `hfwg`, `humanities`, `demography`, `methods`, or unset | Font and layout preset |
 | `fontpath` | path string | Path to bundled fonts directory |
 | `doublespace` | `true` or `false` | Full double spacing, overrides preset |
 | `numbersections` | `true` or `false` | Number section headings |
