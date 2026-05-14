@@ -11,6 +11,9 @@ author:
     country: "USA"
     email: "author@test.edu"
     orcid: "0000-0000-0000-0000"
+institution: "Household Finance Working Group"
+series: "Snapshot"
+number: 1
 surname: "Author"
 runningtitle: "hfwg-tex-template Test"
 date: "March 2026"

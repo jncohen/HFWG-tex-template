@@ -685,6 +685,15 @@ $endif$
 \begin{center}
 \begin{singlespace}
 
+$if(institution)$
+{\small\textbf{$institution$}}\par
+\vspace{0.25em}
+$endif$
+$if(series)$
+{\small $series$$if(number)$\enspace·\enspace No.\,$number$$endif$}\par
+\vspace{1em}
+$endif$
+
 {\setstretch{0.9}\LARGE\bfseries $title$\par}
 
 $if(subtitle)$
@@ -753,6 +762,15 @@ $endif$
 
 \vspace*{0.06\textheight}
 \begin{center}
+
+$if(institution)$
+{\small $institution$}\par
+\vspace{0.25em}
+$endif$
+$if(series)$
+{\small $series$$if(number)$\enspace·\enspace No.\,$number$$endif$}\par
+\vspace{0.75em}
+$endif$
 
 {\setstretch{0.9}\LARGE\bfseries $title$\par}
 

@@ -100,6 +100,10 @@ subtitle: "Optional subtitle"
 author: "Your Name"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
+institution: "Household Finance Working Group"
+series: "Snapshot"
+number: 1
+
 surname: "LastName"
 runningtitle: "Short Running Title"
 
