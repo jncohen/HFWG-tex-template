@@ -224,7 +224,7 @@ $endif$
 % 1b. COLOR PALETTE
 % Loaded early so geometry, titlesec, and hyperref can all use hfwgaccent.
 % methods:    deep tech-blue accent with lighter rule tone
-% hfwg:       Queens College Red (#E71939) accent
+% hfwg:       CUNY Blue (#003DA5, Pantone 286 C) accent
 % default/others: black (no visual change)
 % =======================================================
 \usepackage{xcolor}
@@ -232,8 +232,8 @@ $endif$
   \definecolor{hfwgaccent}{HTML}{1B4F72}
   \definecolor{hfwgrule}{HTML}{2E86C1}
 \else\ifhfwghfwg
-  \definecolor{hfwgaccent}{HTML}{E71939}
-  \definecolor{hfwgrule}{HTML}{E71939}
+  \definecolor{hfwgaccent}{HTML}{003DA5}
+  \definecolor{hfwgrule}{HTML}{003DA5}
 \else
   \definecolor{hfwgaccent}{HTML}{000000}
   \definecolor{hfwgrule}{HTML}{000000}
@@ -829,6 +829,88 @@ $endif$
 \noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
 \end{titlepage}
 
+\else\ifhfwghfwg
+%% -------------------------------------------------------
+%% HFWG: branded working-paper title page
+%% Title, then subtitle, then tight author+affiliation+
+%% institution+series+date block, then abstract.
+%% -------------------------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}\par
+\vspace{3em}
+\begin{center}
+\begin{singlespace}
+
+{\setstretch{0.9}\LARGE\bfseries $title$\par}
+
+$if(subtitle)$
+\vspace{0.5em}
+{\large\color{hfwgaccent} $subtitle$\par}
+$endif$
+
+\vspace{2em}
+
+$if(author)$
+\ifhfwganon\else
+$for(author)$
+$if(author.name)$\textbf{$author.name$}$else$\textbf{$author$}$endif$\par
+$endfor$
+{\small\setlength{\parskip}{1pt}%
+$if(author_dept)$$author_dept$\par$endif$%
+$if(author_inst)$$author_inst$\par$endif$%
+$if(author_addr)$$author_addr$\par$endif$%
+$if(author_email)$$author_email$\par$endif$%
+$if(author_web)$$author_web$\par$endif$%
+$if(author_orcid)$ORCID: $author_orcid$\par$endif$%
+$if(institution)$\textbf{$institution$}\par$endif$%
+$if(series)$$series$$if(number)$\enspace·\enspace No.\,$number$$endif$\par$endif$%
+$if(date)$\ifhfwganon\else$date$\par\fi$endif$%
+}%
+\fi
+$endif$
+
+\end{singlespace}
+\end{center}
+
+\vspace{2em}
+
+$if(abstract)$
+\begin{center}
+\textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
+\vspace{0.5em}
+\begin{minipage}{0.9\linewidth}
+\small\singlespacing
+\textbf{Abstract}\par\vspace{0.25em}
+$abstract$
+$if(keywords)$
+\par\vspace{0.75em}
+\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
+$endif$
+\end{minipage}
+\end{center}
+\vspace{1em}
+$endif$
+
+$if(acknowledgements)$
+\ifhfwganon\else
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\footnotesize\singlespacing
+\noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
+\textbf{Acknowledgements}\par
+$acknowledgements$
+\end{minipage}
+\end{center}
+\vspace{1em}
+\fi
+$endif$
+
+\vfill
+
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
+\end{titlepage}
+
 \else
 %% -------------------------------------------------------
 %% DEFAULT / HUMANITIES / DEMOGRAPHY: centered title page
@@ -904,7 +986,7 @@ $endif$
 
 \end{center}
 \end{titlepage}
-\fi
+\fi\fi
 
 \clearpage
 \setcounter{page}{1}
