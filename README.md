@@ -181,10 +181,6 @@ Each preset adjusts the body font, margins, line spacing, and section heading st
 | `demography` | XITS / Times | Bold + rule | 1 in | 1.5x | Black |
 | `methods` | Source Serif 4 | Bold + blue rule | 0.9 in | 1.25x | Deep blue |
 
-**Plain / journal-submission preset.** Omitting `fontset` (or leaving it commented out) produces a clean Palatino-family document with standard 1-inch margins, 1.5× line spacing, and no color accents. This is the format to use when submitting to journals that impose their own typesetting: the template stays out of the way.
-
-**HFWG preset.** `fontset: hfwg` is the branded working-paper format for Household Finance Working Group publications. It uses Source Serif 4 for body text, Source Sans 3 for headings, and Queens College Red (`#E71939`) for accent rules and links.
-
 **pdfLaTeX fallback.** The bundled fonts require XeLaTeX or LuaLaTeX, which R Markdown uses by default when the fonts are present. If you are using pdfLaTeX, the template falls back gracefully to TeX distribution fonts and emits a warning in the log.
 
 **Spacing override.** To force double spacing regardless of preset:
