@@ -223,21 +223,30 @@ $endif$
 % =======================================================
 % 1b. COLOR PALETTE
 % Loaded early so geometry, titlesec, and hyperref can all use hfwgaccent.
-% methods:    deep tech-blue accent with lighter rule tone
-% hfwg:       CUNY Blue (#003DA5, Pantone 286 C) accent
-% default/others: black (no visual change)
+% The 'accent' YAML variable overrides all fontset defaults (hex, no '#').
+%   accent: E71939   # QC Red
+%   accent: 003DA5   # CUNY Blue (hfwg default)
+% Fontset defaults (when accent is unset):
+%   methods:        deep tech-blue (#1B4F72) with lighter rule (#2E86C1)
+%   hfwg:           CUNY Blue (#003DA5, Pantone 286 C)
+%   default/others: black
 % =======================================================
 \usepackage{xcolor}
-\ifhfwgmethods
-  \definecolor{hfwgaccent}{HTML}{1B4F72}
-  \definecolor{hfwgrule}{HTML}{2E86C1}
-\else\ifhfwghfwg
-  \definecolor{hfwgaccent}{HTML}{003DA5}
-  \definecolor{hfwgrule}{HTML}{003DA5}
-\else
-  \definecolor{hfwgaccent}{HTML}{000000}
-  \definecolor{hfwgrule}{HTML}{000000}
-\fi\fi
+$if(accent)$
+  \definecolor{hfwgaccent}{HTML}{$accent$}
+  \definecolor{hfwgrule}{HTML}{$accent$}
+$else$
+  \ifhfwgmethods
+    \definecolor{hfwgaccent}{HTML}{1B4F72}
+    \definecolor{hfwgrule}{HTML}{2E86C1}
+  \else\ifhfwghfwg
+    \definecolor{hfwgaccent}{HTML}{003DA5}
+    \definecolor{hfwgrule}{HTML}{003DA5}
+  \else
+    \definecolor{hfwgaccent}{HTML}{000000}
+    \definecolor{hfwgrule}{HTML}{000000}
+  \fi\fi
+$endif$
 
 % =======================================================
 % 2. PAGE LAYOUT

@@ -543,6 +543,7 @@ output:
 | Variable | Values | Description |
 |---|---|---|
 | `fontset` | `hfwg`, `humanities`, `demography`, `methods`, or unset | Font and layout preset |
+| `accent` | hex string without `#` (e.g. `E71939`) | Override accent color; defaults to CUNY Blue for `hfwg`, black for others |
 | `fontpath` | path string | Path to bundled fonts directory |
 | `doublespace` | `true` or `false` | Full double spacing, overrides preset |
 | `numbersections` | `true` or `false` | Number section headings |
