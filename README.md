@@ -17,9 +17,11 @@ A personal LaTeX template for academic manuscripts, distributed as an R package.
 9. [Tables](#9-tables)
 10. [Figures](#10-figures)
 11. [Preparing for submission](#11-preparing-for-submission)
-12. [Quick reference: all YAML variables](#12-quick-reference-all-yaml-variables)
-13. [Bibliography: supported source types](#13-bibliography-supported-source-types)
-14. [Non-R installation](#14-non-r-installation)
+12. [Empirical Snapshots](#12-empirical-snapshots)
+13. [Blogposts](#13-blogposts)
+14. [Quick reference: all YAML variables](#14-quick-reference-all-yaml-variables)
+15. [Bibliography: supported source types](#15-bibliography-supported-source-types)
+16. [Non-R installation](#16-non-r-installation)
 
 ---
 
@@ -164,7 +166,7 @@ This produces `paper.pdf` in the same folder. If it is your first compile with T
 The `fontset` variable switches between typographic registers. Choose the one that fits your output context.
 
 ```yaml
-fontset: hfwg          # Source Serif 4 + Source Sans 3, Queens College Red accent -- HFWG working papers
+fontset: hfwg          # Source Serif 4 + Source Sans 3, CUNY Blue accent -- HFWG working papers
 fontset: humanities    # EB Garamond -- theory, AJS, Sociological Theory
 fontset: demography    # XITS (Times-family) -- Demography, Social Forces
 fontset: methods       # Source Serif 4 + Fira Code -- SMR, computational work
@@ -176,12 +178,22 @@ Each preset adjusts the body font, margins, line spacing, and section heading st
 | Preset | Body font | Headings | Margins | Spacing | Accent |
 |---|---|---|---|---|---|
 | *(unset)* | Palatino-family | Bold | 1 in | 1.5x | Black — **use for journal submissions** |
-| `hfwg` | Source Serif 4 | Sans-serif bold + QC Red rule | 1.15 in | 1.45x | Queens College Red |
+| `hfwg` | Source Serif 4 | Sans-serif bold + blue rule | 1.15 in | 1.45x | CUNY Blue (`003DA5`) |
 | `humanities` | EB Garamond | Small caps | 1.3 in | 1.55x | Black |
 | `demography` | XITS / Times | Bold + rule | 1 in | 1.5x | Black |
 | `methods` | Source Serif 4 | Bold + blue rule | 0.9 in | 1.25x | Deep blue |
 
 **pdfLaTeX fallback.** The bundled fonts require XeLaTeX or LuaLaTeX, which R Markdown uses by default when the fonts are present. If you are using pdfLaTeX, the template falls back gracefully to TeX distribution fonts and emits a warning in the log.
+
+**Accent color override.** Any fontset's accent color can be overridden with a hex value (no `#`):
+
+```yaml
+accent: E71939   # QC Red
+accent: 003DA5   # CUNY Blue (hfwg default)
+accent: 000000   # Black (suppress all color)
+```
+
+This controls section heading rules, the header rule, subtitle text, and hyperlink colors.
 
 **Spacing override.** To force double spacing regardless of preset:
 
@@ -510,7 +522,90 @@ output:
 
 ---
 
-## 12. Quick reference: all YAML variables
+## 12. Empirical Snapshots
+
+Snapshots are short public-facing Lab outputs built from one R Markdown source into two deliverables:
+
+| Output | Purpose |
+|---|---|
+| PDF | Compact printable Snapshot with a reduced title header, lead, and optional featured visualization |
+| WordPress companion | HTML or Markdown fragment that can be pasted into a CUNY Academic Commons WordPress post |
+
+Use `snapshot: true` and the `hfwgtex::snapshot_pdf` output format:
+
+```yaml
+---
+title: "Bachelor's Degree Completion Marks the Largest Wealth Divide"
+subtitle: "Survey of Consumer Finances, 2022"
+snapshot: true
+snapshot_label: "Empirical Snapshot"
+snapshot_abstract_label: "Lead"
+snapshot_feature: "figures/education-wealth.png"
+snapshot_feature_caption: |
+  Median household net worth by educational attainment, Survey of Consumer
+  Finances, 2022. Dollar amounts are shown in 2022 dollars.
+
+series: "Snapshot"
+number: 1
+accent: 0066CC
+fontset: hfwg
+
+abstract: |
+  Households headed by college graduates hold substantially more wealth than
+  households without a bachelor's degree, and the largest visible break occurs
+  at bachelor's degree completion.
+
+output:
+  hfwgtex::snapshot_pdf:
+    wordpress: html
+    wordpress_assets: true
+    wordpress_checklist: true
+---
+```
+
+When knitted in RStudio, this writes the PDF plus a companion file named like `paper-wordpress.html`, an optional `paper-wordpress-assets/` folder, and an optional `paper-wordpress-checklist.txt` handoff file. Use `wordpress: markdown` to create `paper-wordpress.md`, or `wordpress: none` to suppress the companion file.
+
+For the CUNY Academic Commons, `wordpress: html` is the recommended default. It produces conservative paste-ready HTML and does not require Markdown, table, PDF, shortcode, or page-builder plugins to be active.
+
+The Snapshot PDF header uses the abstract as the lead paragraph. Put the main 900-1,050 word Snapshot body below the YAML in the fixed sequence: context, finding, implication, and methodological footer.
+
+More detail, including manual inspection commands, is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
+
+---
+
+## 13. Blogposts
+
+Blogposts are public-facing Lab posts that keep the standard HFWG report PDF style while also emitting a WordPress companion file.
+
+```yaml
+---
+title: "A Standard Lab Post"
+subtitle: "A short public-facing report"
+series: "Blogpost"
+number: 1
+fontset: hfwg
+
+abstract: |
+  This post uses the standard HFWG report layout and also emits a WordPress
+  companion file.
+
+output:
+  hfwgtex::blogpost_pdf:
+    wordpress: html
+    wordpress_assets: true
+    wordpress_checklist: true
+---
+```
+
+Use Blogposts when the piece should read like a standard Lab report rather than a visual-forward Snapshot. The companion options are the same as Snapshots: `wordpress: html`, `wordpress: markdown`, or `wordpress: none`.
+
+The RStudio handoff is the same as Snapshots: knit once, then use the PDF, WordPress companion file, assets folder, and checklist.
+
+More detail is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
+
+---
+
+## 14. Quick reference: all YAML variables
 
 ### Document metadata
 
@@ -524,6 +619,30 @@ output:
 | `abstract` | block | Abstract text |
 | `keywords` | list | Keyword list, rendered below abstract |
 | `acknowledgements` | block | Acknowledgements on title page |
+
+### Snapshot mode
+
+| Variable | Description |
+|---|---|
+| `snapshot` | Set `true` to use the compact Snapshot PDF header |
+| `snapshot_label` | Publication type label; defaults to `Empirical Snapshot` |
+| `snapshot_abstract_label` | Label above the lead paragraph; defaults to `Lead` |
+| `snapshot_feature` | Optional path to a featured visualization image |
+| `snapshot_feature_caption` | Optional caption below the featured visualization |
+
+### Publishing output formats
+
+| Output format | Description |
+|---|---|
+| `hfwgtex::snapshot_pdf` | Snapshot PDF plus optional WordPress companion |
+| `hfwgtex::blogpost_pdf` | Standard HFWG report PDF plus optional WordPress companion |
+
+| Output option | Values | Description |
+|---|---|---|
+| `wordpress` | `html`, `markdown`, `none` | Companion file type |
+| `wordpress_file` | path string | Optional explicit companion filename |
+| `wordpress_assets` | `true` or `false` | Copy local companion images into a `-wordpress-assets/` folder |
+| `wordpress_checklist` | `true` or `false` | Write an RA-facing WordPress handoff checklist |
 
 ### Author block
 
@@ -615,7 +734,7 @@ output:
 
 ---
 
-## 13. Bibliography: supported source types
+## 15. Bibliography: supported source types
 
 The bundled `default.csl` handles modern source types that standard styles format poorly. Set the Zotero item type as follows:
 
@@ -651,7 +770,7 @@ Renders as: *Author (Year). Title (Version x.x.x) [Computer software]. Publisher
 
 ---
 
-## 14. Non-R installation
+## 16. Non-R installation
 
 For users without R, two shell scripts are provided.
 

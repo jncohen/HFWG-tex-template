@@ -12,7 +12,7 @@
 %                           TeX Gyre Termes     (pdfLaTeX)
 %   fontset: methods     -> Source Serif 4 + Fira Code (XeLaTeX/LuaLaTeX)
 %                           mathpazo + Fira Code or LM Mono (pdfLaTeX)
-%   fontset: hfwg        -> Source Serif 4 + Source Sans Pro, QC Red accent (XeLaTeX/LuaLaTeX)
+%   fontset: hfwg        -> Source Serif 4 + Source Sans Pro, CUNY Blue accent (XeLaTeX/LuaLaTeX)
 %                           mathpazo            (pdfLaTeX)
 %   (default/unset)      -> TeX Gyre Pagella    (XeLaTeX/LuaLaTeX)
 %                           mathpazo            (pdfLaTeX)
@@ -358,7 +358,7 @@ $endif$
 % humanities: small-caps, generous spacing
 % demography: bold + thin rule below (journal style)
 % methods:    bold + accent color + rule below (futuristic)
-% hfwg:       sans-serif bold + QC Red accent + rule below (branded)
+% hfwg:       sans-serif bold + CUNY Blue accent + rule below (branded)
 % =======================================================
 \usepackage{titlesec}
 
@@ -712,7 +712,7 @@ $endif$
 \begin{document}
 
 % =============================================================
-% TITLE PAGE
+% TITLE PAGE / SNAPSHOT HEADER
 % methods:  centered, with thick accent rules top and bottom
 % others:   centered (humanities/demography/default)
 % =============================================================
@@ -759,6 +759,83 @@ $if(author_orcid)$ORCID: $author_orcid$\par$endif$%
 $endif$
 }
 
+\newcommand{\hfwgseriesblock}{%
+{\small\setlength{\parskip}{1pt}%
+$if(institution)$$institution$\par$endif$%
+$if(series)$$series$$if(number)$\enspace\ensuremath{\cdot}\enspace No.\,$number$$endif$\par$endif$%
+}%
+}
+
+$if(snapshot)$
+%% -------------------------------------------------------
+%% SNAPSHOT: compact publication header.
+%% The body begins on the first page after this header; use this for
+%% short public-facing Lab outputs that also have a WordPress companion.
+%% -------------------------------------------------------
+\thispagestyle{empty}
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
+\vspace{0.6em}
+
+{\small\sffamily\bfseries\color{hfwgaccent}%
+$if(snapshot_label)$$snapshot_label$$else$Empirical Snapshot$endif$%
+}\par
+\vspace{0.75em}
+
+{\setstretch{0.95}\LARGE\bfseries $title$\par}
+
+$if(subtitle)$
+\vspace{0.35em}
+{\large\color{hfwgaccent} $subtitle$\par}
+$endif$
+
+\vspace{1em}
+
+\begin{singlespace}
+\hfwgauthorblock
+
+\par\vspace{2\baselineskip}
+\hfwgseriesblock
+
+$if(date)$
+\ifhfwganon\else
+\vspace{0.25em}
+{\small $date$}\par
+\fi
+$endif$
+\end{singlespace}
+
+$if(abstract)$
+\vspace{1.25em}
+\begin{minipage}{0.92\linewidth}
+\small\singlespacing
+\noindent\textbf{$if(snapshot_abstract_label)$$snapshot_abstract_label$$else$Lead$endif$}\par\vspace{0.25em}
+$abstract$
+$if(keywords)$
+\par\vspace{0.75em}
+\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
+$endif$
+\end{minipage}
+$endif$
+
+$if(snapshot_feature)$
+\vspace{1.25em}
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{$snapshot_feature$}
+$if(snapshot_feature_caption)$
+\par\vspace{0.35em}
+\begin{minipage}{0.92\linewidth}
+\footnotesize\singlespacing
+$snapshot_feature_caption$
+\end{minipage}
+$endif$
+\end{center}
+$endif$
+
+\vspace{1.5em}
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.5pt}}\par
+\vspace{1.5em}
+
+$else$
 \ifhfwgmethods
 %% -------------------------------------------------------
 %% METHODS: centered title page with accent rules
@@ -766,18 +843,10 @@ $endif$
 \begin{titlepage}
 \thispagestyle{empty}
 \noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
-\vspace{3em}
+\vspace*{0.13\textheight}
 \begin{center}
 \begin{singlespace}
 
-$if(institution)$
-{\small\textbf{$institution$}}\par
-\vspace{0.25em}
-$endif$
-$if(series)$
-{\small $series$$if(number)$\enspace·\enspace No.\,$number$$endif$}\par
-\vspace{1em}
-$endif$
 
 {\setstretch{0.9}\LARGE\bfseries $title$\par}
 
@@ -789,6 +858,9 @@ $endif$
 \vspace{2em}
 
 \hfwgauthorblock
+
+\par\vspace{2\baselineskip}
+\hfwgseriesblock
 
 $if(date)$
 \ifhfwganon\else
@@ -847,7 +919,7 @@ $endif$
 \begin{titlepage}
 \thispagestyle{empty}
 \noindent\textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}\par
-\vspace{3em}
+\vspace*{0.13\textheight}
 \begin{center}
 \begin{singlespace}
 
@@ -860,22 +932,15 @@ $endif$
 
 \vspace{2em}
 
-$if(author)$
+\hfwgauthorblock
+
+\par\vspace{2\baselineskip}
+\hfwgseriesblock
+
+$if(date)$
 \ifhfwganon\else
-$for(author)$
-$if(author.name)$\textbf{$author.name$}$else$\textbf{$author$}$endif$\par
-$endfor$
-{\small\setlength{\parskip}{1pt}%
-$if(author_dept)$$author_dept$\par$endif$%
-$if(author_inst)$$author_inst$\par$endif$%
-$if(author_addr)$$author_addr$\par$endif$%
-$if(author_email)$$author_email$\par$endif$%
-$if(author_web)$$author_web$\par$endif$%
-$if(author_orcid)$ORCID: $author_orcid$\par$endif$%
-$if(institution)$\textbf{$institution$}\par$endif$%
-$if(series)$$series$$if(number)$\enspace·\enspace No.\,$number$$endif$\par$endif$%
-$if(date)$\ifhfwganon\else$date$\par\fi$endif$%
-}%
+\vspace{0.25em}
+{\small $date$}\par
 \fi
 $endif$
 
@@ -927,17 +992,9 @@ $endif$
 \begin{titlepage}
 \thispagestyle{empty}
 
-\vspace*{0.06\textheight}
+\vspace*{0.14\textheight}
 \begin{center}
 
-$if(institution)$
-{\small $institution$}\par
-\vspace{0.25em}
-$endif$
-$if(series)$
-{\small $series$$if(number)$\enspace·\enspace No.\,$number$$endif$}\par
-\vspace{0.75em}
-$endif$
 
 {\setstretch{0.9}\LARGE\bfseries $title$\par}
 
@@ -953,6 +1010,9 @@ $endif$
 
 \hfwgauthorblock
 
+\par\vspace{2\baselineskip}
+\hfwgseriesblock
+
 % --- DATE ---
 %% NOTE (Issue 4): To preserve a human-readable date string, use inline R:
 %%   date: "`r format(Sys.Date(), '%B %d, %Y')`"
@@ -966,7 +1026,8 @@ $endif$
 }
 \end{singlespace}
 
-\vfill
+
+\vspace{2em}
 
 $if(abstract)$
 \begin{minipage}{0.8\textwidth}
@@ -996,8 +1057,13 @@ $endif$
 \end{center}
 \end{titlepage}
 \fi\fi
+$endif$
 
+$if(snapshot)$
+\vspace{0.5em}
+$else$
 \clearpage
+$endif$
 \setcounter{page}{1}
 
 % =======================================================
