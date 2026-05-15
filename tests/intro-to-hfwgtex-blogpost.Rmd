@@ -138,7 +138,10 @@ barplot(
   col = c("#B8C7D9", "#8FB3D9", "#0066CC", "#004C99"),
   border = NA,
   las = 1,
-  ylab = "Median net worth"
+  ylab = "Median net worth",
+  cex.axis = 0.75,
+  cex.lab = 0.85,
+  cex.names = 0.8
 )
 ```
 

@@ -27,10 +27,14 @@
 - Separated author/contact metadata from institution and series metadata on title pages with two baseline skips.
 - Consolidated institution, series, and number rendering through a shared title-page series block.
 - Preserved the reordered, centered title-page layout across `methods`, `hfwg`, and default title-page variants.
+- Switched the `hfwg` preset to XITS with roman headings for a sharper, more classic report appearance.
+- Centered Pandoc longtables so table bodies align with their captions.
+- Tightened non-methods code blocks with smaller monospace text and denser line spacing.
 
 ## Tests and documentation
 
 - Added `tests/knit-publishing-formats.R` to generate manual inspection documents for Snapshot and Blogpost workflows.
+- Added `tests/knit-snapshot.R` as a Snapshot-specific manual inspection entry point.
 - Added `docs/publishing-workflows.md` as the first split-out documentation page for longer workflow guidance.
 - Expanded README documentation for Snapshot and Blogpost YAML, WordPress companion outputs, asset folders, and RA handoff checklists.
 

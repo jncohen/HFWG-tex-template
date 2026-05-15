@@ -155,16 +155,17 @@ write_fontset_rmd <- function(id, fontset) {
     "  col = c('#D9E2EC', '#8FB3D9', '#2E6FA3'),",
     "  border = NA,",
     "  ylab = 'Median wealth',",
-    "  las = 1",
+    "  las = 1,",
+    "  cex.axis = 0.75,",
+    "  cex.lab = 0.85,",
+    "  cex.names = 0.8",
     ")",
     "```",
     "",
     "# Conclusion",
     "",
     "The final section gives section headings, spacing, references, and running",
-    "headers a little more room to show themselves.",
-    "",
-    "# References"
+    "headers a little more room to show themselves."
   )
 
   writeLines(lines[!is.na(lines)], rmd_path, useBytes = TRUE)

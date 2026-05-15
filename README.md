@@ -166,7 +166,7 @@ This produces `paper.pdf` in the same folder. If it is your first compile with T
 The `fontset` variable switches between typographic registers. Choose the one that fits your output context.
 
 ```yaml
-fontset: hfwg          # Source Serif 4 + Source Sans 3, CUNY Blue accent -- HFWG working papers
+fontset: hfwg          # XITS with CUNY Blue accent -- HFWG working papers
 fontset: humanities    # EB Garamond -- theory, AJS, Sociological Theory
 fontset: demography    # XITS (Times-family) -- Demography, Social Forces
 fontset: methods       # Source Serif 4 + Fira Code -- SMR, computational work
@@ -178,7 +178,7 @@ Each preset adjusts the body font, margins, line spacing, and section heading st
 | Preset | Body font | Headings | Margins | Spacing | Accent |
 |---|---|---|---|---|---|
 | *(unset)* | Palatino-family | Bold | 1 in | 1.5x | Black — **use for journal submissions** |
-| `hfwg` | Source Serif 4 | Sans-serif bold + blue rule | 1.15 in | 1.45x | CUNY Blue (`003DA5`) |
+| `hfwg` | XITS / Times | Roman bold + blue rule | 1.15 in | 1.45x | CUNY Blue (`003DA5`) |
 | `humanities` | EB Garamond | Small caps | 1.3 in | 1.55x | Black |
 | `demography` | XITS / Times | Bold + rule | 1 in | 1.5x | Black |
 | `methods` | Source Serif 4 | Bold + blue rule | 0.9 in | 1.25x | Deep blue |

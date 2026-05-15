@@ -12,7 +12,7 @@
 %                           TeX Gyre Termes     (pdfLaTeX)
 %   fontset: methods     -> Source Serif 4 + Fira Code (XeLaTeX/LuaLaTeX)
 %                           mathpazo + Fira Code or LM Mono (pdfLaTeX)
-%   fontset: hfwg        -> Source Serif 4 + Source Sans Pro, CUNY Blue accent (XeLaTeX/LuaLaTeX)
+%   fontset: hfwg        -> XITS, roman headings, CUNY Blue accent (XeLaTeX/LuaLaTeX)
 %                           mathpazo            (pdfLaTeX)
 %   (default/unset)      -> TeX Gyre Pagella    (XeLaTeX/LuaLaTeX)
 %                           mathpazo            (pdfLaTeX)
@@ -82,7 +82,7 @@ $endif$
     \fi
     \ifhfwghfwg
       %% hfwg: requires XeLaTeX/LuaLaTeX; mathpazo used instead under pdfLaTeX.
-      \PackageWarning{hfwgtemplate}{fontset=hfwg: Source Serif 4 + Source Sans Pro
+      \PackageWarning{hfwgtemplate}{fontset=hfwg: XITS
         require XeLaTeX/LuaLaTeX. Falling back to mathpazo under pdfLaTeX.}
     \fi
   \fi
@@ -164,18 +164,18 @@ $endif$
         Fira Code. Using default monospace font.}%
     }
   \else\ifhfwghfwg
-    %% hfwg: Source Serif 4 body + Source Sans Pro headings, Queens College branding.
-    \IfFileExists{\hfwgfontsdir SourceSerif4-Regular.otf}{%
-      \setmainfont{SourceSerif4}[
+    %% hfwg: XITS body + roman headings for a sharper, classic report style.
+    \IfFileExists{\hfwgfontsdir XITS-Regular.otf}{%
+      \setmainfont{XITS}[
         Path           = \hfwgfontsdir,
         UprightFont    = *-Regular,
         BoldFont       = *-Bold,
-        ItalicFont     = *-It,
-        BoldItalicFont = *-BoldIt,
+        ItalicFont     = *-Italic,
+        BoldItalicFont = *-BoldItalic,
         Extension      = .otf]%
     }{%
       \PackageWarning{hfwgtemplate}{fontset=hfwg: \hfwgfontsdir
-        SourceSerif4-Regular.otf not found. Run scripts/get-fonts.sh, or set
+        XITS-Regular.otf not found. Run scripts/get-fonts.sh, or set
         fontpath: in YAML if using a managed template. Falling back to default.}%
       \IfFontExistsTF{TeX Gyre Pagella}{%
         \setmainfont{TeX Gyre Pagella}%
@@ -183,19 +183,6 @@ $endif$
         \PackageWarning{hfwgtemplate}{TeX Gyre Pagella not found; using Latin Modern Roman.}%
         \setmainfont{Latin Modern Roman}%
       }%
-    }
-    \IfFileExists{\hfwgfontsdir SourceSans3-Regular.otf}{%
-      \setsansfont{SourceSans3}[
-        Path           = \hfwgfontsdir,
-        UprightFont    = *-Regular,
-        BoldFont       = *-Bold,
-        ItalicFont     = *-It,
-        BoldItalicFont = *-BoldIt,
-        Extension      = .otf]%
-    }{%
-      \PackageWarning{hfwgtemplate}{fontset=hfwg: \hfwgfontsdir
-        SourceSans3-Regular.otf not found. Run scripts/get-fonts.sh to install
-        Source Sans 3. Using default sans-serif font for headings.}%
     }
   \else
     %% Default or unrecognized fontset: TeX Gyre Pagella with graceful fallback.
@@ -328,8 +315,8 @@ $endif$
 \AtBeginEnvironment{longtable}{
   \small
   \singlespacing
-  \setlength{\LTleft}{0pt}
-  \setlength{\LTright}{0pt}
+  \setlength{\LTleft}{\fill}
+  \setlength{\LTright}{\fill}
   \setlength{\LTcapwidth}{\textwidth}
   %% Treat special characters as ordinary text inside table cells.
   %% Pandoc does not escape these when converting markdown tables,
@@ -358,7 +345,7 @@ $endif$
 % humanities: small-caps, generous spacing
 % demography: bold + thin rule below (journal style)
 % methods:    bold + accent color + rule below (futuristic)
-% hfwg:       sans-serif bold + CUNY Blue accent + rule below (branded)
+% hfwg:       roman bold + CUNY Blue accent + rule below (branded)
 % =======================================================
 \usepackage{titlesec}
 
@@ -396,9 +383,9 @@ $if(numbersections)$
     \titlespacing{\subsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1ex plus 0.25ex}{-0.5ex}
   \else\ifhfwghfwg
-    \titleformat{\section}{\large\bfseries\sffamily\color{hfwgaccent}}{\thesection}{1em}{}[\hfwgwgrule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries\sffamily\color{hfwgaccent}}{\thesubsection}{1em}{}
-    \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{\thesubsubsection}{1em}{}
+    \titleformat{\section}{\large\bfseries\color{hfwgaccent}}{\thesection}{1em}{}[\hfwgwgrule\vspace{0.4em}]
+    \titleformat{\subsection}{\normalsize\bfseries\color{hfwgaccent}}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
     \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
     \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
@@ -435,9 +422,9 @@ $else$
     \titlespacing{\subsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1ex plus 0.25ex}{-0.5ex}
   \else\ifhfwghfwg
-    \titleformat{\section}{\large\bfseries\sffamily\color{hfwgaccent}}{}{0pt}{}[\hfwgwgrule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries\sffamily\color{hfwgaccent}}{}{0pt}{}
-    \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{}{0pt}{}
+    \titleformat{\section}{\large\bfseries\color{hfwgaccent}}{}{0pt}{}[\hfwgwgrule\vspace{0.4em}]
+    \titleformat{\subsection}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
+    \titleformat{\subsubsection}{\normalsize\itshape}{}{0pt}{}
     \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
     \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
@@ -517,7 +504,7 @@ $if(highlighting-macros)$
 $highlighting-macros$
 
 % =======================================================
-% 8b. CODE BLOCK STYLING (methods fontset only)
+% 8b. CODE BLOCK STYLING
 %
 % Applies to:
 %   Shaded/Highlighting  — knitr/Pandoc code INPUT blocks
@@ -609,6 +596,27 @@ $highlighting-macros$
     \vspace{3pt}%
   }
 
+\fi
+
+\ifhfwgmethods\else
+  %% Non-methods presets use manuscript spacing in prose, but code needs to
+  %% remain compact and readable.  Use a smaller monospace face with tight
+  %% leading so long lines are less likely to overflow the shaded box.
+  \fvset{fontsize=\footnotesize}
+  \makeatletter
+  \renewcommand{\verbatim@font}{\footnotesize\ttfamily}
+  \makeatother
+  \AtBeginEnvironment{Shaded}{%
+    \footnotesize
+    \setstretch{1.05}%
+    \setlength{\parskip}{0pt}%
+    \setlength{\partopsep}{0pt}%
+  }
+  \AtBeginEnvironment{verbatim}{%
+    \footnotesize
+    \setstretch{1.05}%
+    \setlength{\parskip}{0pt}%
+  }
 \fi
 $endif$
 
