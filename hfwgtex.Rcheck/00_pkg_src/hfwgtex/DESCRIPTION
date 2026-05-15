@@ -9,8 +9,11 @@ Description: Pandoc/Quarto LaTeX template for academic manuscripts produced
     support, line numbering, and two-column layout. Use hfwg_use() to
     install the template bundle into a new project directory.
 License: MIT + file LICENSE
-Imports:
-    rmarkdown
+Imports: rmarkdown
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+NeedsCompilation: no
+Packaged: 2026-05-15 16:34:30 UTC; CodexSandboxOffline
+Author: Joseph N. Cohen [aut, cre]
+Maintainer: Joseph N. Cohen <joseph.cohen@qc.cuny.edu>
