@@ -141,7 +141,6 @@ output:
 
 header-includes:
    - \usepackage{booktabs}
-   - \usepackage{pdflscape}
 ---
 ```
 
@@ -405,6 +404,32 @@ knitr::kable(
   kable_styling(latex_options = "hold_position") |>
   add_header_above(c(" " = 1, "Full sample" = 3))
 ```
+
+### Wide and landscape tables
+
+Use landscape pages for tables with many columns, long variable labels, or repeated model columns that visibly overflow the portrait text block. The template loads `pdflscape`, so you can wrap a wide table directly:
+
+```latex
+\begin{landscape}
+```
+
+```{r wide-table, echo=FALSE, results='asis'}
+knitr::kable(wide_table, format = "latex", booktabs = TRUE)
+```
+
+```latex
+\end{landscape}
+```
+
+With `kableExtra`, the equivalent is:
+
+```r
+knitr::kable(wide_table, format = "latex", booktabs = TRUE) |>
+  kableExtra::kable_styling(latex_options = "hold_position") |>
+  kableExtra::landscape()
+```
+
+If one table needs landscape, scan nearby regression, appendix, and robustness tables for the same pattern: more columns than fit comfortably in portrait, clipped notes, or LaTeX `Overfull \hbox` warnings in the build log.
 
 ### Table notes
 

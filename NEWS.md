@@ -24,6 +24,8 @@
 
 ## Template refinements
 
+- Positioned `hfwg` title-page accent bars one inch from the top and bottom page edges, with one-inch left/right insets and a fixed 1.5-inch title offset below the upper bar.
+- Loaded `pdflscape` in the template so wide tables can be placed on landscape pages without extra YAML header includes.
 - Separated author/contact metadata from institution and series metadata on title pages with two baseline skips.
 - Consolidated institution, series, and number rendering through a shared title-page series block.
 - Preserved the reordered, centered title-page layout across `methods`, `hfwg`, and default title-page variants.
