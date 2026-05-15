@@ -569,7 +569,7 @@ For the CUNY Academic Commons, `wordpress: html` is the recommended default. It 
 
 The Snapshot PDF header uses the abstract as the lead paragraph. Put the main 900-1,050 word Snapshot body below the YAML in the fixed sequence: context, finding, implication, and methodological footer.
 
-More detail, including manual inspection commands, is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
+More detail, including manual inspection commands such as `Rscript tests/knit-snapshot.R`, is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 
 ---
 

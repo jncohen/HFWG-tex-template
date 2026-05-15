@@ -99,6 +99,8 @@ Rscript tests/knit-publishing-formats.R --no-render
 Rscript tests/knit-publishing-formats.R
 Rscript tests/knit-publishing-formats.R snapshot
 Rscript tests/knit-publishing-formats.R blogpost
+Rscript tests/knit-snapshot.R --no-render
+Rscript tests/knit-snapshot.R
 ```
 
 The script writes:

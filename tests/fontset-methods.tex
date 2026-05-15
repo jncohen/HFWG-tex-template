@@ -1,0 +1,1034 @@
+\documentclass[12pt]{article}
+
+% =======================================================
+% 1. ENGINE + TYPOGRAPHY
+%
+% Font presets are controlled by the 'fontset' YAML variable.
+% Valid values: humanities | demography | methods | hfwg | (unset = default)
+%
+%   fontset: humanities  -> EB Garamond         (XeLaTeX/LuaLaTeX)
+%                           mathpazo + warning  (pdfLaTeX)
+%   fontset: demography  -> XITS                (XeLaTeX/LuaLaTeX)
+%                           TeX Gyre Termes     (pdfLaTeX)
+%   fontset: methods     -> Source Serif 4 + Fira Code (XeLaTeX/LuaLaTeX)
+%                           mathpazo + Fira Code or LM Mono (pdfLaTeX)
+%   fontset: hfwg        -> Source Serif 4 + Source Sans Pro, CUNY Blue accent (XeLaTeX/LuaLaTeX)
+%                           mathpazo            (pdfLaTeX)
+%   (default/unset)      -> TeX Gyre Pagella    (XeLaTeX/LuaLaTeX)
+%                           mathpazo            (pdfLaTeX)
+%
+% XeLaTeX/LuaLaTeX fonts are loaded from a local fonts/ directory so the
+% bundle is self-contained regardless of system font installation.
+% The 'fontpath' YAML variable overrides the default 'fonts/' relative path
+% with an absolute path --- required when using the managed template layout
+% (e.g., template: ~/Templates/hfwg-tex/hfwgtemplate.tex).
+% Example: fontpath: /Users/yourname/Templates/hfwg-tex/fonts/
+% =======================================================
+\usepackage{iftex}
+
+%% --- FONT PRESET MACRO (set from YAML, used for \ifx branching below) ---
+\def\hfwgfontset{methods}
+\makeatletter
+\def\hfwgfontset@h{humanities}
+\def\hfwgfontset@d{demography}
+\def\hfwgfontset@m{methods}
+\def\hfwgfontset@w{hfwg}
+%% Boolean flags — set once here, usable everywhere without \makeatletter
+\newif\ifhfwghumanities
+\newif\ifhfwgdemography
+\newif\ifhfwgmethods
+\newif\ifhfwghfwg
+\ifx\hfwgfontset\hfwgfontset@h\hfwghumanitiestrue\else\hfwghumanitiesfalse\fi
+\ifx\hfwgfontset\hfwgfontset@d\hfwgdemographytrue\else\hfwgdemographyfalse\fi
+\ifx\hfwgfontset\hfwgfontset@m\hfwgmethodstrue\else\hfwgmethodsfalse\fi
+\ifx\hfwgfontset\hfwgfontset@w\hfwghfwgtrue\else\hfwghfwgfalse\fi
+\newcommand{\hfwgmethodscodescale}{0.90}
+
+%% --- FONT PATH (override with 'fontpath:' YAML variable for managed templates) ---
+\def\hfwgfontsdir{../inst/fonts/}
+
+%% --- FONT LOADING ---
+
+\ifPDFTeX
+  %% pdfLaTeX path: uses TeX distribution packages only (no font files needed).
+  \usepackage[T1]{fontenc}
+  \ifhfwgdemography
+    %% demography: TeX Gyre Termes (Times-family); ships with every TeXLive/MiKTeX.
+    \usepackage{tgtermes}
+  \else
+    \usepackage{mathpazo}
+    \ifhfwghumanities
+      %% humanities: EB Garamond requires XeLaTeX/LuaLaTeX; mathpazo used instead.
+      \PackageWarning{hfwgtemplate}{fontset=humanities: EB Garamond requires
+        XeLaTeX/LuaLaTeX. Falling back to mathpazo under pdfLaTeX.}
+    \fi
+    \ifhfwgmethods
+      %% methods: try Fira Code for monospace; fall back to Latin Modern Mono.
+      \IfFileExists{FiraCode.sty}{%
+        \usepackage[scale=\hfwgmethodscodescale]{FiraCode}%
+      }{%
+        \PackageWarning{hfwgtemplate}{fontset=methods: Fira Code not found in the
+          TeX distribution. Using Latin Modern Mono. Install the 'firacode'
+          package (TeXLive: tlmgr install firacode).}%
+      }
+    \fi
+    \ifhfwghfwg
+      %% hfwg: requires XeLaTeX/LuaLaTeX; mathpazo used instead under pdfLaTeX.
+      \PackageWarning{hfwgtemplate}{fontset=hfwg: Source Serif 4 + Source Sans Pro
+        require XeLaTeX/LuaLaTeX. Falling back to mathpazo under pdfLaTeX.}
+    \fi
+  \fi
+\else
+  %% XeLaTeX / LuaLaTeX path: uses fontspec with bundled fonts from fonts/ dir.
+  %% Each preset uses \IfFileExists to fail gracefully if fonts/ is not populated.
+  %% Run scripts/get-fonts.sh to download font files into fonts/.
+  \usepackage{fontspec}
+  \ifhfwghumanities
+    \IfFileExists{\hfwgfontsdir EBGaramond-Regular.otf}{%
+      \setmainfont{EBGaramond}[
+        Path           = \hfwgfontsdir,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Italic,
+        BoldItalicFont = *-BoldItalic,
+        Extension      = .otf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=humanities: \hfwgfontsdir
+        EBGaramond-Regular.otf not found. Run scripts/get-fonts.sh, or set
+        fontpath: in YAML if using a managed template. Falling back to default.}%
+      \IfFontExistsTF{TeX Gyre Pagella}{%
+        \setmainfont{TeX Gyre Pagella}%
+      }{%
+        \PackageWarning{hfwgtemplate}{TeX Gyre Pagella not found; using Latin Modern Roman.}%
+        \setmainfont{Latin Modern Roman}%
+      }%
+    }
+  \else\ifhfwgdemography
+    \IfFileExists{\hfwgfontsdir XITS-Regular.otf}{%
+      \setmainfont{XITS}[
+        Path           = \hfwgfontsdir,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Italic,
+        BoldItalicFont = *-BoldItalic,
+        Extension      = .otf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=demography: \hfwgfontsdir
+        XITS-Regular.otf not found. Run scripts/get-fonts.sh, or set
+        fontpath: in YAML if using a managed template. Falling back to default.}%
+      \IfFontExistsTF{TeX Gyre Pagella}{%
+        \setmainfont{TeX Gyre Pagella}%
+      }{%
+        \PackageWarning{hfwgtemplate}{TeX Gyre Pagella not found; using Latin Modern Roman.}%
+        \setmainfont{Latin Modern Roman}%
+      }%
+    }
+  \else\ifhfwgmethods
+    \IfFileExists{\hfwgfontsdir SourceSerif4-Regular.otf}{%
+      \setmainfont{SourceSerif4}[
+        Path           = \hfwgfontsdir,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-It,
+        BoldItalicFont = *-BoldIt,
+        Extension      = .otf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=methods: \hfwgfontsdir
+        SourceSerif4-Regular.otf not found. Run scripts/get-fonts.sh, or set
+        fontpath: in YAML if using a managed template. Falling back to default.}%
+      \IfFontExistsTF{TeX Gyre Pagella}{%
+        \setmainfont{TeX Gyre Pagella}%
+      }{%
+        \PackageWarning{hfwgtemplate}{TeX Gyre Pagella not found; using Latin Modern Roman.}%
+        \setmainfont{Latin Modern Roman}%
+      }%
+    }
+    \IfFileExists{\hfwgfontsdir FiraCode-Regular.ttf}{%
+      \setmonofont{FiraCode}[
+        Path        = \hfwgfontsdir,
+        UprightFont = *-Regular,
+        BoldFont    = *-Bold,
+        Scale       = \hfwgmethodscodescale,
+        Extension   = .ttf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=methods: \hfwgfontsdir
+        FiraCode-Regular.ttf not found. Run scripts/get-fonts.sh to install
+        Fira Code. Using default monospace font.}%
+    }
+  \else\ifhfwghfwg
+    %% hfwg: Source Serif 4 body + Source Sans Pro headings, Queens College branding.
+    \IfFileExists{\hfwgfontsdir SourceSerif4-Regular.otf}{%
+      \setmainfont{SourceSerif4}[
+        Path           = \hfwgfontsdir,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-It,
+        BoldItalicFont = *-BoldIt,
+        Extension      = .otf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=hfwg: \hfwgfontsdir
+        SourceSerif4-Regular.otf not found. Run scripts/get-fonts.sh, or set
+        fontpath: in YAML if using a managed template. Falling back to default.}%
+      \IfFontExistsTF{TeX Gyre Pagella}{%
+        \setmainfont{TeX Gyre Pagella}%
+      }{%
+        \PackageWarning{hfwgtemplate}{TeX Gyre Pagella not found; using Latin Modern Roman.}%
+        \setmainfont{Latin Modern Roman}%
+      }%
+    }
+    \IfFileExists{\hfwgfontsdir SourceSans3-Regular.otf}{%
+      \setsansfont{SourceSans3}[
+        Path           = \hfwgfontsdir,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-It,
+        BoldItalicFont = *-BoldIt,
+        Extension      = .otf]%
+    }{%
+      \PackageWarning{hfwgtemplate}{fontset=hfwg: \hfwgfontsdir
+        SourceSans3-Regular.otf not found. Run scripts/get-fonts.sh to install
+        Source Sans 3. Using default sans-serif font for headings.}%
+    }
+  \else
+    %% Default or unrecognized fontset: TeX Gyre Pagella with graceful fallback.
+    \ifx\hfwgfontset\empty\else
+      \PackageWarning{hfwgtemplate}{Unknown fontset value '\hfwgfontset'.
+        Valid values: humanities, demography, methods, hfwg. Using default.}
+    \fi
+    \IfFontExistsTF{TeX Gyre Pagella}{%
+      \setmainfont{TeX Gyre Pagella}%
+    }{%
+      %% ISSUE 1 FIX: emit warning when TeX Gyre Pagella is unavailable.
+      \PackageWarning{hfwgtemplate}{TeX Gyre Pagella not found on this system.
+        Using Latin Modern Roman as fallback. Install tex-gyre for the intended
+        Palatino-family appearance.}%
+      \setmainfont{Latin Modern Roman}%
+    }
+  \fi\fi\fi\fi
+\fi
+\makeatother
+
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\providecommand{\citeproc}[2]{#2}
+
+% =======================================================
+% 1b. COLOR PALETTE
+% Loaded early so geometry, titlesec, and hyperref can all use hfwgaccent.
+% The 'accent' YAML variable overrides all fontset defaults (hex, no '#').
+%   accent: E71939   # QC Red
+%   accent: 003DA5   # CUNY Blue (hfwg default)
+% Fontset defaults (when accent is unset):
+%   methods:        deep tech-blue (#1B4F72) with lighter rule (#2E86C1)
+%   hfwg:           CUNY Blue (#003DA5, Pantone 286 C)
+%   default/others: black
+% =======================================================
+\usepackage{xcolor}
+  \ifhfwgmethods
+    \definecolor{hfwgaccent}{HTML}{1B4F72}
+    \definecolor{hfwgrule}{HTML}{2E86C1}
+  \else\ifhfwghfwg
+    \definecolor{hfwgaccent}{HTML}{003DA5}
+    \definecolor{hfwgrule}{HTML}{003DA5}
+  \else
+    \definecolor{hfwgaccent}{HTML}{000000}
+    \definecolor{hfwgrule}{HTML}{000000}
+  \fi\fi
+
+% =======================================================
+% 2. PAGE LAYOUT
+% humanities:  wider, book-like margins
+% methods:     tighter, dense technical report margins
+% hfwg:        slightly generous, branded working paper margins
+% default/demography: standard 1-inch
+% =======================================================
+\ifhfwghumanities
+  \usepackage[left=1.3in,right=1.3in,top=1.1in,bottom=1.1in]{geometry}
+\else\ifhfwgmethods
+  \usepackage[left=0.9in,right=0.9in,top=0.9in,bottom=0.9in]{geometry}
+\else\ifhfwghfwg
+  \usepackage[left=1.15in,right=1.15in,top=1.1in,bottom=1.1in]{geometry}
+\else
+  \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\fi\fi\fi
+\usepackage{setspace}
+
+  %% humanities: slightly more generous leading; methods: tighter; hfwg: balanced
+  \ifhfwghumanities
+    \setstretch{1.55}
+  \else\ifhfwgmethods
+    \setstretch{1.25}
+  \else\ifhfwghfwg
+    \setstretch{1.45}
+  \else
+    \onehalfspacing
+  \fi\fi\fi
+
+%% humanities: wider paragraph indent for book-like feel
+\ifhfwghumanities
+  \setlength{\parindent}{18pt}
+\else
+  \setlength{\parindent}{15pt}  %% applies to methods, hfwg, demography, default
+\fi
+\setlength{\parskip}{0pt}
+
+% =======================================================
+% 3. GRAPHICS + FLOATS
+% =======================================================
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{longtable,booktabs}
+\usepackage{array}
+\usepackage{caption}
+
+\captionsetup{
+  font=small,
+  labelfont=bf
+}
+
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{1}
+\setcounter{totalnumber}{3}
+
+\renewcommand{\arraystretch}{1.1}
+
+% More deterministic float spacing
+\setlength{\intextsep}{0.75\baselineskip}
+\setlength{\textfloatsep}{1.25\baselineskip}
+
+% --- Auto-scale images ---
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% =======================================================
+% 4. TABLE AUTOMATION (Pandoc longtable)
+% =======================================================
+\usepackage{etoolbox}
+
+\AtBeginEnvironment{longtable}{
+  \small
+  \singlespacing
+  \setlength{\LTleft}{0pt}
+  \setlength{\LTright}{0pt}
+  \setlength{\LTcapwidth}{\textwidth}
+  %% Treat special characters as ordinary text inside table cells.
+  %% Pandoc does not escape these when converting markdown tables,
+  %% so variable names (underscores), exponents (carets), and
+  %% percentage values (percent signs) cause LaTeX errors or silent
+  %% data loss. Catcode 12 (other) makes them literal characters
+  %% without affecting math mode or comments outside this environment.
+  \catcode95=12    %% underscore  (_): subscript operator
+  \catcode94=12    %% caret      (^): superscript operator
+  \catcode37=12    %% percent    (%): comment char -- silent data loss if unescaped
+}
+
+% =======================================================
+% 4b. SPECIAL CHARACTER HANDLING IN BODY TEXT
+% =======================================================
+%% \usepackage{underscore} makes _ safe in ordinary text mode
+%% (e.g. variable names mentioned inline in prose) while
+%% preserving its subscript role inside math environments.
+%% This complements the longtable catcode fix above.
+\usepackage{underscore}
+
+% =======================================================
+% 5. SECTION FORMATTING + NUMBERING TOGGLE
+%
+% default:    bold, no rule
+% humanities: small-caps, generous spacing
+% demography: bold + thin rule below (journal style)
+% methods:    bold + accent color + rule below (futuristic)
+% hfwg:       sans-serif bold + CUNY Blue accent + rule below (branded)
+% =======================================================
+\usepackage{titlesec}
+
+%% Named rule commands for \titleformat after-code.
+%% Necessary because \titleformat's optional [after-code] argument uses [],
+%% and LaTeX's optional-arg scanner doesn't handle nested [] depth, so
+%% \titleformat{...}{}{}{}{}[\titlerule[0.5pt]] would close the outer []
+%% at the first ] it encounters. Wrapping in a command avoids nesting.
+\newcommand{\hfwgdemorule}{\titlerule[0.3pt]}
+\newcommand{\hfwgmetrule}{\color{hfwgrule}\titlerule[0.5pt]}
+\newcommand{\hfwgwgrule}{\color{hfwgrule}\titlerule[0.4pt]}
+
+  \setcounter{secnumdepth}{3}
+  \setcounter{tocdepth}{3}
+  \ifhfwghumanities
+    \titleformat{\section}{\large\scshape}{\thesection}{1em}{}
+    \titleformat{\subsection}{\normalsize\bfseries\itshape}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
+    \titlespacing{\section}{0pt}{2.5ex plus 0.5ex}{-0.5ex}
+    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
+    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
+  \else\ifhfwgdemography
+    \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}[\hfwgdemorule\vspace{0.4em}]
+    \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
+    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
+    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
+    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
+  \else\ifhfwgmethods
+    \titleformat{\section}{\large\bfseries\color{hfwgaccent}}{\thesection}{1em}{}[\hfwgmetrule\vspace{0.4em}]
+    \titleformat{\subsection}{\normalsize\bfseries\color{hfwgaccent}}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\itshape\color{hfwgaccent}}{\thesubsubsection}{1em}{}
+    \titlespacing{\section}{0pt}{1.75ex plus 0.5ex}{-0.5ex}
+    \titlespacing{\subsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
+    \titlespacing{\subsubsection}{0pt}{1ex plus 0.25ex}{-0.5ex}
+  \else\ifhfwghfwg
+    \titleformat{\section}{\large\bfseries\sffamily\color{hfwgaccent}}{\thesection}{1em}{}[\hfwgwgrule\vspace{0.4em}]
+    \titleformat{\subsection}{\normalsize\bfseries\sffamily\color{hfwgaccent}}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{\thesubsubsection}{1em}{}
+    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
+    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
+    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
+  \else
+    \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+    \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
+    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
+    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
+    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
+  \fi\fi\fi\fi
+
+% =======================================================
+% 6. HYPERREF + HEADERS/FOOTERS
+% =======================================================
+%% methods + hfwg: colored links reinforce the accent palette
+\ifhfwgmethods
+  \usepackage[colorlinks=true,linkcolor=hfwgaccent,urlcolor=hfwgrule,citecolor=hfwgaccent]{hyperref}
+\else\ifhfwghfwg
+  \usepackage[colorlinks=true,linkcolor=hfwgaccent,urlcolor=hfwgrule,citecolor=hfwgaccent]{hyperref}
+\else
+  \usepackage[hidelinks]{hyperref}
+\fi\fi
+
+%% PDF document metadata — populated from YAML front matter.
+%% Enables proper indexing in repositories, readers, and search engines.
+%% Multiple authors are semicolon-separated (PDF/XMP convention).
+\hypersetup{
+  pdftitle    = {Fontset Test: methods: Synthetic document for visual
+regression checks},
+  pdfauthor   = {Ada Template; Sam Sample},
+  pdfsubject  = {Synthetic document for visual regression checks},
+  pdfkeywords = {font testing, R Markdown, LaTeX template}
+}
+
+\usepackage{fancyhdr}
+
+% =======================================================
+% 7. OPTIONAL MODES
+% =======================================================
+\newif\ifhfwganon
+\hfwganonfalse
+
+\newcommand{\hfwgmaincolumns}{1}
+
+
+% =======================================================
+% 8. PANDOC SUPPORT
+% =======================================================
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+}
+
+\providecommand{\pandocbounded}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% =======================================================
+% 8b. CODE BLOCK STYLING (methods fontset only)
+%
+% Applies to:
+%   Shaded/Highlighting  — knitr/Pandoc code INPUT blocks
+%   verbatim             — knitr console OUTPUT blocks
+%
+% Design:
+%   Input:  blue-tinted background + 3pt left accent rule, footnotesize
+%   Output: neutral gray background, footnotesize, no page-split
+%
+% Implementation notes:
+%   - framed is already loaded by highlighting-macros (via snugshade).
+%   - \MakeFramed with a custom \FrameCommand draws a colored vrule then
+%     a \colorbox; MakeFramed passes the framed content as the argument
+%     to the last token of \FrameCommand.
+%   - Font size for Highlighting uses \fvset, NOT \RecustomVerbatimEnvironment.
+%     fancyvrb v4+ (MiKTeX/TeX Live 2024+) pre-defines \VerbBar internally;
+%     \RecustomVerbatimEnvironment re-triggers that initialisation, causing
+%     a "Command \VerbBar already defined" conflict with Pandoc's
+%     highlighting-macros.  \fvset sets options without re-registering
+%     the environment and avoids the conflict entirely.
+%   - Font size for verbatim uses \verbatim@font, the LaTeX hook that
+%     controls the typeface inside all verbatim environments, for the
+%     same reason.
+%   - \surroundwithmdframed wraps verbatim externally so its verbatim
+%     catcode regime is unaffected, then applies the shaded background.
+%   - nobreak=true on the verbatim frame prevents output blocks from
+%     splitting across pages; for input blocks, an outer \minipage
+%     wrapper achieves the same (blocks longer than \textheight still
+%     overflow, which is the acceptable edge-case trade-off).
+% =======================================================
+\ifhfwgmethods
+
+  %% --- colors ---
+  \definecolor{codeinputbg}{HTML}{EBF0F7}   %% blue-tinted input background
+  \definecolor{codeoutputbg}{HTML}{F2F2F2}  %% neutral gray output background
+
+  %% --- code INPUT: Shaded + left accent rule, no page split ---
+  %% The outer minipage keeps the block together; MakeFramed draws the
+  %% colored vrule + background.  Long blocks that exceed \textheight
+  %% will still overflow (acceptable trade-off vs. splitting mid-block).
+  \renewenvironment{Shaded}{%
+    \vspace{3pt}%
+    \noindent\begin{minipage}{\linewidth}%
+    \def\FrameCommand{%
+      \hspace{1pt}%
+      {\color{hfwgrule}\vrule width 3pt}%
+      \hspace{4pt}%
+      \colorbox{codeinputbg}%
+    }%
+    \MakeFramed{\advance\hsize by -\width \FrameRestore}%
+    \footnotesize
+    \setlength{\parskip}{0pt}%
+    \setlength{\partopsep}{0pt}%
+  }{%
+    \endMakeFramed
+    \end{minipage}%
+    \vspace{3pt}%
+  }
+
+  %% Fira Code at footnotesize for highlighted code blocks.
+  %% \fvset is safe with fancyvrb v4+; \RecustomVerbatimEnvironment is not.
+  \fvset{fontsize=\footnotesize}
+
+  %% footnotesize for standard verbatim (console output).
+  %% \verbatim@font is the LaTeX hook called inside every verbatim environment
+  %% to set the typeface; overriding it here is fancyvrb-independent.
+  \makeatletter
+  \renewcommand{\verbatim@font}{\footnotesize\ttfamily}
+  \makeatother
+
+  %% --- code OUTPUT: shaded verbatim ---
+  %% mdframed is intentionally avoided: it loads pgf/tikz, which patches
+  %% \@ifnextchar globally and causes infinite recursion ("TeX capacity
+  %% exceeded [input stack size=10000]") when hyperref's \href is called
+  %% inside \hfwgauthorblock.  The framed package (already loaded above by
+  %% highlighting-macros) is sufficient and carries no such risk.
+  %%
+  %% etoolbox's \AtBeginEnvironment runs before verbatim's catcode changes,
+  %% and \AtEndEnvironment runs after they are restored, so \MakeFramed and
+  %% \endMakeFramed execute in normal LaTeX mode on either side of the
+  %% verbatim content.
+  \AtBeginEnvironment{verbatim}{%
+    \vspace{3pt}%
+    \def\FrameCommand{\fboxsep=4pt\colorbox{codeoutputbg}}%
+    \MakeFramed{\FrameRestore}%
+  }
+  \AtEndEnvironment{verbatim}{%
+    \endMakeFramed
+    \vspace{3pt}%
+  }
+
+\fi
+
+%% NOTE (Issue 5): knitr/Quarto may inject booktabs, float, longtable, or
+%% other packages already loaded above via header-includes. This is benign ---
+%% LaTeX's \usepackage deduplicates package loading --- but may produce harmless
+%% "already loaded" notes in verbose log output. No action required.
+
+
+% --- Pandoc table width arithmetic support ---
+\usepackage{calc}
+\providecommand{\real}[1]{#1}
+
+% =======================================================
+% RUNNING TITLE + PAGESTYLE
+% =======================================================
+\pagestyle{fancy}
+\setlength{\headheight}{14.5pt}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+
+% Ensure "plain" pages (e.g., first page after \section in some classes) match
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+}
+
+%% methods + hfwg: tint the header rule to match the accent color palette.
+%% \headrule is the fancyhdr hook that draws the line below the header;
+%% redefining it with \color{hfwgrule} keeps the rule weight unchanged
+%% while coordinating it with section rules and link colors.
+\ifhfwgmethods
+  \renewcommand{\headrule}{%
+    {\color{hfwgrule}\hrule width\headwidth height\headrulewidth}%
+    \vskip-\headrulewidth%
+  }
+\else\ifhfwghfwg
+  \renewcommand{\headrule}{%
+    {\color{hfwgrule}\hrule width\headwidth height\headrulewidth}%
+    \vskip-\headrulewidth%
+  }
+\fi\fi
+
+\fancyhead[R]{\small\itshape Template: Fontset Test: methods}
+
+% =======================================================
+% 9. CSL REFERENCES (Pandoc)
+% =======================================================
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+
+\providecommand{\citeproctext}{}
+
+\newenvironment{CSLReferences}[2]
+ {%
+  %% ISSUE 3 FIX: revert to single column before references when maincolumns: 2.
+  %% \twocolumn persists through the body into the bibliography section otherwise.
+  %% \onecolumn forces a page break (standard behavior for two-column papers).
+  \ifnum\hfwgmaincolumns=2\relax\onecolumn\fi
+  \section*{References}
+  \begin{list}{}{%
+   \setlength{\itemindent}{0pt}
+   \setlength{\leftmargin}{0pt}
+   \setlength{\parsep}{0pt}
+   \ifodd #1
+    \setlength{\leftmargin}{\cslhangindent}
+    \setlength{\itemindent}{-\cslhangindent}
+   \fi
+   \ifnum #2 > 0
+    \setlength{\itemsep}{#2\baselineskip}
+   \else
+    \setlength{\itemsep}{0pt}
+   \fi
+  }%
+  \renewcommand{\bibitem}[2][]{\item}
+ }
+ {\end{list}}
+
+% =======================================================
+% 10. R / SOFTWARE MACROS
+% =======================================================
+\newcommand{\pkg}[1]{\texttt{#1}}
+\newcommand{\CRANpkg}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+% =======================================================
+% BEGIN DOCUMENT
+% =======================================================
+\begin{document}
+
+% =============================================================
+% TITLE PAGE / SNAPSHOT HEADER
+% methods:  centered, with thick accent rules top and bottom
+% others:   centered (humanities/demography/default)
+% =============================================================
+
+%% Shared author-block macro.
+%%
+%% Author names come from the for(author) loop — Quarto passes author.name
+%% through its normalize-author.lua filter. All other author sub-fields
+%% (department, institution, email, orcid, etc.) are stripped by that filter
+%% and never reach the Pandoc template.
+%%
+%% Solution: supply contact details via top-level author_* YAML variables,
+%% which Quarto does not process and therefore passes through unchanged.
+%%
+%%   author_dept:   Department of Sociology
+%%   author_inst:   Queens College, City University of New York
+%%   author_addr:   65-30 Kissena Blvd., Queens, NY 11367, USA
+%%   author_email:  hfwg@qc.cuny.edu
+%%   author_web:    https://hfwg.qc.cuny.edu
+%%   author_orcid:  0000-0002-6197-4453
+%%
+\newcommand{\hfwgauthorblock}{%
+\ifhfwganon\else
+\textbf{Ada Template}\par
+\textbf{Sam Sample}\par
+{\small\setlength{\parskip}{1pt}%
+Department of Sociology\par%
+Queens College, City University of New York\par%
+65-30 Kissena Blvd., Queens, NY 11367, USA\par%
+%% NOTE: \href{mailto:ada.template@example.edu}{\nolinkurl{ada.template@example.edu}} and \url{https://example.edu/fontset-test} are used WITHOUT a \href wrapper.
+%% Pandoc processes YAML metadata values as Markdown and, with its default
+%% autolink_bare_uris extension, converts plain email addresses to
+%% \href{mailto:...}{\nolinkurl{...}} and bare URLs to \url{...} before
+%% the values reach this template.  Wrapping them again in \href would
+%% produce nested \href calls, which causes hyperref's \@protected@testopt
+%% to recurse infinitely and overflow TeX's input stack.
+\href{mailto:ada.template@example.edu}{\nolinkurl{ada.template@example.edu}}\par%
+\url{https://example.edu/fontset-test}\par%
+ORCID: 0000-0002-1825-0097\par%
+}%
+\fi
+}
+
+\newcommand{\hfwgseriesblock}{%
+{\small\setlength{\parskip}{1pt}%
+Household Finance Working Group\par%
+Fontset Test Series\enspace\ensuremath{\cdot}\enspace No.\,5\par%
+}%
+}
+
+\ifhfwgmethods
+%% -------------------------------------------------------
+%% METHODS: centered title page with accent rules
+%% -------------------------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
+\vspace*{0.13\textheight}
+\begin{center}
+\begin{singlespace}
+
+
+{\setstretch{0.9}\LARGE\bfseries Fontset Test: methods\par}
+
+\vspace{0.5em}
+{\large\color{hfwgaccent} Synthetic document for visual regression
+checks\par}
+
+\vspace{2em}
+
+\hfwgauthorblock
+
+\par\vspace{2\baselineskip}
+\hfwgseriesblock
+
+\ifhfwganon\else
+\vspace{0.25em}
+{\small May 2026}\par
+\fi
+
+\end{singlespace}
+\end{center}
+
+\vspace{2em}
+
+\begin{center}
+\textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
+\vspace{0.5em}
+\begin{minipage}{0.9\linewidth}
+\small\singlespacing
+\textbf{Abstract}\par\vspace{0.25em}
+This fake manuscript tests title-page metadata, body typography,
+citations, headings, mathematical notation, tables, figures, and code
+formatting across the available HFWG template fontsets.
+\par\vspace{0.75em}
+\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\ifhfwganon\else
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\footnotesize\singlespacing
+\noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
+\textbf{Acknowledgements}\par
+This synthetic acknowledgement is included to test the title-page
+acknowledgement block and its spacing.
+\end{minipage}
+\end{center}
+\vspace{1em}
+\fi
+
+\vfill
+
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
+\end{titlepage}
+
+\else\ifhfwghfwg
+%% -------------------------------------------------------
+%% HFWG: branded working-paper title page
+%% Title, then subtitle, then tight author+affiliation+
+%% institution+series+date block, then abstract.
+%% -------------------------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}\par
+\vspace*{0.13\textheight}
+\begin{center}
+\begin{singlespace}
+
+{\setstretch{0.9}\LARGE\bfseries Fontset Test: methods\par}
+
+\vspace{0.5em}
+{\large\color{hfwgaccent} Synthetic document for visual regression
+checks\par}
+
+\vspace{2em}
+
+\hfwgauthorblock
+
+\par\vspace{2\baselineskip}
+\hfwgseriesblock
+
+\ifhfwganon\else
+\vspace{0.25em}
+{\small May 2026}\par
+\fi
+
+\end{singlespace}
+\end{center}
+
+\vspace{2em}
+
+\begin{center}
+\textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
+\vspace{0.5em}
+\begin{minipage}{0.9\linewidth}
+\small\singlespacing
+\textbf{Abstract}\par\vspace{0.25em}
+This fake manuscript tests title-page metadata, body typography,
+citations, headings, mathematical notation, tables, figures, and code
+formatting across the available HFWG template fontsets.
+\par\vspace{0.75em}
+\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\ifhfwganon\else
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\footnotesize\singlespacing
+\noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
+\textbf{Acknowledgements}\par
+This synthetic acknowledgement is included to test the title-page
+acknowledgement block and its spacing.
+\end{minipage}
+\end{center}
+\vspace{1em}
+\fi
+
+\vfill
+
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
+\end{titlepage}
+
+\else
+%% -------------------------------------------------------
+%% DEFAULT / HUMANITIES / DEMOGRAPHY: centered title page
+%% -------------------------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+
+\vspace*{0.14\textheight}
+\begin{center}
+
+
+{\setstretch{0.9}\LARGE\bfseries Fontset Test: methods\par}
+
+\vspace{0.25em}
+{\large Synthetic document for visual regression checks\par}
+
+\vspace{2em}
+
+\begin{singlespace}
+{\normalsize
+
+\hfwgauthorblock
+
+\par\vspace{2\baselineskip}
+\hfwgseriesblock
+
+% --- DATE ---
+%% NOTE (Issue 4): To preserve a human-readable date string, use inline R:
+%%   date: "`r format(Sys.Date(), '%B %d, %Y')`"
+\ifhfwganon\else
+\vspace{0.5em}
+{\small May 2026}\par
+\fi
+
+}
+\end{singlespace}
+
+
+\vspace{2em}
+
+\begin{minipage}{0.8\textwidth}
+\small\singlespacing
+\textbf{Abstract}\par\vspace{0.25em}
+This fake manuscript tests title-page metadata, body typography,
+citations, headings, mathematical notation, tables, figures, and code
+formatting across the available HFWG template fontsets.
+\par\vspace{1em}
+\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
+\end{minipage}
+
+\vfill
+
+\ifhfwganon\else
+\begin{minipage}{0.8\textwidth}
+\footnotesize\singlespacing
+\noindent\rule{0.3\textwidth}{0.4pt}\par
+\textbf{Acknowledgements}\par
+This synthetic acknowledgement is included to test the title-page
+acknowledgement block and its spacing.
+\end{minipage}
+\fi
+
+\end{center}
+\end{titlepage}
+\fi\fi
+
+\clearpage
+\setcounter{page}{1}
+
+% =======================================================
+% MAIN BODY
+% =======================================================
+
+% Main text column layout toggle
+\ifnum\hfwgmaincolumns=2\relax
+  \twocolumn
+\fi
+
+\ifhfwganon
+\begingroup
+\small
+\noindent\textit{This manuscript is set to anonymous mode. Identifying metadata fields are suppressed on the title page.}\par
+\endgroup
+\vspace{1em}
+\fi
+
+\section{Introduction}\label{introduction}
+
+This paragraph exercises ordinary prose, \emph{emphasis}, \textbf{strong
+emphasis}, inline code such as \texttt{median\_income}, and citations
+(Burnham and Anderson 2002; Warren 2015). The metadata citation should
+also resolve cleanly (Household Finance Working Group 2026).
+
+\subsection{Mathematical Notation}\label{mathematical-notation}
+
+Inline math should sit comfortably in text, as in
+\(y_i = \alpha + \beta x_i + \epsilon_i\).
+
+\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+\]
+
+\subsection{Table and Code}\label{table-and-code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summary\_table }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{group =} \FunctionTok{c}\NormalTok{(}\StringTok{"No degree"}\NormalTok{, }\StringTok{"BA"}\NormalTok{, }\StringTok{"Graduate"}\NormalTok{),}
+  \AttributeTok{median\_wealth =} \FunctionTok{c}\NormalTok{(}\DecValTok{42000}\NormalTok{, }\DecValTok{180000}\NormalTok{, }\DecValTok{325000}\NormalTok{),}
+  \AttributeTok{share =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.52}\NormalTok{, }\FloatTok{0.31}\NormalTok{, }\FloatTok{0.17}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(summary\_table, }\AttributeTok{caption =} \StringTok{"Synthetic household wealth by education"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrr@{}}
+\caption{Synthetic household wealth by education}\tabularnewline
+\toprule\noalign{}
+group & median\_wealth & share \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+group & median\_wealth & share \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+No degree & 42000 & 0.52 \\
+BA & 180000 & 0.31 \\
+Graduate & 325000 & 0.17 \\
+\end{longtable}
+
+\subsection{Figure}\label{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(}
+\NormalTok{  summary\_table}\SpecialCharTok{$}\NormalTok{median\_wealth,}
+  \AttributeTok{names.arg =}\NormalTok{ summary\_table}\SpecialCharTok{$}\NormalTok{group,}
+  \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#D9E2EC"}\NormalTok{, }\StringTok{"\#8FB3D9"}\NormalTok{, }\StringTok{"\#2E6FA3"}\NormalTok{),}
+  \AttributeTok{border =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"Median wealth"}\NormalTok{,}
+  \AttributeTok{las =} \DecValTok{1}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{fontset-methods_files/fontset-methods_files/figure-latex/figure-example-1.pdf}}
+
+\section{Conclusion}\label{conclusion}
+
+The final section gives section headings, spacing, references, and
+running headers a little more room to show themselves.
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-burnham2002}
+Burnham, Kenneth P., and David R. Anderson. 2002. \emph{Model Selection
+and Multimodel Inference: A Practical Information-Theoretic Approach}.
+New York: Springer.
+
+\bibitem[\citeproctext]{ref-hfwg2026}
+Household Finance Working Group. 2026. {``Illustrative Working Paper
+Metadata for Template Testing.''} Test Report 1. Household Finance
+Working Group.
+
+\bibitem[\citeproctext]{ref-warren2015}
+Warren, John Robert. 2015. {``Potential Data Sources for a New Study of
+Social Mobility in the United States.''} \emph{The Annals of the
+American Academy of Political and Social Science} 657 (1):208--46.
+\url{https://doi.org/10.1177/0002716214558447}.
+
+\end{CSLReferences}
+
+% =======================================================
+% REFERENCES
+% =======================================================
+\clearpage
+
+\end{document}
