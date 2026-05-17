@@ -1,6 +1,6 @@
-# hfwgtex
+# Household Finance Working Group TeX Template
 
-A personal LaTeX template for academic manuscripts, distributed as an R package. Designed for **R Markdown** workflows. All formatting is controlled via YAML front matter -- no manual LaTeX editing required.
+This repository contains a system to format papers from RMarkdown to polished PDF and web formats for use in the public distribution of materials related to the Household Finance Working Group at Queens College in the City University of New York.  It is maintained by Professor Joseph N. Cohen, Department of Sociology, CUNY Queens College.
 
 ---
 
