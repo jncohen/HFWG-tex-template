@@ -774,6 +774,7 @@ $endif$
 {\small\setlength{\parskip}{1pt}%
 $if(institution)$$institution$\par$endif$%
 $if(series)$$series$$if(number)$\enspace\ensuremath{\cdot}\enspace No.\,$number$$endif$\par$endif$%
+$if(date)$\ifhfwganon\else$date$\par\fi$endif$%
 }%
 }
 
@@ -867,11 +868,6 @@ $endif$
 
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
-$if(date)$
-\ifhfwganon\else
-{\small $date$}\par
-\fi
-$endif$
 
 \end{singlespace}
 \end{center}
@@ -941,11 +937,6 @@ $endif$
 
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
-$if(date)$
-\ifhfwganon\else
-{\small $date$}\par
-\fi
-$endif$
 
 \end{singlespace}
 \end{center}
