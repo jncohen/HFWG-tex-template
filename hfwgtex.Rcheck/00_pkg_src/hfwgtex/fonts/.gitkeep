@@ -1,3 +1,0 @@
-# Font files are tracked via Git LFS and downloaded by scripts/get-fonts.sh.
-# Run: bash scripts/get-fonts.sh
-# then: git add fonts/ && git commit
