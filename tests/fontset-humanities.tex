@@ -263,7 +263,9 @@
 % 3. GRAPHICS + FLOATS
 % =======================================================
 \usepackage{graphicx}
-\usepackage{eso-pic}
+%% eso-pic is only needed for the methods and hfwg title-page bars.
+%% Loading it conditionally keeps default/humanities/demography free of the dependency.
+\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi
 \usepackage{float}
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
