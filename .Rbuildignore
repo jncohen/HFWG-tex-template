@@ -1,0 +1,6 @@
+^hfwgtex\.Rcheck$
+^hfwgtex_.*\.tar\.gz$
+^tests/intro-to-hfwgtex-blogpost\.tex$
+^tests/intro-to-hfwgtex-blogpost\.pdf$
+^tests/intro-to-hfwgtex-blogpost-wordpress\.html$
+^tests/intro-to-hfwgtex-blogpost_files$

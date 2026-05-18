@@ -54,6 +54,7 @@ $if(fontpath)$
 $else$
 \def\hfwgfontsdir{fonts/}
 $endif$
+\definecolor{hfwgcunyblue}{HTML}{003DA5}
 
 %% --- FONT LOADING ---
 
@@ -806,12 +807,6 @@ $endif$
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
 
-$if(date)$
-\ifhfwganon\else
-\vspace{0.25em}
-{\small $date$}\par
-\fi
-$endif$
 \end{singlespace}
 
 $if(abstract)$
@@ -852,8 +847,9 @@ $else$
 %% -------------------------------------------------------
 \begin{titlepage}
 \thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
-\vspace*{0.0325\textheight}
+\vspace*{\dimexpr 1in-\voffset-\topmargin-\headheight-\headsep\relax}
+\noindent\textcolor{hfwgcunyblue}{\rule{\textwidth}{3pt}}\par
+\vspace{1in}
 \begin{center}
 \begin{singlespace}
 
@@ -871,10 +867,8 @@ $endif$
 
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
-
 $if(date)$
 \ifhfwganon\else
-\vspace{0.25em}
 {\small $date$}\par
 \fi
 $endif$
@@ -882,7 +876,7 @@ $endif$
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 $if(abstract)$
 \begin{center}
@@ -915,9 +909,9 @@ $acknowledgements$
 \fi
 $endif$
 
-\vfill
-
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
+\vspace*{\fill}
+\noindent\textcolor{hfwgcunyblue}{\rule{\textwidth}{3pt}}\par
+\vspace*{\dimexpr 1in-3pt\relax}
 \end{titlepage}
 
 \else\ifhfwghfwg
@@ -928,21 +922,9 @@ $endif$
 %% -------------------------------------------------------
 \begin{titlepage}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(\LenToUnit{1in},\LenToUnit{-1in}){%
-      \raisebox{-3pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
-      }%
-    }%
-  }%
-  \AtPageLowerLeft{%
-    \put(\LenToUnit{1in},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
-    }%
-  }%
-}%
-\vspace*{\dimexpr 1.5in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
+\vspace*{\dimexpr 1in-\voffset-\topmargin-\headheight-\headsep\relax}
+\noindent\textcolor{hfwgcunyblue}{\rule{\textwidth}{3pt}}\par
+\vspace{1in}
 \begin{center}
 \begin{singlespace}
 
@@ -959,10 +941,8 @@ $endif$
 
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
-
 $if(date)$
 \ifhfwganon\else
-\vspace{0.25em}
 {\small $date$}\par
 \fi
 $endif$
@@ -970,7 +950,7 @@ $endif$
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 $if(abstract)$
 \begin{center}
@@ -1003,7 +983,9 @@ $acknowledgements$
 \fi
 $endif$
 
-\vfill
+\vspace*{\fill}
+\noindent\textcolor{hfwgcunyblue}{\rule{\textwidth}{3pt}}\par
+\vspace*{\dimexpr 1in-3pt\relax}
 \end{titlepage}
 
 \else

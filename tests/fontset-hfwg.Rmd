@@ -4,8 +4,8 @@ subtitle: "Synthetic document for visual regression checks"
 date: "May 2026"
 
 author:
-  - name: "Ada Template"
-  - name: "Sam Sample"
+  - name: "Jordan Junior"
+  - name: "Taylor Trainee"
 
 surname: "Template"
 runningtitle: "Fontset Test: hfwg"
@@ -13,7 +13,7 @@ runningtitle: "Fontset Test: hfwg"
 author_dept: "Department of Sociology"
 author_inst: "Queens College, City University of New York"
 author_addr: "65-30 Kissena Blvd., Queens, NY 11367, USA"
-author_email: "ada.template@example.edu"
+author_email: "jordan.junior@example.edu"
 author_web: "https://example.edu/fontset-test"
 author_orcid: "0000-0002-1825-0097"
 
