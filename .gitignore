@@ -18,3 +18,7 @@
 
 # Test output PDFs (do not commit)
 test-*.pdf
+
+# R CMD build/check artifacts (never commit these)
+*.Rcheck/
+*.tar.gz
