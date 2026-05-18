@@ -1,4 +1,4 @@
-WordPress publishing checklist: Using the HFWG TeX Template from R Markdown
+WordPress publishing checklist: The HFWG Template Turns R Markdown Into Publishable Lab Documents
 
 1. Open the WordPress companion file in a browser or text editor.
 2. Upload any files in the assets folder to the WordPress Media Library.
@@ -8,6 +8,6 @@ WordPress publishing checklist: Using the HFWG TeX Template from R Markdown
 6. Preview the post on desktop and mobile before publishing.
 7. Attach or link the PDF as the archival/download version.
 
-PDF: C:/Users/JCohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-blogpost.pdf
-Companion: C:/Users/JCohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-blogpost-wordpress.html
+PDF: C:/Users/JCohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-snapshot.pdf
+Companion: C:/Users/JCohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-snapshot-wordpress.html
 Assets: none detected
