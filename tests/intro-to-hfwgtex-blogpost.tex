@@ -255,8 +255,10 @@
 % 3. GRAPHICS + FLOATS
 % =======================================================
 \usepackage{graphicx}
+\usepackage{eso-pic}
 \usepackage{float}
 \usepackage{longtable,booktabs}
+\usepackage{pdflscape}
 \usepackage{array}
 \usepackage{caption}
 
@@ -685,22 +687,22 @@ introduction for new R users},
 %%
 \newcommand{\hfwgauthorblock}{%
 \ifhfwganon\else
+%
+%% Object author: name + per-author sub-fields (R Markdown / direct Pandoc).
+%% NOTE: email/web sub-fields are used WITHOUT an extra \href wrapper.
+%% Pandoc processes YAML sub-field values as Markdown and autolinks bare
+%% addresses, so wrapping again would cause nested \href recursion.
+{\setlength{\parskip}{1pt}%
 \textbf{Household Finance Lab}\par
-{\small\setlength{\parskip}{1pt}%
+{\small%
 %
 %
 %
-%% NOTE:  and  are used WITHOUT a \href wrapper.
-%% Pandoc processes YAML metadata values as Markdown and, with its default
-%% autolink_bare_uris extension, converts plain email addresses to
-%% \href{mailto:...}{\nolinkurl{...}} and bare URLs to \url{...} before
-%% the values reach this template.  Wrapping them again in \href would
-%% produce nested \href calls, which causes hyperref's \@protected@testopt
-%% to recurse infinitely and overflow TeX's input stack.
 %
 %
 %
-}%
+}}%
+%
 \fi
 }
 
@@ -717,8 +719,21 @@ Blogpost\enspace\ensuremath{\cdot}\enspace No.\,1\par%
 %% -------------------------------------------------------
 \begin{titlepage}
 \thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
-\vspace*{0.13\textheight}
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
+      \raisebox{-4pt}[0pt][0pt]{%
+        \textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}%
+      }%
+    }%
+  }%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
+      \textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}%
+    }%
+  }%
+}%
+\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
 \begin{center}
 \begin{singlespace}
 
@@ -737,14 +752,13 @@ Markdown\par}
 \hfwgseriesblock
 
 \ifhfwganon\else
-\vspace{0.25em}
-{\small May 15, 2026}\par
+{\small May 18, 2026}\par
 \fi
 
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 \begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
@@ -761,8 +775,6 @@ of R and R Markdown but have never worked directly with TeX or LaTeX.
 
 
 \vfill
-
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
 \end{titlepage}
 
 \else\ifhfwghfwg
@@ -773,8 +785,21 @@ of R and R Markdown but have never worked directly with TeX or LaTeX.
 %% -------------------------------------------------------
 \begin{titlepage}
 \thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}\par
-\vspace*{0.13\textheight}
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
+      \raisebox{-3pt}[0pt][0pt]{%
+        \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
+      }%
+    }%
+  }%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
+      \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
+    }%
+  }%
+}%
+\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
 \begin{center}
 \begin{singlespace}
 
@@ -792,14 +817,13 @@ Markdown\par}
 \hfwgseriesblock
 
 \ifhfwganon\else
-\vspace{0.25em}
-{\small May 15, 2026}\par
+{\small May 18, 2026}\par
 \fi
 
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 \begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
@@ -816,8 +840,6 @@ of R and R Markdown but have never worked directly with TeX or LaTeX.
 
 
 \vfill
-
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
 \end{titlepage}
 
 \else
@@ -852,7 +874,7 @@ Markdown\par}
 %%   date: "`r format(Sys.Date(), '%B %d, %Y')`"
 \ifhfwganon\else
 \vspace{0.5em}
-{\small May 15, 2026}\par
+{\small May 18, 2026}\par
 \fi
 
 }
@@ -999,7 +1021,6 @@ pieces are \texttt{title}, \texttt{author}, \texttt{fontset}, and the
 A fontset is a preset design style. It changes the document's typography
 and layout.
 
-{\def\LTcaptype{} % do not increment counter
 \begin{longtable}[]{@{}ll@{}}
 \toprule\noalign{}
 Fontset & Best use \\
@@ -1015,7 +1036,6 @@ feel \\
 \texttt{methods} & Technical reports with code and compact spacing \\
 unset & Plain journal-submission style \\
 \end{longtable}
-}
 
 For most Lab documents, start with:
 
@@ -1054,7 +1074,7 @@ For example, this code creates a small figure:
 
 \begin{figure}
 \centering
-\pandocbounded{\includegraphics[keepaspectratio,alt={Example bar chart produced from R code.}]{intro-to-hfwgtex-blogpost_files/intro-to-hfwgtex-blogpost_files/figure-latex/example-figure-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{intro-to-hfwgtex-blogpost_files/figure-latex/example-figure-1.pdf}}
 \caption{Example bar chart produced from R code.}
 \end{figure}
 
@@ -1082,7 +1102,6 @@ For that workflow, use \texttt{hfwgtex::blogpost\_pdf}:
 
 When you click \textbf{Knit}, the package creates several files:
 
-{\def\LTcaptype{} % do not increment counter
 \begin{longtable}[]{@{}ll@{}}
 \toprule\noalign{}
 File & Purpose \\
@@ -1095,7 +1114,6 @@ File & Purpose \\
 \texttt{-wordpress-assets/} & Images used by the WordPress companion \\
 \texttt{-wordpress-checklist.txt} & A short publishing checklist \\
 \end{longtable}
-}
 
 The HTML output is designed to be conservative. It does not assume that
 special WordPress plugins are active. In most cases, the research

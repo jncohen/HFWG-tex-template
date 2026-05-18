@@ -45,7 +45,7 @@
 \newcommand{\hfwgmethodscodescale}{0.90}
 
 %% --- FONT PATH (override with 'fontpath:' YAML variable for managed templates) ---
-\def\hfwgfontsdir{../inst/fonts/}
+\def\hfwgfontsdir{fonts/}
 
 %% --- FONT LOADING ---
 
@@ -531,22 +531,22 @@ Documents: A Snapshot test for PDF and WordPress output},
 %%
 \newcommand{\hfwgauthorblock}{%
 \ifhfwganon\else
+%
+%% Object author: name + per-author sub-fields (R Markdown / direct Pandoc).
+%% NOTE: email/web sub-fields are used WITHOUT an extra \href wrapper.
+%% Pandoc processes YAML sub-field values as Markdown and autolinks bare
+%% addresses, so wrapping again would cause nested \href recursion.
+{\setlength{\parskip}{1pt}%
 \textbf{Household Finance Lab}\par
-{\small\setlength{\parskip}{1pt}%
+{\small%
 %
 %
 %
-%% NOTE:  and  are used WITHOUT a \href wrapper.
-%% Pandoc processes YAML metadata values as Markdown and, with its default
-%% autolink_bare_uris extension, converts plain email addresses to
-%% \href{mailto:...}{\nolinkurl{...}} and bare URLs to \url{...} before
-%% the values reach this template.  Wrapping them again in \href would
-%% produce nested \href calls, which causes hyperref's \@protected@testopt
-%% to recurse infinitely and overflow TeX's input stack.
 %
 %
 %
-}%
+}}%
+%
 \fi
 }
 
@@ -587,7 +587,6 @@ output\par}
 \hfwgseriesblock
 
 \ifhfwganon\else
-\vspace{0.25em}
 {\small May 18, 2026}\par
 \fi
 \end{singlespace}

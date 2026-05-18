@@ -45,7 +45,7 @@
 \newcommand{\hfwgmethodscodescale}{0.90}
 
 %% --- FONT PATH (override with 'fontpath:' YAML variable for managed templates) ---
-\def\hfwgfontsdir{../inst/fonts/}
+\def\hfwgfontsdir{fonts/}
 
 %% --- FONT LOADING ---
 
@@ -212,8 +212,8 @@
 % =======================================================
 \usepackage{xcolor}
   \ifhfwgmethods
-    \definecolor{hfwgaccent}{HTML}{1B4F72}
-    \definecolor{hfwgrule}{HTML}{2E86C1}
+    \definecolor{hfwgaccent}{HTML}{003DA5}
+    \definecolor{hfwgrule}{HTML}{003DA5}
   \else\ifhfwghfwg
     \definecolor{hfwgaccent}{HTML}{003DA5}
     \definecolor{hfwgrule}{HTML}{003DA5}
@@ -695,23 +695,39 @@ regression checks},
 %%
 \newcommand{\hfwgauthorblock}{%
 \ifhfwganon\else
+%
+%% Object author: name + per-author sub-fields (R Markdown / direct Pandoc).
+%% NOTE: email/web sub-fields are used WITHOUT an extra \href wrapper.
+%% Pandoc processes YAML sub-field values as Markdown and autolinks bare
+%% addresses, so wrapping again would cause nested \href recursion.
+{\setlength{\parskip}{1pt}%
 \textbf{Ada Template}\par
+{\small%
+%
+%
+%
+%
+%
+%
+}}%
+%
+\vspace{0.75em}%
+%
+%% Object author: name + per-author sub-fields (R Markdown / direct Pandoc).
+%% NOTE: email/web sub-fields are used WITHOUT an extra \href wrapper.
+%% Pandoc processes YAML sub-field values as Markdown and autolinks bare
+%% addresses, so wrapping again would cause nested \href recursion.
+{\setlength{\parskip}{1pt}%
 \textbf{Sam Sample}\par
-{\small\setlength{\parskip}{1pt}%
-Department of Sociology\par%
-Queens College, City University of New York\par%
-65-30 Kissena Blvd., Queens, NY 11367, USA\par%
-%% NOTE: \href{mailto:ada.template@example.edu}{\nolinkurl{ada.template@example.edu}} and \url{https://example.edu/fontset-test} are used WITHOUT a \href wrapper.
-%% Pandoc processes YAML metadata values as Markdown and, with its default
-%% autolink_bare_uris extension, converts plain email addresses to
-%% \href{mailto:...}{\nolinkurl{...}} and bare URLs to \url{...} before
-%% the values reach this template.  Wrapping them again in \href would
-%% produce nested \href calls, which causes hyperref's \@protected@testopt
-%% to recurse infinitely and overflow TeX's input stack.
-\href{mailto:ada.template@example.edu}{\nolinkurl{ada.template@example.edu}}\par%
-\url{https://example.edu/fontset-test}\par%
-ORCID: 0000-0002-1825-0097\par%
-}%
+{\small%
+%
+%
+%
+%
+%
+%
+}}%
+%
 \fi
 }
 
@@ -728,8 +744,21 @@ Fontset Test Series\enspace\ensuremath{\cdot}\enspace No.\,1\par%
 %% -------------------------------------------------------
 \begin{titlepage}
 \thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
-\vspace*{0.0325\textheight}
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
+      \raisebox{-4pt}[0pt][0pt]{%
+        \textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}%
+      }%
+    }%
+  }%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
+      \textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}%
+    }%
+  }%
+}%
+\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
 \begin{center}
 \begin{singlespace}
 
@@ -748,14 +777,13 @@ checks\par}
 \hfwgseriesblock
 
 \ifhfwganon\else
-\vspace{0.25em}
 {\small May 2026}\par
 \fi
 
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 \begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
@@ -786,8 +814,6 @@ acknowledgement block and its spacing.
 \fi
 
 \vfill
-
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
 \end{titlepage}
 
 \else\ifhfwghfwg
@@ -800,19 +826,19 @@ acknowledgement block and its spacing.
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
   \AtPageUpperLeft{%
-    \put(\LenToUnit{1in},\LenToUnit{-1in}){%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
       \raisebox{-3pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
+        \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
       }%
     }%
   }%
   \AtPageLowerLeft{%
-    \put(\LenToUnit{1in},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
+      \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
     }%
   }%
 }%
-\vspace*{\dimexpr 1.5in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
+\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
 \begin{center}
 \begin{singlespace}
 
@@ -830,14 +856,13 @@ checks\par}
 \hfwgseriesblock
 
 \ifhfwganon\else
-\vspace{0.25em}
 {\small May 2026}\par
 \fi
 
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 \begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par

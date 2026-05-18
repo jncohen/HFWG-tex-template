@@ -224,8 +224,8 @@ $if(accent)$
   \definecolor{hfwgrule}{HTML}{$accent$}
 $else$
   \ifhfwgmethods
-    \definecolor{hfwgaccent}{HTML}{1B4F72}
-    \definecolor{hfwgrule}{HTML}{2E86C1}
+    \definecolor{hfwgaccent}{HTML}{003DA5}
+    \definecolor{hfwgrule}{HTML}{003DA5}
   \else\ifhfwghfwg
     \definecolor{hfwgaccent}{HTML}{003DA5}
     \definecolor{hfwgrule}{HTML}{003DA5}
@@ -748,23 +748,37 @@ $endif$
 $if(author)$
 \ifhfwganon\else
 $for(author)$
-$if(author.name)$\textbf{$author.name$}$else$\textbf{$author$}$endif$\par
-$endfor$
+$if(author.name)$%
+%% Object author: name + per-author sub-fields (R Markdown / direct Pandoc).
+%% NOTE: email/web sub-fields are used WITHOUT an extra \href wrapper.
+%% Pandoc processes YAML sub-field values as Markdown and autolinks bare
+%% addresses, so wrapping again would cause nested \href recursion.
+{\setlength{\parskip}{1pt}%
+\textbf{$author.name$}\par
+{\small%
+$if(author.dept)$$author.dept$\par$endif$%
+$if(author.inst)$$author.inst$\par$endif$%
+$if(author.addr)$$author.addr$\par$endif$%
+$if(author.email)$$author.email$\par$endif$%
+$if(author.web)$$author.web$\par$endif$%
+$if(author.orcid)$ORCID: $author.orcid$\par$endif$%
+}}%
+$else$%
+%% String author (legacy / Quarto path): name + top-level author_* variables.
+%% NOTE: top-level author_* details repeat for each string author if multiple
+%% are listed. Use per-author sub-fields (name: ...) for individual affiliations.
+\textbf{$author$}\par
 {\small\setlength{\parskip}{1pt}%
 $if(author_dept)$$author_dept$\par$endif$%
 $if(author_inst)$$author_inst$\par$endif$%
 $if(author_addr)$$author_addr$\par$endif$%
-%% NOTE: $author_email$ and $author_web$ are used WITHOUT a \href wrapper.
-%% Pandoc processes YAML metadata values as Markdown and, with its default
-%% autolink_bare_uris extension, converts plain email addresses to
-%% \href{mailto:...}{\nolinkurl{...}} and bare URLs to \url{...} before
-%% the values reach this template.  Wrapping them again in \href would
-%% produce nested \href calls, which causes hyperref's \@protected@testopt
-%% to recurse infinitely and overflow TeX's input stack.
 $if(author_email)$$author_email$\par$endif$%
 $if(author_web)$$author_web$\par$endif$%
 $if(author_orcid)$ORCID: $author_orcid$\par$endif$%
 }%
+$endif$%
+$sep$\vspace{0.75em}%
+$endfor$
 \fi
 $endif$
 }
@@ -808,7 +822,6 @@ $endif$
 
 $if(date)$
 \ifhfwganon\else
-\vspace{0.25em}
 {\small $date$}\par
 \fi
 $endif$
@@ -852,8 +865,21 @@ $else$
 %% -------------------------------------------------------
 \begin{titlepage}
 \thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
-\vspace*{0.0325\textheight}
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
+      \raisebox{-4pt}[0pt][0pt]{%
+        \textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}%
+      }%
+    }%
+  }%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
+      \textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}%
+    }%
+  }%
+}%
+\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
 \begin{center}
 \begin{singlespace}
 
@@ -874,7 +900,6 @@ $endif$
 
 $if(date)$
 \ifhfwganon\else
-\vspace{0.25em}
 {\small $date$}\par
 \fi
 $endif$
@@ -882,7 +907,7 @@ $endif$
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 $if(abstract)$
 \begin{center}
@@ -916,8 +941,6 @@ $acknowledgements$
 $endif$
 
 \vfill
-
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
 \end{titlepage}
 
 \else\ifhfwghfwg
@@ -930,19 +953,19 @@ $endif$
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
   \AtPageUpperLeft{%
-    \put(\LenToUnit{1in},\LenToUnit{-1in}){%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
       \raisebox{-3pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
+        \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
       }%
     }%
   }%
   \AtPageLowerLeft{%
-    \put(\LenToUnit{1in},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
+    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
+      \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
     }%
   }%
 }%
-\vspace*{\dimexpr 1.5in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
+\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
 \begin{center}
 \begin{singlespace}
 
@@ -962,7 +985,6 @@ $endif$
 
 $if(date)$
 \ifhfwganon\else
-\vspace{0.25em}
 {\small $date$}\par
 \fi
 $endif$
@@ -970,7 +992,7 @@ $endif$
 \end{singlespace}
 \end{center}
 
-\vspace{2em}
+\vspace{2\baselineskip}
 
 $if(abstract)$
 \begin{center}
