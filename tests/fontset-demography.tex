@@ -27,11 +27,7 @@
 \usepackage{iftex}
 
 %% --- FONT PRESET MACRO (set from YAML, used for \ifx branching below) ---
-$if(fontset)$
-\def\hfwgfontset{$fontset$}
-$else$
-\def\hfwgfontset{}
-$endif$
+\def\hfwgfontset{demography}
 \makeatletter
 \def\hfwgfontset@h{humanities}
 \def\hfwgfontset@d{demography}
@@ -49,11 +45,7 @@ $endif$
 \newcommand{\hfwgmethodscodescale}{0.90}
 
 %% --- FONT PATH (override with 'fontpath:' YAML variable for managed templates) ---
-$if(fontpath)$
-\def\hfwgfontsdir{$fontpath$}
-$else$
-\def\hfwgfontsdir{fonts/}
-$endif$
+\def\hfwgfontsdir{../inst/fonts/}
 
 %% --- FONT LOADING ---
 
@@ -219,13 +211,9 @@ $endif$
 %   default/others: black
 % =======================================================
 \usepackage{xcolor}
-$if(accent)$
-  \definecolor{hfwgaccent}{HTML}{$accent$}
-  \definecolor{hfwgrule}{HTML}{$accent$}
-$else$
   \ifhfwgmethods
-    \definecolor{hfwgaccent}{HTML}{003DA5}
-    \definecolor{hfwgrule}{HTML}{003DA5}
+    \definecolor{hfwgaccent}{HTML}{1B4F72}
+    \definecolor{hfwgrule}{HTML}{2E86C1}
   \else\ifhfwghfwg
     \definecolor{hfwgaccent}{HTML}{003DA5}
     \definecolor{hfwgrule}{HTML}{003DA5}
@@ -233,7 +221,6 @@ $else$
     \definecolor{hfwgaccent}{HTML}{000000}
     \definecolor{hfwgrule}{HTML}{000000}
   \fi\fi
-$endif$
 
 % =======================================================
 % 2. PAGE LAYOUT
@@ -253,9 +240,6 @@ $endif$
 \fi\fi\fi
 \usepackage{setspace}
 
-$if(doublespace)$
-\doublespacing
-$else$
   %% humanities: slightly more generous leading; methods: tighter; hfwg: balanced
   \ifhfwghumanities
     \setstretch{1.55}
@@ -266,7 +250,6 @@ $else$
   \else
     \onehalfspacing
   \fi\fi\fi
-$endif$
 
 %% humanities: wider paragraph indent for book-like feel
 \ifhfwghumanities
@@ -360,7 +343,6 @@ $endif$
 \newcommand{\hfwgmetrule}{\color{hfwgrule}\titlerule[0.5pt]}
 \newcommand{\hfwgwgrule}{\color{hfwgrule}\titlerule[0.4pt]}
 
-$if(numbersections)$
   \setcounter{secnumdepth}{3}
   \setcounter{tocdepth}{3}
   \ifhfwghumanities
@@ -399,46 +381,6 @@ $if(numbersections)$
     \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
   \fi\fi\fi\fi
-$else$
-  \setcounter{secnumdepth}{0}
-  \setcounter{tocdepth}{0}
-  \ifhfwghumanities
-    \titleformat{\section}{\large\scshape}{}{0pt}{}
-    \titleformat{\subsection}{\normalsize\bfseries\itshape}{}{0pt}{}
-    \titleformat{\subsubsection}{\normalsize\itshape}{}{0pt}{}
-    \titlespacing{\section}{0pt}{2.5ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \else\ifhfwgdemography
-    \titleformat{\section}{\large\bfseries}{}{0pt}{}[\hfwgdemorule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
-    \titleformat{\subsubsection}{\normalsize\bfseries\itshape}{}{0pt}{}
-    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \else\ifhfwgmethods
-    \titleformat{\section}{\large\bfseries\color{hfwgaccent}}{}{0pt}{}[\hfwgmetrule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
-    \titleformat{\subsubsection}{\normalsize\itshape\color{hfwgaccent}}{}{0pt}{}
-    \titlespacing{\section}{0pt}{1.75ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1ex plus 0.25ex}{-0.5ex}
-  \else\ifhfwghfwg
-    \titleformat{\section}{\large\bfseries\color{hfwgaccent}}{}{0pt}{}[\hfwgwgrule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
-    \titleformat{\subsubsection}{\normalsize\itshape}{}{0pt}{}
-    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \else
-    \titleformat{\section}{\large\bfseries}{}{0pt}{}
-    \titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
-    \titleformat{\subsubsection}{\normalsize\bfseries\itshape}{}{0pt}{}
-    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \fi\fi\fi\fi
-$endif$
 
 % =======================================================
 % 6. HYPERREF + HEADERS/FOOTERS
@@ -456,10 +398,11 @@ $endif$
 %% Enables proper indexing in repositories, readers, and search engines.
 %% Multiple authors are semicolon-separated (PDF/XMP convention).
 \hypersetup{
-  pdftitle    = {$title$$if(subtitle)$: $subtitle$$endif$},
-  pdfauthor   = {$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$; $endfor$},
-  pdfsubject  = {$if(subtitle)$$subtitle$$endif$},
-  pdfkeywords = {$for(keywords)$$keywords$$sep$, $endfor$}
+  pdftitle    = {Fontset Test: demography: Synthetic document for visual
+regression checks},
+  pdfauthor   = {Ada Template; Sam Sample},
+  pdfsubject  = {Synthetic document for visual regression checks},
+  pdfkeywords = {font testing, R Markdown, LaTeX template}
 }
 
 \usepackage{fancyhdr}
@@ -468,29 +411,10 @@ $endif$
 % 7. OPTIONAL MODES
 % =======================================================
 \newif\ifhfwganon
-$if(anonymize)$
-\hfwganontrue
-$else$
 \hfwganonfalse
-$endif$
 
-$if(maincolumns)$
-\newcommand{\hfwgmaincolumns}{$maincolumns$}
-$else$
 \newcommand{\hfwgmaincolumns}{1}
-$endif$
 
-$if(linenumbers)$
-\usepackage{lineno}
-\linenumbers
-%% KNOWN ISSUE: lineno + setspace interaction.
-%% Line numbers may visually mis-align at 1.5x or 2x spacing because lineno
-%% places marks at physical TeX line intervals, not visual double-spaced lines.
-%% The line-number counter still advances correctly; only the gutter position
-%% drifts. A structural fix requires patching lineno internals and is deferred.
-%% Workaround: use onehalfspacing (not doublespace) for line-numbered drafts,
-%% or treat the visual offset as cosmetic.
-$endif$
 
 % =======================================================
 % 8. PANDOC SUPPORT
@@ -502,8 +426,46 @@ $endif$
 
 \providecommand{\pandocbounded}[1]{#1}
 
-$if(highlighting-macros)$
-$highlighting-macros$
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % =======================================================
 % 8b. CODE BLOCK STYLING
@@ -620,13 +582,12 @@ $highlighting-macros$
     \setlength{\parskip}{0pt}%
   }
 \fi
-$endif$
 
 %% NOTE (Issue 5): knitr/Quarto may inject booktabs, float, longtable, or
 %% other packages already loaded above via header-includes. This is benign ---
 %% LaTeX's \usepackage deduplicates package loading --- but may produce harmless
 %% "already loaded" notes in verbose log output. No action required.
-$header-includes$
+
 
 % --- Pandoc table width arithmetic support ---
 \usepackage{calc}
@@ -662,19 +623,7 @@ $header-includes$
   }
 \fi\fi
 
-$if(surname)$
-$if(runningtitle)$
-\fancyhead[R]{\small\itshape $surname$: $runningtitle$}
-$else$
-\fancyhead[R]{\small\itshape $surname$}
-$endif$
-$else$
-$if(runningtitle)$
-\fancyhead[R]{\small\itshape $runningtitle$}
-$else$
-\fancyhead[R]{\small\itshape $title$}
-$endif$
-$endif$
+\fancyhead[R]{\small\itshape Template: Fontset Test: demography}
 
 % =======================================================
 % 9. CSL REFERENCES (Pandoc)
@@ -745,151 +694,51 @@ $endif$
 %%   author_orcid:  0000-0002-6197-4453
 %%
 \newcommand{\hfwgauthorblock}{%
-$if(author)$
 \ifhfwganon\else
-$for(author)$
-$if(author.name)$%
-%% Object author: name + per-author sub-fields (R Markdown / direct Pandoc).
-%% NOTE: email/web sub-fields are used WITHOUT an extra \href wrapper.
-%% Pandoc processes YAML sub-field values as Markdown and autolinks bare
-%% addresses, so wrapping again would cause nested \href recursion.
-{\setlength{\parskip}{1pt}%
-\textbf{$author.name$}\par
-{\small%
-$if(author.dept)$$author.dept$\par$endif$%
-$if(author.inst)$$author.inst$\par$endif$%
-$if(author.addr)$$author.addr$\par$endif$%
-$if(author.email)$$author.email$\par$endif$%
-$if(author.web)$$author.web$\par$endif$%
-$if(author.orcid)$ORCID: $author.orcid$\par$endif$%
-}}%
-$else$%
-%% String author (legacy / Quarto path): name + top-level author_* variables.
-%% NOTE: top-level author_* details repeat for each string author if multiple
-%% are listed. Use per-author sub-fields (name: ...) for individual affiliations.
-\textbf{$author$}\par
+\textbf{Ada Template}\par
+\textbf{Sam Sample}\par
 {\small\setlength{\parskip}{1pt}%
-$if(author_dept)$$author_dept$\par$endif$%
-$if(author_inst)$$author_inst$\par$endif$%
-$if(author_addr)$$author_addr$\par$endif$%
-$if(author_email)$$author_email$\par$endif$%
-$if(author_web)$$author_web$\par$endif$%
-$if(author_orcid)$ORCID: $author_orcid$\par$endif$%
+Department of Sociology\par%
+Queens College, City University of New York\par%
+65-30 Kissena Blvd., Queens, NY 11367, USA\par%
+%% NOTE: \href{mailto:ada.template@example.edu}{\nolinkurl{ada.template@example.edu}} and \url{https://example.edu/fontset-test} are used WITHOUT a \href wrapper.
+%% Pandoc processes YAML metadata values as Markdown and, with its default
+%% autolink_bare_uris extension, converts plain email addresses to
+%% \href{mailto:...}{\nolinkurl{...}} and bare URLs to \url{...} before
+%% the values reach this template.  Wrapping them again in \href would
+%% produce nested \href calls, which causes hyperref's \@protected@testopt
+%% to recurse infinitely and overflow TeX's input stack.
+\href{mailto:ada.template@example.edu}{\nolinkurl{ada.template@example.edu}}\par%
+\url{https://example.edu/fontset-test}\par%
+ORCID: 0000-0002-1825-0097\par%
 }%
-$endif$%
-$sep$\vspace{0.75em}%
-$endfor$
 \fi
-$endif$
 }
 
 \newcommand{\hfwgseriesblock}{%
 {\small\setlength{\parskip}{1pt}%
-$if(institution)$$institution$\par$endif$%
-$if(series)$$series$$if(number)$\enspace\ensuremath{\cdot}\enspace No.\,$number$$endif$\par$endif$%
+Household Finance Working Group\par%
+Fontset Test Series\enspace\ensuremath{\cdot}\enspace No.\,4\par%
 }%
 }
 
-$if(snapshot)$
-%% -------------------------------------------------------
-%% SNAPSHOT: compact publication header.
-%% The body begins on the first page after this header; use this for
-%% short public-facing Lab outputs that also have a WordPress companion.
-%% -------------------------------------------------------
-\thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
-\vspace{0.6em}
-
-{\small\sffamily\bfseries\color{hfwgaccent}%
-$if(snapshot_label)$$snapshot_label$$else$Empirical Snapshot$endif$%
-}\par
-\vspace{0.75em}
-
-{\setstretch{0.95}\LARGE\bfseries $title$\par}
-
-$if(subtitle)$
-\vspace{0.35em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
-
-\vspace{1em}
-
-\begin{singlespace}
-\hfwgauthorblock
-
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-
-$if(date)$
-\ifhfwganon\else
-{\small $date$}\par
-\fi
-$endif$
-\end{singlespace}
-
-$if(abstract)$
-\vspace{1.25em}
-\begin{minipage}{0.92\linewidth}
-\small\singlespacing
-\noindent\textbf{$if(snapshot_abstract_label)$$snapshot_abstract_label$$else$Lead$endif$}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
-\par\vspace{0.75em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
-\end{minipage}
-$endif$
-
-$if(snapshot_feature)$
-\vspace{1.25em}
-\begin{center}
-\includegraphics[width=0.92\linewidth,keepaspectratio]{$snapshot_feature$}
-$if(snapshot_feature_caption)$
-\par\vspace{0.35em}
-\begin{minipage}{0.92\linewidth}
-\footnotesize\singlespacing
-$snapshot_feature_caption$
-\end{minipage}
-$endif$
-\end{center}
-$endif$
-
-\vspace{1.5em}
-\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.5pt}}\par
-\vspace{1.5em}
-
-$else$
 \ifhfwgmethods
 %% -------------------------------------------------------
 %% METHODS: centered title page with accent rules
 %% -------------------------------------------------------
 \begin{titlepage}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
-      \raisebox{-4pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}%
-      }%
-    }%
-  }%
-  \AtPageLowerLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}%
-    }%
-  }%
-}%
-\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
+\vspace*{0.0325\textheight}
 \begin{center}
 \begin{singlespace}
 
 
-{\setstretch{0.9}\LARGE\bfseries $title$\par}
+{\setstretch{0.9}\LARGE\bfseries Fontset Test: demography\par}
 
-$if(subtitle)$
 \vspace{0.5em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
+{\large\color{hfwgaccent} Synthetic document for visual regression
+checks\par}
 
 \vspace{2em}
 
@@ -898,49 +747,47 @@ $endif$
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
 
-$if(date)$
 \ifhfwganon\else
-{\small $date$}\par
+\vspace{0.25em}
+{\small May 2026}\par
 \fi
-$endif$
 
 \end{singlespace}
 \end{center}
 
-\vspace{2\baselineskip}
+\vspace{2em}
 
-$if(abstract)$
 \begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
 \small\singlespacing
 \textbf{Abstract}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
+This fake manuscript tests title-page metadata, body typography,
+citations, headings, mathematical notation, tables, figures, and code
+formatting across the available HFWG template fontsets.
 \par\vspace{0.75em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
+\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
 \end{minipage}
 \end{center}
 \vspace{1em}
-$endif$
 
-$if(acknowledgements)$
 \ifhfwganon\else
 \begin{center}
 \begin{minipage}{0.9\linewidth}
 \footnotesize\singlespacing
 \noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
 \textbf{Acknowledgements}\par
-$acknowledgements$
+This synthetic acknowledgement is included to test the title-page
+acknowledgement block and its spacing.
 \end{minipage}
 \end{center}
 \vspace{1em}
 \fi
-$endif$
 
 \vfill
+
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
 \end{titlepage}
 
 \else\ifhfwghfwg
@@ -953,28 +800,27 @@ $endif$
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
   \AtPageUpperLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
+    \put(\LenToUnit{1in},\LenToUnit{-1in}){%
       \raisebox{-3pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
+        \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
       }%
     }%
   }%
   \AtPageLowerLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
+    \put(\LenToUnit{1in},\LenToUnit{1in}){%
+      \textcolor{hfwgaccent}{\rule{\dimexpr\paperwidth-2in\relax}{3pt}}%
     }%
   }%
 }%
-\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
+\vspace*{\dimexpr 1.5in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
 \begin{center}
 \begin{singlespace}
 
-{\setstretch{0.9}\LARGE\bfseries $title$\par}
+{\setstretch{0.9}\LARGE\bfseries Fontset Test: demography\par}
 
-$if(subtitle)$
 \vspace{0.5em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
+{\large\color{hfwgaccent} Synthetic document for visual regression
+checks\par}
 
 \vspace{2em}
 
@@ -983,47 +829,43 @@ $endif$
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
 
-$if(date)$
 \ifhfwganon\else
-{\small $date$}\par
+\vspace{0.25em}
+{\small May 2026}\par
 \fi
-$endif$
 
 \end{singlespace}
 \end{center}
 
-\vspace{2\baselineskip}
+\vspace{2em}
 
-$if(abstract)$
 \begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
 \small\singlespacing
 \textbf{Abstract}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
+This fake manuscript tests title-page metadata, body typography,
+citations, headings, mathematical notation, tables, figures, and code
+formatting across the available HFWG template fontsets.
 \par\vspace{0.75em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
+\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
 \end{minipage}
 \end{center}
 \vspace{1em}
-$endif$
 
-$if(acknowledgements)$
 \ifhfwganon\else
 \begin{center}
 \begin{minipage}{0.9\linewidth}
 \footnotesize\singlespacing
 \noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
 \textbf{Acknowledgements}\par
-$acknowledgements$
+This synthetic acknowledgement is included to test the title-page
+acknowledgement block and its spacing.
 \end{minipage}
 \end{center}
 \vspace{1em}
 \fi
-$endif$
 
 \vfill
 \end{titlepage}
@@ -1039,12 +881,10 @@ $endif$
 \begin{center}
 
 
-{\setstretch{0.9}\LARGE\bfseries $title$\par}
+{\setstretch{0.9}\LARGE\bfseries Fontset Test: demography\par}
 
-$if(subtitle)$
 \vspace{0.25em}
-{\large $subtitle$\par}
-$endif$
+{\large Synthetic document for visual regression checks\par}
 
 \vspace{2em}
 
@@ -1059,12 +899,10 @@ $endif$
 % --- DATE ---
 %% NOTE (Issue 4): To preserve a human-readable date string, use inline R:
 %%   date: "`r format(Sys.Date(), '%B %d, %Y')`"
-$if(date)$
 \ifhfwganon\else
 \vspace{0.5em}
-{\small $date$}\par
+{\small May 2026}\par
 \fi
-$endif$
 
 }
 \end{singlespace}
@@ -1072,41 +910,33 @@ $endif$
 
 \vspace{2em}
 
-$if(abstract)$
 \begin{minipage}{0.8\textwidth}
 \small\singlespacing
 \textbf{Abstract}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
+This fake manuscript tests title-page metadata, body typography,
+citations, headings, mathematical notation, tables, figures, and code
+formatting across the available HFWG template fontsets.
 \par\vspace{1em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
+\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
 \end{minipage}
-$endif$
 
 \vfill
 
-$if(acknowledgements)$
 \ifhfwganon\else
 \begin{minipage}{0.8\textwidth}
 \footnotesize\singlespacing
 \noindent\rule{0.3\textwidth}{0.4pt}\par
 \textbf{Acknowledgements}\par
-$acknowledgements$
+This synthetic acknowledgement is included to test the title-page
+acknowledgement block and its spacing.
 \end{minipage}
 \fi
-$endif$
 
 \end{center}
 \end{titlepage}
 \fi\fi
-$endif$
 
-$if(snapshot)$
-\vspace{0.5em}
-$else$
 \clearpage
-$endif$
 \setcounter{page}{1}
 
 % =======================================================
@@ -1126,13 +956,100 @@ $endif$
 \vspace{1em}
 \fi
 
-$body$
+\section{Introduction}\label{introduction}
+
+This paragraph exercises ordinary prose, \emph{emphasis}, \textbf{strong
+emphasis}, inline code such as \texttt{median\_income}, and citations
+(Burnham and Anderson 2002; Warren 2015). The metadata citation should
+also resolve cleanly (Household Finance Working Group 2026).
+
+\subsection{Mathematical Notation}\label{mathematical-notation}
+
+Inline math should sit comfortably in text, as in
+\(y_i = \alpha + \beta x_i + \epsilon_i\).
+
+\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+\]
+
+\subsection{Table and Code}\label{table-and-code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summary\_table }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{group =} \FunctionTok{c}\NormalTok{(}\StringTok{"No degree"}\NormalTok{, }\StringTok{"BA"}\NormalTok{, }\StringTok{"Graduate"}\NormalTok{),}
+  \AttributeTok{median\_wealth =} \FunctionTok{c}\NormalTok{(}\DecValTok{42000}\NormalTok{, }\DecValTok{180000}\NormalTok{, }\DecValTok{325000}\NormalTok{),}
+  \AttributeTok{share =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.52}\NormalTok{, }\FloatTok{0.31}\NormalTok{, }\FloatTok{0.17}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(summary\_table, }\AttributeTok{caption =} \StringTok{"Synthetic household wealth by education"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrr@{}}
+\caption{Synthetic household wealth by education}\tabularnewline
+\toprule\noalign{}
+group & median\_wealth & share \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+group & median\_wealth & share \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+No degree & 42000 & 0.52 \\
+BA & 180000 & 0.31 \\
+Graduate & 325000 & 0.17 \\
+\end{longtable}
+
+\subsection{Figure}\label{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(}
+\NormalTok{  summary\_table}\SpecialCharTok{$}\NormalTok{median\_wealth,}
+  \AttributeTok{names.arg =}\NormalTok{ summary\_table}\SpecialCharTok{$}\NormalTok{group,}
+  \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#D9E2EC"}\NormalTok{, }\StringTok{"\#8FB3D9"}\NormalTok{, }\StringTok{"\#2E6FA3"}\NormalTok{),}
+  \AttributeTok{border =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"Median wealth"}\NormalTok{,}
+  \AttributeTok{las =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{cex.axis =} \FloatTok{0.75}\NormalTok{,}
+  \AttributeTok{cex.lab =} \FloatTok{0.85}\NormalTok{,}
+  \AttributeTok{cex.names =} \FloatTok{0.8}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{fontset-demography_files/figure-latex/figure-example-1.pdf}}
+
+\section{Conclusion}\label{conclusion}
+
+The final section gives section headings, spacing, references, and
+running headers a little more room to show themselves.
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-burnham2002}
+Burnham, Kenneth P., and David R. Anderson. 2002. \emph{Model Selection
+and Multimodel Inference: A Practical Information-Theoretic Approach}.
+New York: Springer.
+
+\bibitem[\citeproctext]{ref-hfwg2026}
+Household Finance Working Group. 2026. {``Illustrative Working Paper
+Metadata for Template Testing.''} Test Report 1. Household Finance
+Working Group.
+
+\bibitem[\citeproctext]{ref-warren2015}
+Warren, John Robert. 2015. {``Potential Data Sources for a New Study of
+Social Mobility in the United States.''} \emph{The Annals of the
+American Academy of Political and Social Science} 657 (1):208--46.
+\url{https://doi.org/10.1177/0002716214558447}.
+
+\end{CSLReferences}
 
 % =======================================================
 % REFERENCES
 % =======================================================
-$if(bibliography)$
 \clearpage
-$endif$
 
 \end{document}

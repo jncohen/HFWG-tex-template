@@ -5,24 +5,27 @@ date: "May 2026"
 
 author:
   - name: "Ada Template"
-  - name: "Sam Sample"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    addr: "65-30 Kissena Blvd., Queens, NY 11367, USA"
+    email: "ada.template@example.edu"
+    web: "https://example.edu/fontset-test"
+    orcid: "0000-0002-1825-0097"
+  - name: "Junior Co-Author A"
+    inst: "Graduate Center, City University of New York"
+    orcid: "0000-0002-5555-0001"
+  - name: "Junior Co-Author B"
+    inst: "Baruch College, City University of New York"
+    orcid: "0000-0002-5555-0002"
 
 surname: "Template"
 runningtitle: "Fontset Test: methods"
-
-author_dept: "Department of Sociology"
-author_inst: "Queens College, City University of New York"
-author_addr: "65-30 Kissena Blvd., Queens, NY 11367, USA"
-author_email: "ada.template@example.edu"
-author_web: "https://example.edu/fontset-test"
-author_orcid: "0000-0002-1825-0097"
 
 institution: "Household Finance Working Group"
 series: "Fontset Test Series"
 number: 5
 
 fontset: methods
-fontpath: "../inst/fonts/"
 bibliography: "fontset-test.bib"
 csl: "../inst/csl/default.csl"
 
@@ -49,7 +52,7 @@ acknowledgements: |
 output:
   pdf_document:
     template: "../inst/templates/hfwgtemplate.tex"
-    latex_engine: xelatex
+    latex_engine: pdflatex
     keep_tex: true
 ---
 

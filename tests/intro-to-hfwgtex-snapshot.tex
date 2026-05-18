@@ -27,11 +27,7 @@
 \usepackage{iftex}
 
 %% --- FONT PRESET MACRO (set from YAML, used for \ifx branching below) ---
-$if(fontset)$
-\def\hfwgfontset{$fontset$}
-$else$
-\def\hfwgfontset{}
-$endif$
+\def\hfwgfontset{hfwg}
 \makeatletter
 \def\hfwgfontset@h{humanities}
 \def\hfwgfontset@d{demography}
@@ -49,11 +45,7 @@ $endif$
 \newcommand{\hfwgmethodscodescale}{0.90}
 
 %% --- FONT PATH (override with 'fontpath:' YAML variable for managed templates) ---
-$if(fontpath)$
-\def\hfwgfontsdir{$fontpath$}
-$else$
-\def\hfwgfontsdir{fonts/}
-$endif$
+\def\hfwgfontsdir{../inst/fonts/}
 
 %% --- FONT LOADING ---
 
@@ -219,21 +211,8 @@ $endif$
 %   default/others: black
 % =======================================================
 \usepackage{xcolor}
-$if(accent)$
-  \definecolor{hfwgaccent}{HTML}{$accent$}
-  \definecolor{hfwgrule}{HTML}{$accent$}
-$else$
-  \ifhfwgmethods
-    \definecolor{hfwgaccent}{HTML}{003DA5}
-    \definecolor{hfwgrule}{HTML}{003DA5}
-  \else\ifhfwghfwg
-    \definecolor{hfwgaccent}{HTML}{003DA5}
-    \definecolor{hfwgrule}{HTML}{003DA5}
-  \else
-    \definecolor{hfwgaccent}{HTML}{000000}
-    \definecolor{hfwgrule}{HTML}{000000}
-  \fi\fi
-$endif$
+  \definecolor{hfwgaccent}{HTML}{0066CC}
+  \definecolor{hfwgrule}{HTML}{0066CC}
 
 % =======================================================
 % 2. PAGE LAYOUT
@@ -253,9 +232,6 @@ $endif$
 \fi\fi\fi
 \usepackage{setspace}
 
-$if(doublespace)$
-\doublespacing
-$else$
   %% humanities: slightly more generous leading; methods: tighter; hfwg: balanced
   \ifhfwghumanities
     \setstretch{1.55}
@@ -266,7 +242,6 @@ $else$
   \else
     \onehalfspacing
   \fi\fi\fi
-$endif$
 
 %% humanities: wider paragraph indent for book-like feel
 \ifhfwghumanities
@@ -360,46 +335,6 @@ $endif$
 \newcommand{\hfwgmetrule}{\color{hfwgrule}\titlerule[0.5pt]}
 \newcommand{\hfwgwgrule}{\color{hfwgrule}\titlerule[0.4pt]}
 
-$if(numbersections)$
-  \setcounter{secnumdepth}{3}
-  \setcounter{tocdepth}{3}
-  \ifhfwghumanities
-    \titleformat{\section}{\large\scshape}{\thesection}{1em}{}
-    \titleformat{\subsection}{\normalsize\bfseries\itshape}{\thesubsection}{1em}{}
-    \titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
-    \titlespacing{\section}{0pt}{2.5ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \else\ifhfwgdemography
-    \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}[\hfwgdemorule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
-    \titleformat{\subsubsection}{\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
-    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \else\ifhfwgmethods
-    \titleformat{\section}{\large\bfseries\color{hfwgaccent}}{\thesection}{1em}{}[\hfwgmetrule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries\color{hfwgaccent}}{\thesubsection}{1em}{}
-    \titleformat{\subsubsection}{\normalsize\itshape\color{hfwgaccent}}{\thesubsubsection}{1em}{}
-    \titlespacing{\section}{0pt}{1.75ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1ex plus 0.25ex}{-0.5ex}
-  \else\ifhfwghfwg
-    \titleformat{\section}{\large\bfseries\color{hfwgaccent}}{\thesection}{1em}{}[\hfwgwgrule\vspace{0.4em}]
-    \titleformat{\subsection}{\normalsize\bfseries\color{hfwgaccent}}{\thesubsection}{1em}{}
-    \titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
-    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \else
-    \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
-    \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
-    \titleformat{\subsubsection}{\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
-    \titlespacing{\section}{0pt}{2ex plus 0.5ex}{-0.5ex}
-    \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
-    \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
-  \fi\fi\fi\fi
-$else$
   \setcounter{secnumdepth}{0}
   \setcounter{tocdepth}{0}
   \ifhfwghumanities
@@ -438,7 +373,6 @@ $else$
     \titlespacing{\subsection}{0pt}{1.5ex plus 0.25ex}{-0.5ex}
     \titlespacing{\subsubsection}{0pt}{1.25ex plus 0.25ex}{-0.5ex}
   \fi\fi\fi\fi
-$endif$
 
 % =======================================================
 % 6. HYPERREF + HEADERS/FOOTERS
@@ -456,10 +390,11 @@ $endif$
 %% Enables proper indexing in repositories, readers, and search engines.
 %% Multiple authors are semicolon-separated (PDF/XMP convention).
 \hypersetup{
-  pdftitle    = {$title$$if(subtitle)$: $subtitle$$endif$},
-  pdfauthor   = {$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$; $endfor$},
-  pdfsubject  = {$if(subtitle)$$subtitle$$endif$},
-  pdfkeywords = {$for(keywords)$$keywords$$sep$, $endfor$}
+  pdftitle    = {The HFWG Template Turns R Markdown Into Publishable Lab
+Documents: A Snapshot test for PDF and WordPress output},
+  pdfauthor   = {Household Finance Lab},
+  pdfsubject  = {A Snapshot test for PDF and WordPress output},
+  pdfkeywords = {}
 }
 
 \usepackage{fancyhdr}
@@ -468,29 +403,10 @@ $endif$
 % 7. OPTIONAL MODES
 % =======================================================
 \newif\ifhfwganon
-$if(anonymize)$
-\hfwganontrue
-$else$
 \hfwganonfalse
-$endif$
 
-$if(maincolumns)$
-\newcommand{\hfwgmaincolumns}{$maincolumns$}
-$else$
 \newcommand{\hfwgmaincolumns}{1}
-$endif$
 
-$if(linenumbers)$
-\usepackage{lineno}
-\linenumbers
-%% KNOWN ISSUE: lineno + setspace interaction.
-%% Line numbers may visually mis-align at 1.5x or 2x spacing because lineno
-%% places marks at physical TeX line intervals, not visual double-spaced lines.
-%% The line-number counter still advances correctly; only the gutter position
-%% drifts. A structural fix requires patching lineno internals and is deferred.
-%% Workaround: use onehalfspacing (not doublespace) for line-numbered drafts,
-%% or treat the visual offset as cosmetic.
-$endif$
 
 % =======================================================
 % 8. PANDOC SUPPORT
@@ -502,131 +418,12 @@ $endif$
 
 \providecommand{\pandocbounded}[1]{#1}
 
-$if(highlighting-macros)$
-$highlighting-macros$
-
-% =======================================================
-% 8b. CODE BLOCK STYLING
-%
-% Applies to:
-%   Shaded/Highlighting  — knitr/Pandoc code INPUT blocks
-%   verbatim             — knitr console OUTPUT blocks
-%
-% Design:
-%   Input:  blue-tinted background + 3pt left accent rule, footnotesize
-%   Output: neutral gray background, footnotesize, no page-split
-%
-% Implementation notes:
-%   - framed is already loaded by highlighting-macros (via snugshade).
-%   - \MakeFramed with a custom \FrameCommand draws a colored vrule then
-%     a \colorbox; MakeFramed passes the framed content as the argument
-%     to the last token of \FrameCommand.
-%   - Font size for Highlighting uses \fvset, NOT \RecustomVerbatimEnvironment.
-%     fancyvrb v4+ (MiKTeX/TeX Live 2024+) pre-defines \VerbBar internally;
-%     \RecustomVerbatimEnvironment re-triggers that initialisation, causing
-%     a "Command \VerbBar already defined" conflict with Pandoc's
-%     highlighting-macros.  \fvset sets options without re-registering
-%     the environment and avoids the conflict entirely.
-%   - Font size for verbatim uses \verbatim@font, the LaTeX hook that
-%     controls the typeface inside all verbatim environments, for the
-%     same reason.
-%   - \surroundwithmdframed wraps verbatim externally so its verbatim
-%     catcode regime is unaffected, then applies the shaded background.
-%   - nobreak=true on the verbatim frame prevents output blocks from
-%     splitting across pages; for input blocks, an outer \minipage
-%     wrapper achieves the same (blocks longer than \textheight still
-%     overflow, which is the acceptable edge-case trade-off).
-% =======================================================
-\ifhfwgmethods
-
-  %% --- colors ---
-  \definecolor{codeinputbg}{HTML}{EBF0F7}   %% blue-tinted input background
-  \definecolor{codeoutputbg}{HTML}{F2F2F2}  %% neutral gray output background
-
-  %% --- code INPUT: Shaded + left accent rule, no page split ---
-  %% The outer minipage keeps the block together; MakeFramed draws the
-  %% colored vrule + background.  Long blocks that exceed \textheight
-  %% will still overflow (acceptable trade-off vs. splitting mid-block).
-  \renewenvironment{Shaded}{%
-    \vspace{3pt}%
-    \noindent\begin{minipage}{\linewidth}%
-    \def\FrameCommand{%
-      \hspace{1pt}%
-      {\color{hfwgrule}\vrule width 3pt}%
-      \hspace{4pt}%
-      \colorbox{codeinputbg}%
-    }%
-    \MakeFramed{\advance\hsize by -\width \FrameRestore}%
-    \footnotesize
-    \setlength{\parskip}{0pt}%
-    \setlength{\partopsep}{0pt}%
-  }{%
-    \endMakeFramed
-    \end{minipage}%
-    \vspace{3pt}%
-  }
-
-  %% Fira Code at footnotesize for highlighted code blocks.
-  %% \fvset is safe with fancyvrb v4+; \RecustomVerbatimEnvironment is not.
-  \fvset{fontsize=\footnotesize}
-
-  %% footnotesize for standard verbatim (console output).
-  %% \verbatim@font is the LaTeX hook called inside every verbatim environment
-  %% to set the typeface; overriding it here is fancyvrb-independent.
-  \makeatletter
-  \renewcommand{\verbatim@font}{\footnotesize\ttfamily}
-  \makeatother
-
-  %% --- code OUTPUT: shaded verbatim ---
-  %% mdframed is intentionally avoided: it loads pgf/tikz, which patches
-  %% \@ifnextchar globally and causes infinite recursion ("TeX capacity
-  %% exceeded [input stack size=10000]") when hyperref's \href is called
-  %% inside \hfwgauthorblock.  The framed package (already loaded above by
-  %% highlighting-macros) is sufficient and carries no such risk.
-  %%
-  %% etoolbox's \AtBeginEnvironment runs before verbatim's catcode changes,
-  %% and \AtEndEnvironment runs after they are restored, so \MakeFramed and
-  %% \endMakeFramed execute in normal LaTeX mode on either side of the
-  %% verbatim content.
-  \AtBeginEnvironment{verbatim}{%
-    \vspace{3pt}%
-    \def\FrameCommand{\fboxsep=4pt\colorbox{codeoutputbg}}%
-    \MakeFramed{\FrameRestore}%
-  }
-  \AtEndEnvironment{verbatim}{%
-    \endMakeFramed
-    \vspace{3pt}%
-  }
-
-\fi
-
-\ifhfwgmethods\else
-  %% Non-methods presets use manuscript spacing in prose, but code needs to
-  %% remain compact and readable.  Use a smaller monospace face with tight
-  %% leading so long lines are less likely to overflow the shaded box.
-  \fvset{fontsize=\footnotesize}
-  \makeatletter
-  \renewcommand{\verbatim@font}{\footnotesize\ttfamily}
-  \makeatother
-  \AtBeginEnvironment{Shaded}{%
-    \footnotesize
-    \setstretch{1.05}%
-    \setlength{\parskip}{0pt}%
-    \setlength{\partopsep}{0pt}%
-  }
-  \AtBeginEnvironment{verbatim}{%
-    \footnotesize
-    \setstretch{1.05}%
-    \setlength{\parskip}{0pt}%
-  }
-\fi
-$endif$
 
 %% NOTE (Issue 5): knitr/Quarto may inject booktabs, float, longtable, or
 %% other packages already loaded above via header-includes. This is benign ---
 %% LaTeX's \usepackage deduplicates package loading --- but may produce harmless
 %% "already loaded" notes in verbose log output. No action required.
-$header-includes$
+
 
 % --- Pandoc table width arithmetic support ---
 \usepackage{calc}
@@ -662,19 +459,7 @@ $header-includes$
   }
 \fi\fi
 
-$if(surname)$
-$if(runningtitle)$
-\fancyhead[R]{\small\itshape $surname$: $runningtitle$}
-$else$
-\fancyhead[R]{\small\itshape $surname$}
-$endif$
-$else$
-$if(runningtitle)$
-\fancyhead[R]{\small\itshape $runningtitle$}
-$else$
-\fancyhead[R]{\small\itshape $title$}
-$endif$
-$endif$
+\fancyhead[R]{\small\itshape HFWG: HFWG Template Snapshot}
 
 % =======================================================
 % 9. CSL REFERENCES (Pandoc)
@@ -745,52 +530,33 @@ $endif$
 %%   author_orcid:  0000-0002-6197-4453
 %%
 \newcommand{\hfwgauthorblock}{%
-$if(author)$
 \ifhfwganon\else
-$for(author)$
-$if(author.name)$%
-%% Object author: name + per-author sub-fields (R Markdown / direct Pandoc).
-%% NOTE: email/web sub-fields are used WITHOUT an extra \href wrapper.
-%% Pandoc processes YAML sub-field values as Markdown and autolinks bare
-%% addresses, so wrapping again would cause nested \href recursion.
-{\setlength{\parskip}{1pt}%
-\textbf{$author.name$}\par
-{\small%
-$if(author.dept)$$author.dept$\par$endif$%
-$if(author.inst)$$author.inst$\par$endif$%
-$if(author.addr)$$author.addr$\par$endif$%
-$if(author.email)$$author.email$\par$endif$%
-$if(author.web)$$author.web$\par$endif$%
-$if(author.orcid)$ORCID: $author.orcid$\par$endif$%
-}}%
-$else$%
-%% String author (legacy / Quarto path): name + top-level author_* variables.
-%% NOTE: top-level author_* details repeat for each string author if multiple
-%% are listed. Use per-author sub-fields (name: ...) for individual affiliations.
-\textbf{$author$}\par
+\textbf{Household Finance Lab}\par
 {\small\setlength{\parskip}{1pt}%
-$if(author_dept)$$author_dept$\par$endif$%
-$if(author_inst)$$author_inst$\par$endif$%
-$if(author_addr)$$author_addr$\par$endif$%
-$if(author_email)$$author_email$\par$endif$%
-$if(author_web)$$author_web$\par$endif$%
-$if(author_orcid)$ORCID: $author_orcid$\par$endif$%
+%
+%
+%
+%% NOTE:  and  are used WITHOUT a \href wrapper.
+%% Pandoc processes YAML metadata values as Markdown and, with its default
+%% autolink_bare_uris extension, converts plain email addresses to
+%% \href{mailto:...}{\nolinkurl{...}} and bare URLs to \url{...} before
+%% the values reach this template.  Wrapping them again in \href would
+%% produce nested \href calls, which causes hyperref's \@protected@testopt
+%% to recurse infinitely and overflow TeX's input stack.
+%
+%
+%
 }%
-$endif$%
-$sep$\vspace{0.75em}%
-$endfor$
 \fi
-$endif$
 }
 
 \newcommand{\hfwgseriesblock}{%
 {\small\setlength{\parskip}{1pt}%
-$if(institution)$$institution$\par$endif$%
-$if(series)$$series$$if(number)$\enspace\ensuremath{\cdot}\enspace No.\,$number$$endif$\par$endif$%
+Household Finance Lab\par%
+Snapshot\enspace\ensuremath{\cdot}\enspace No.\,1\par%
 }%
 }
 
-$if(snapshot)$
 %% -------------------------------------------------------
 %% SNAPSHOT: compact publication header.
 %% The body begins on the first page after this header; use this for
@@ -801,16 +567,16 @@ $if(snapshot)$
 \vspace{0.6em}
 
 {\small\sffamily\bfseries\color{hfwgaccent}%
-$if(snapshot_label)$$snapshot_label$$else$Empirical Snapshot$endif$%
+Empirical Snapshot%
 }\par
 \vspace{0.75em}
 
-{\setstretch{0.95}\LARGE\bfseries $title$\par}
+{\setstretch{0.95}\LARGE\bfseries The HFWG Template Turns R Markdown
+Into Publishable Lab Documents\par}
 
-$if(subtitle)$
 \vspace{0.35em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
+{\large\color{hfwgaccent} A Snapshot test for PDF and WordPress
+output\par}
 
 \vspace{1em}
 
@@ -820,293 +586,40 @@ $endif$
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
 
-$if(date)$
 \ifhfwganon\else
-{\small $date$}\par
+\vspace{0.25em}
+{\small May 18, 2026}\par
 \fi
-$endif$
 \end{singlespace}
 
-$if(abstract)$
 \vspace{1.25em}
 \begin{minipage}{0.92\linewidth}
 \small\singlespacing
-\noindent\textbf{$if(snapshot_abstract_label)$$snapshot_abstract_label$$else$Lead$endif$}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
-\par\vspace{0.75em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
+\noindent\textbf{Lead}\par\vspace{0.25em}
+Students can write in ordinary R Markdown and use the HFWG template to
+produce polished PDFs and WordPress-ready companion files. The template
+keeps TeX out of the student's way while preserving consistent Lab
+typography, title metadata, figures, tables, and publishing handoffs.
 \end{minipage}
-$endif$
 
-$if(snapshot_feature)$
 \vspace{1.25em}
 \begin{center}
-\includegraphics[width=0.92\linewidth,keepaspectratio]{$snapshot_feature$}
-$if(snapshot_feature_caption)$
+\includegraphics[width=0.92\linewidth,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
 \par\vspace{0.35em}
 \begin{minipage}{0.92\linewidth}
 \footnotesize\singlespacing
-$snapshot_feature_caption$
+Example rendering workflow for the HFWG template. The values are
+synthetic and are used only to test Snapshot layout, figure placement,
+and WordPress companion output.
 \end{minipage}
-$endif$
 \end{center}
-$endif$
 
 \vspace{1.5em}
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.5pt}}\par
 \vspace{1.5em}
 
-$else$
-\ifhfwgmethods
-%% -------------------------------------------------------
-%% METHODS: centered title page with accent rules
-%% -------------------------------------------------------
-\begin{titlepage}
-\thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
-      \raisebox{-4pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}%
-      }%
-    }%
-  }%
-  \AtPageLowerLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}%
-    }%
-  }%
-}%
-\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
-\begin{center}
-\begin{singlespace}
 
-
-{\setstretch{0.9}\LARGE\bfseries $title$\par}
-
-$if(subtitle)$
 \vspace{0.5em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
-
-\vspace{2em}
-
-\hfwgauthorblock
-
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-
-$if(date)$
-\ifhfwganon\else
-{\small $date$}\par
-\fi
-$endif$
-
-\end{singlespace}
-\end{center}
-
-\vspace{2\baselineskip}
-
-$if(abstract)$
-\begin{center}
-\textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
-\vspace{0.5em}
-\begin{minipage}{0.9\linewidth}
-\small\singlespacing
-\textbf{Abstract}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
-\par\vspace{0.75em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
-\end{minipage}
-\end{center}
-\vspace{1em}
-$endif$
-
-$if(acknowledgements)$
-\ifhfwganon\else
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\footnotesize\singlespacing
-\noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
-\textbf{Acknowledgements}\par
-$acknowledgements$
-\end{minipage}
-\end{center}
-\vspace{1em}
-\fi
-$endif$
-
-\vfill
-\end{titlepage}
-
-\else\ifhfwghfwg
-%% -------------------------------------------------------
-%% HFWG: branded working-paper title page
-%% Title, then subtitle, then tight author+affiliation+
-%% institution+series+date block, then abstract.
-%% -------------------------------------------------------
-\begin{titlepage}
-\thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
-      \raisebox{-3pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
-      }%
-    }%
-  }%
-  \AtPageLowerLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
-    }%
-  }%
-}%
-\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
-\begin{center}
-\begin{singlespace}
-
-{\setstretch{0.9}\LARGE\bfseries $title$\par}
-
-$if(subtitle)$
-\vspace{0.5em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
-
-\vspace{2em}
-
-\hfwgauthorblock
-
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-
-$if(date)$
-\ifhfwganon\else
-{\small $date$}\par
-\fi
-$endif$
-
-\end{singlespace}
-\end{center}
-
-\vspace{2\baselineskip}
-
-$if(abstract)$
-\begin{center}
-\textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
-\vspace{0.5em}
-\begin{minipage}{0.9\linewidth}
-\small\singlespacing
-\textbf{Abstract}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
-\par\vspace{0.75em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
-\end{minipage}
-\end{center}
-\vspace{1em}
-$endif$
-
-$if(acknowledgements)$
-\ifhfwganon\else
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\footnotesize\singlespacing
-\noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
-\textbf{Acknowledgements}\par
-$acknowledgements$
-\end{minipage}
-\end{center}
-\vspace{1em}
-\fi
-$endif$
-
-\vfill
-\end{titlepage}
-
-\else
-%% -------------------------------------------------------
-%% DEFAULT / HUMANITIES / DEMOGRAPHY: centered title page
-%% -------------------------------------------------------
-\begin{titlepage}
-\thispagestyle{empty}
-
-\vspace*{0.14\textheight}
-\begin{center}
-
-
-{\setstretch{0.9}\LARGE\bfseries $title$\par}
-
-$if(subtitle)$
-\vspace{0.25em}
-{\large $subtitle$\par}
-$endif$
-
-\vspace{2em}
-
-\begin{singlespace}
-{\normalsize
-
-\hfwgauthorblock
-
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-
-% --- DATE ---
-%% NOTE (Issue 4): To preserve a human-readable date string, use inline R:
-%%   date: "`r format(Sys.Date(), '%B %d, %Y')`"
-$if(date)$
-\ifhfwganon\else
-\vspace{0.5em}
-{\small $date$}\par
-\fi
-$endif$
-
-}
-\end{singlespace}
-
-
-\vspace{2em}
-
-$if(abstract)$
-\begin{minipage}{0.8\textwidth}
-\small\singlespacing
-\textbf{Abstract}\par\vspace{0.25em}
-$abstract$
-$if(keywords)$
-\par\vspace{1em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
-\end{minipage}
-$endif$
-
-\vfill
-
-$if(acknowledgements)$
-\ifhfwganon\else
-\begin{minipage}{0.8\textwidth}
-\footnotesize\singlespacing
-\noindent\rule{0.3\textwidth}{0.4pt}\par
-\textbf{Acknowledgements}\par
-$acknowledgements$
-\end{minipage}
-\fi
-$endif$
-
-\end{center}
-\end{titlepage}
-\fi\fi
-$endif$
-
-$if(snapshot)$
-\vspace{0.5em}
-$else$
-\clearpage
-$endif$
 \setcounter{page}{1}
 
 % =======================================================
@@ -1126,13 +639,50 @@ $endif$
 \vspace{1em}
 \fi
 
-$body$
+\section{Context}\label{context}
+
+The HFWG template is designed for students and research assistants who
+already know the basics of R Markdown but do not know TeX. They can
+write text, code, figures, and tables in one \texttt{.Rmd} file, then
+let the template handle the PDF design.
+
+This matters because the Lab needs consistent output across working
+papers, research notes, Snapshots, and blogposts. Without a template,
+every student has to make dozens of small design decisions. With the
+template, those decisions live in one shared system.
+
+\section{Finding}\label{finding}
+
+The core workflow is simple: write once in RStudio, then knit into
+multiple publication formats. The PDF uses the HFWG LaTeX template. The
+WordPress companion uses conservative HTML that can be pasted into the
+CUNY Academic Commons editor without depending on special plugins.
+
+The Snapshot format is built for short, visual-forward public
+communication. Its first page uses a compact header, a lead paragraph,
+and one featured visualization. That makes it different from a standard
+report, which uses a fuller title page and more traditional academic
+structure.
+
+\section{Implication}\label{implication}
+
+For students, the practical lesson is that TeX is part of the production
+system, not something they need to edit directly. Their job is to write
+clear R Markdown, provide accurate YAML metadata, make readable figures,
+and inspect the knitted output.
+
+For the Lab, the benefit is standardization. A research assistant can
+produce a PDF, a WordPress paste file, an image asset folder, and a
+publishing checklist from the same source document.
+
+\section{Methodological footer}\label{methodological-footer}
+
+This Snapshot is a synthetic manual inspection file. It tests layout,
+figure handling, and publishing output only. The figure values are
+invented and should not be interpreted as empirical results.
 
 % =======================================================
 % REFERENCES
 % =======================================================
-$if(bibliography)$
-\clearpage
-$endif$
 
 \end{document}

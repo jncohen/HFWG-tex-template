@@ -14,7 +14,6 @@ surname: "HFWG"
 runningtitle: "HFWG Template Snapshot"
 
 fontset: hfwg
-fontpath: "../inst/fonts/"
 accent: 0066CC
 
 snapshot: true
@@ -35,7 +34,7 @@ abstract: |
 output:
   hfwgtex::snapshot_pdf:
     template: "../inst/templates/hfwgtemplate.tex"
-    latex_engine: xelatex
+    latex_engine: pdflatex
     keep_tex: true
     wordpress: html
     wordpress_assets: true

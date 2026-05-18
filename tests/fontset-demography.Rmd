@@ -22,7 +22,6 @@ series: "Fontset Test Series"
 number: 4
 
 fontset: demography
-fontpath: "../inst/fonts/"
 bibliography: "fontset-test.bib"
 csl: "../inst/csl/default.csl"
 
@@ -49,7 +48,7 @@ acknowledgements: |
 output:
   pdf_document:
     template: "../inst/templates/hfwgtemplate.tex"
-    latex_engine: xelatex
+    latex_engine: pdflatex
     keep_tex: true
 ---
 
