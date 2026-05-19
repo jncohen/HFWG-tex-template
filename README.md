@@ -89,6 +89,19 @@ my-paper/
 
 **Updating.** After upgrading the package, re-run `hfwg_use(overwrite = TRUE)` to pull in any template changes.
 
+**Starter documents.** The repository includes blank R Markdown starters in
+`templates/`:
+
+| Starter | Use |
+|---|---|
+| `templates/research-note.Rmd` | Research Note working paper using `fontset: methods` |
+| `templates/technical-note.Rmd` | Technical Note working paper using `fontset: methods` |
+| `templates/snapshot.Rmd` | One-page Empirical Snapshot using `hfwgtex::snapshot_pdf` |
+| `templates/blog-post.Rmd` | Public-facing Blog Post using `hfwgtex::blogpost_pdf` |
+
+Copy the starter that matches the project, run `hfwgtex::hfwg_use()`, and
+replace the prompts with the document text.
+
 ---
 
 ## 4. Your first document

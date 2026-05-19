@@ -1,0 +1,59 @@
+---
+title: "Clear Public-Facing Blog Post Title"
+subtitle: "Optional one-sentence deck"
+author: "Your Name"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+
+institution: "Household Finance Working Group"
+series: "HFWG Blog"
+surname: "Surname"
+runningtitle: "Short Running Title"
+
+author_title: "Title or Role"
+author_bio: "One-line author bio for the byline box."
+author_dept: "Department of Sociology"
+author_inst: "Queens College, City University of New York"
+author_email: "you@example.edu"
+author_web: "https://hhfinance.commons.gc.cuny.edu"
+
+abstract: |
+  Optional short deck or excerpt. Use this only if it helps the reader understand the post before the body begins.
+
+bibliography: references.bib
+csl: default.csl
+fontpath: fonts/
+
+fontset: hfwg
+accent: 003DA5
+numbersections: false
+doublespace: false
+linenumbers: false
+maincolumns: 1
+
+output:
+  hfwgtex::blogpost_pdf:
+    template: hfwgtemplate.tex
+    latex_engine: xelatex
+    keep_tex: true
+    wordpress: html
+    wordpress_assets: true
+    wordpress_checklist: true
+---
+
+<!-- Blog posts are generic public-facing pieces. Use inline visuals where they help, but do not build the page around a single featured visualization. -->
+
+# Opening
+
+<!-- Start with the observation, question, or news peg that makes the post worth reading now. -->
+
+# Main Point
+
+<!-- Make one clear argument or explanation. Keep paragraphs short and examples concrete. -->
+
+```{r inline-figure-placeholder, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Replace with a direct, self-contained caption."}
+# Add an optional inline visualization here.
+```
+
+# What It Means
+
+<!-- Close with the practical implication, open question, or next step for readers. -->
