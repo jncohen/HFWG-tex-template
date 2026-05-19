@@ -4,9 +4,11 @@ subtitle: "A gentle introduction for new R users"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
 author:
-  - name: "Household Finance Lab"
+  - name: "Ada Template"
 
 institution: "Household Finance Lab"
+author_title: "Research Associate, Household Finance Lab"
+author_bio: "Creates practical guides and short public posts for Household Finance Lab readers."
 
 surname: "HFWG"
 runningtitle: "Using the HFWG TeX Template"

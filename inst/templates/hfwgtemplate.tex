@@ -239,7 +239,7 @@ $endif$
 % 2. PAGE LAYOUT
 % humanities:  wider, book-like margins
 % methods:     tighter, dense technical report margins
-% hfwg:        slightly generous, branded working paper margins
+% hfwg:        compact, branded blog-post margins
 % default/demography: standard 1-inch
 % =======================================================
 \ifhfwghumanities
@@ -334,6 +334,20 @@ $endif$
   \catcode94=12    %% caret      (^): superscript operator
   \catcode37=12    %% percent    (%): comment char -- silent data loss if unescaped
 }
+
+\newcommand{\hfwgcompactcolumnssetup}{%
+  \setlength{\columnsep}{0.24in}%
+  \raggedcolumns
+  \footnotesize
+  \setstretch{0.98}%
+  \setlength{\parindent}{0.85em}%
+  \setlength{\parskip}{0pt}%
+  \titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}%
+  \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}%
+  \titlespacing{\section}{0pt}{0.5em}{0.14em}%
+  \titlespacing{\subsection}{0pt}{0.38em}{0.1em}%
+}
+
 
 % =======================================================
 % 4b. SPECIAL CHARACTER HANDLING IN BODY TEXT
@@ -806,67 +820,50 @@ $if(snapshot)$
 \singlespacing
 \footnotesize
 \noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2.2pt}}\par
-\vspace{0.35em}
+\vspace{0.45em}
 
-{\small\sffamily\bfseries\color{hfwgaccent}%
-$if(snapshot_label)$$snapshot_label$$else$Empirical Snapshot$endif$%
-}\hfill
+\noindent
+\begin{minipage}[t]{0.18\textwidth}
+\vspace{0pt}
+\fcolorbox{hfwgaccent}{white}{%
+  \begin{minipage}[c][0.72in][c]{0.86\linewidth}
+  \centering\rule{0pt}{0.68in}
+  \end{minipage}%
+}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.78\textwidth}
+\vspace{0pt}
+{\small\sffamily\bfseries\color{hfwgaccent}$if(snapshot_label)$$snapshot_label$$else$Empirical Snapshot$endif$}\hfill
 $if(date)$
 \ifhfwganon\else
 {\small $date$}%
 \fi
 $endif$
-\par\vspace{0.55em}
+\par\vspace{0.35em}
 
 \begingroup
-\setbox0=\hbox{\Large\bfseries $title$}%
-\ifdim\wd0>\textwidth
-  \noindent\resizebox{\textwidth}{!}{\Large\bfseries $title$}\par
+\setbox0=\hbox{\large\bfseries $title$}%
+\ifdim\wd0>\linewidth
+  \noindent\resizebox{\linewidth}{!}{\large\bfseries $title$}\par
 \else
-  {\Large\bfseries $title$\par}%
+  {\large\bfseries $title$\par}%
 \fi
 \endgroup
-
-$if(abstract)$
-\vspace{0.5em}
-$else$
-\vspace{0.4em}
-$endif$
-
-$if(snapshot_feature)$
-\noindent
-\begin{minipage}[t]{0.50\textwidth}
-\vspace{0pt}
-$if(abstract)$
-{\small\bfseries $abstract$}
-$if(keywords)$
-\par\vspace{0.25em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
-$endif$
 \end{minipage}\hfill
-\begin{minipage}[t]{0.44\textwidth}
-\vspace{0pt}
-\includegraphics[width=\linewidth,keepaspectratio]{$snapshot_feature$}
-$if(snapshot_feature_caption)$
-\vspace{-0.35em}
-{\scriptsize\singlespacing $snapshot_feature_caption$\par}
-$endif$
-\end{minipage}\par
+\par\vspace{0.35em}
+
+\noindent{\scriptsize\bfseries
+$if(snapshot_byline_name)$$snapshot_byline_name$$else$$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$, $endfor$$endif$%
+}\par
+$if(snapshot_byline_affiliation)$
+{\scriptsize $snapshot_byline_affiliation$}\par
 $else$
-$if(abstract)$
-{\small\bfseries $abstract$}
-$if(keywords)$
-\par\vspace{0.25em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
-\par
-$endif$
+$if(institution)${\scriptsize $institution$}\par$endif$
 $endif$
 
 \vspace{0.55em}
-\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.45pt}}\par
-\vspace{0.35em}
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.55em}
 
 $else$
 \ifhfwgmethods
@@ -955,88 +952,73 @@ $endif$
 
 \else\ifhfwghfwg
 %% -------------------------------------------------------
-%% HFWG: branded working-paper title page
-%% Top and bottom bars at 1in from page edge.
-%% All content vertically centered between the two bars.
+%% HFWG: one-page blog/post layout.
+%% Generic public-facing posts use a designed masthead, compact columns,
+%% inline figures, author box, and footer. Use methods for working papers.
 %% -------------------------------------------------------
-\newgeometry{top=1in,bottom=1in,left=1in,right=1in}
-\begin{titlepage}
+\newgeometry{top=0.55in,bottom=0.55in,left=0.6in,right=0.6in}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
-      \raisebox{-3pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
-      }%
-    }%
-  }%
-  \AtPageLowerLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
-    }%
-  }%
-}%
-%% Fixed upper title placement for both working papers and blogposts.
-\vspace*{0.65in}%
-\begin{center}
-\begin{singlespace}
+\begingroup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\singlespacing
+\footnotesize
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2.2pt}}\par
+\vspace{0.45em}
 
-{\setstretch{0.9}\LARGE\bfseries $title$\par}
-
-$if(subtitle)$
-\vspace{0.18em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
-
-\vfill
-
-\hfwgauthorblock
-
-$if(blogpost)$
-\par\vspace{1.25\baselineskip}
-$else$
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-$endif$
-
+\noindent
+\begin{minipage}[t]{0.18\textwidth}
+\vspace{0pt}
+\fcolorbox{hfwgaccent}{white}{%
+  \begin{minipage}[c][0.42in][c]{0.86\linewidth}
+  \centering\tiny\bfseries\color{hfwgaccent}HFWG
+  \end{minipage}%
+}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.78\textwidth}
+\vspace{0pt}
+{\small\sffamily\bfseries\color{hfwgaccent}$if(series)$$series$$else$HFWG Blog$endif$}\hfill
 $if(date)$
 \ifhfwganon\else
-{\small $date$}\par
+{\small $date$}%
 \fi
+$endif$
+\par\vspace{0.35em}
+
+\begingroup
+\setbox0=\hbox{\large\bfseries $title$}%
+\ifdim\wd0>\linewidth
+  \noindent\resizebox{\linewidth}{!}{\large\bfseries $title$}\par
+\else
+  {\large\bfseries $title$\par}%
+\fi
+\endgroup
+\end{minipage}\hfill
+\par\vspace{0.35em}
+
+\noindent{\scriptsize\bfseries
+$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$, $endfor$%
+}\par
+$if(institution)$
+{\scriptsize $institution$}\par
+$endif$
+
+$if(subtitle)$
+\vspace{0.45em}
+{\small\bfseries\color{hfwgaccent} $subtitle$\par}
 $endif$
 
 $if(abstract)$
-\vspace{2\baselineskip}
-\textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
-\vspace{0.5em}
-\begin{minipage}{0.9\linewidth}
-\small\singlespacing
-\textbf{Abstract}\par\vspace{0.25em}
+\vspace{0.35em}
+\begin{minipage}{0.78\textwidth}
+\scriptsize\singlespacing
 $abstract$
-$if(keywords)$
-\par\vspace{0.75em}
-\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
-$endif$
 \end{minipage}
 $endif$
 
-$if(acknowledgements)$
-\ifhfwganon\else
-\vspace{1em}
-\begin{minipage}{0.9\linewidth}
-\footnotesize\singlespacing
-\noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
-\textbf{Acknowledgements}\par
-$acknowledgements$
-\end{minipage}
-\fi
-$endif$
-
-\end{singlespace}
-\end{center}
-\vfill\null
-\end{titlepage}
-\restoregeometry
+\vspace{0.55em}
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.45em}
 
 \else
 %% -------------------------------------------------------
@@ -1228,16 +1210,63 @@ $if(snapshot)$
 \begin{multicols}{2}
 \setlength{\columnsep}{0.22in}
 \raggedcolumns
+\scriptsize
+\setstretch{0.94}
+\setlength{\parindent}{0.85em}
+\setlength{\parskip}{0pt}
+\titleformat{\section}{\footnotesize\bfseries\color{hfwgaccent}}{}{0pt}{}
+\titleformat{\subsection}{\scriptsize\bfseries}{}{0pt}{}
+\titlespacing{\section}{0pt}{0.45em}{0.12em}
+\titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+$if(abstract)$
+\noindent{\bfseries $abstract$}\par\vspace{0.25em}
+$endif$
+$if(snapshot_feature)$
+\begin{wrapfigure}{r}{0.50\linewidth}
+\vspace{-0.9em}
+\includegraphics[width=\linewidth,height=0.95in,keepaspectratio]{$snapshot_feature$}
+$if(snapshot_feature_caption)$
+\vspace{-0.55em}
+{\scriptsize\singlespacing $snapshot_feature_caption$\par}
+$endif$
+\vspace{-0.65em}
+\end{wrapfigure}
+$endif$
+$else$
+\ifhfwghfwg
+\renewenvironment{longtable}[2][]{%
+  \par\smallskip\noindent\footnotesize
+  \renewcommand{\caption}[2][]{\textbf{##2}}%
+  \begin{tabular}{#2}%
+}{%
+  \end{tabular}\par\smallskip
+}
+\renewcommand{\endhead}{}
+\renewcommand{\endfirsthead}{}
+\renewcommand{\endfoot}{}
+\renewcommand{\endlastfoot}{}
+\makeatletter
+\renewenvironment{figure}[1][]{%
+  \par\smallskip\noindent\begin{minipage}{\linewidth}\centering
+  \def\@captype{figure}%
+}{%
+  \end{minipage}\par\smallskip
+}
+\makeatother
+\begin{multicols}{2}
+\setlength{\columnsep}{0.24in}
+\raggedcolumns
 \footnotesize
-\setstretch{0.96}
+\setstretch{0.98}
 \setlength{\parindent}{0.85em}
 \setlength{\parskip}{0pt}
 \titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
 \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
-\titlespacing{\section}{0pt}{0.45em}{0.12em}
-\titlespacing{\subsection}{0pt}{0.35em}{0.1em}
-$else$
+\titlespacing{\section}{0pt}{0.5em}{0.14em}
+\titlespacing{\subsection}{0pt}{0.38em}{0.1em}
+\else
 \clearpage
+\fi
 $endif$
 \setcounter{page}{1}
 
@@ -1246,8 +1275,10 @@ $endif$
 % =======================================================
 
 % Main text column layout toggle
+\ifhfwghfwg\else
 \ifnum\hfwgmaincolumns=2\relax
   \twocolumn
+\fi
 \fi
 
 \ifhfwganon
@@ -1278,15 +1309,67 @@ $endif$
 \begin{minipage}[c]{0.74\linewidth}
 \textbf{$if(snapshot_byline_name)$$snapshot_byline_name$$else$$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$, $endfor$$endif$}\par
 $if(snapshot_byline_title)${$snapshot_byline_title$}\par$endif$
+$if(snapshot_byline_affiliation)${$snapshot_byline_affiliation$}\par$endif$
 $if(snapshot_byline_link)${\color{hfwgaccent}$snapshot_byline_link$}\par$endif$
 $if(snapshot_byline_bio)$$snapshot_byline_bio$$endif$
 \end{minipage}
 \end{minipage}\par
-\vspace{0.35em}
-{\scriptsize\itshape\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.}\par
 \end{multicols}
+\vfill
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.25em}
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+\scriptsize\bfseries\color{hfwgaccent}HFWG Snapshot
+\end{minipage}\hfill
+\begin{minipage}[t]{0.74\textwidth}
+\scriptsize\raggedleft\itshape
+\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.
+\end{minipage}\par
 \endgroup
 \restoregeometry
+$endif$
+
+$if(snapshot)$
+$else$
+\ifhfwghfwg
+\par\vspace{0.65em}
+\noindent\textcolor{hfwgrule}{\rule{\linewidth}{0.45pt}}\par
+\vspace{0.25em}
+{\scriptsize\bfseries\color{hfwgaccent} About the Author}\par
+\vspace{0.2em}
+\begin{minipage}{\linewidth}
+\scriptsize\singlespacing
+\begin{minipage}[c]{0.20\linewidth}
+$if(author_image)$
+\includegraphics[width=\linewidth,keepaspectratio]{$author_image$}
+$else$
+\colorbox{hfwgaccent!10}{\rule{0pt}{0.58in}\rule{0.58in}{0pt}}
+$endif$
+\end{minipage}\hfill
+\begin{minipage}[c]{0.74\linewidth}
+\textbf{$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$, $endfor$}\par
+$if(author_title)$$author_title$\par$endif$
+$if(institution)$$institution$\par$endif$
+$if(author_web)${\color{hfwgaccent}$author_web$}\par$endif$
+$if(author_bio)$$author_bio$$endif$
+\end{minipage}
+\end{minipage}\par
+\end{multicols}
+\vfill
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.25em}
+\noindent
+\begin{minipage}[t]{0.24\textwidth}
+\scriptsize\bfseries\color{hfwgaccent}HFWG Blog
+\end{minipage}\hfill
+\begin{minipage}[t]{0.72\textwidth}
+\scriptsize\raggedleft
+$if(institution)$$institution$. $endif$$if(date)$$date$.$endif$
+\end{minipage}\par
+\endgroup
+\restoregeometry
+\fi
 $endif$
 
 % =======================================================

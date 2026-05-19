@@ -24,6 +24,8 @@ runningtitle: "Fontset Test: hfwg"
 institution: "Household Finance Working Group"
 series: "Fontset Test Series"
 number: 2
+author_title: "Template author"
+author_bio: "Maintains public-facing template examples and publication workflows."
 
 fontset: hfwg
 bibliography: "fontset-test.bib"

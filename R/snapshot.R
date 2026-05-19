@@ -48,8 +48,8 @@ snapshot_pdf <- function(...,
 
 #' Render a Blogpost PDF and WordPress companion file
 #'
-#' Use this output format for public-facing Lab posts that should keep the
-#' standard HFWG report PDF styling while also producing a WordPress-ready
+#' Use this output format for public-facing Lab posts that should use the
+#' compact HFWG blog PDF styling while also producing a WordPress-ready
 #' companion file.
 #'
 #' Add to YAML:

@@ -226,7 +226,7 @@
 % 2. PAGE LAYOUT
 % humanities:  wider, book-like margins
 % methods:     tighter, dense technical report margins
-% hfwg:        slightly generous, branded working paper margins
+% hfwg:        compact, branded blog-post margins
 % default/demography: standard 1-inch
 % =======================================================
 \ifhfwghumanities
@@ -317,6 +317,20 @@
   \catcode94=12    %% caret      (^): superscript operator
   \catcode37=12    %% percent    (%): comment char -- silent data loss if unescaped
 }
+
+\newcommand{\hfwgcompactcolumnssetup}{%
+  \setlength{\columnsep}{0.24in}%
+  \raggedcolumns
+  \footnotesize
+  \setstretch{0.98}%
+  \setlength{\parindent}{0.85em}%
+  \setlength{\parskip}{0pt}%
+  \titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}%
+  \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}%
+  \titlespacing{\section}{0pt}{0.5em}{0.14em}%
+  \titlespacing{\subsection}{0pt}{0.38em}{0.1em}%
+}
+
 
 % =======================================================
 % 4b. SPECIAL CHARACTER HANDLING IN BODY TEXT
@@ -839,78 +853,69 @@ acknowledgement block and its spacing.
 
 \else\ifhfwghfwg
 %% -------------------------------------------------------
-%% HFWG: branded working-paper title page
-%% Top and bottom bars at 1in from page edge.
-%% All content vertically centered between the two bars.
+%% HFWG: one-page blog/post layout.
+%% Generic public-facing posts use a designed masthead, compact columns,
+%% inline figures, author box, and footer. Use methods for working papers.
 %% -------------------------------------------------------
-\newgeometry{top=1in,bottom=1in,left=1in,right=1in}
-\begin{titlepage}
+\newgeometry{top=0.55in,bottom=0.55in,left=0.6in,right=0.6in}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
-      \raisebox{-3pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
-      }%
-    }%
-  }%
-  \AtPageLowerLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
-      \textcolor{hfwgaccent}{\rule{\textwidth}{3pt}}%
-    }%
-  }%
-}%
-%% Fixed upper title placement for both working papers and blogposts.
-\vspace*{0.65in}%
-\begin{center}
-\begin{singlespace}
+\begingroup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\singlespacing
+\footnotesize
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2.2pt}}\par
+\vspace{0.45em}
 
-{\setstretch{0.9}\LARGE\bfseries Fontset Test: methods\par}
-
-\vspace{0.18em}
-{\large\color{hfwgaccent} Synthetic document for visual regression
-checks\par}
-
-\vfill
-
-\hfwgauthorblock
-
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-
+\noindent
+\begin{minipage}[t]{0.18\textwidth}
+\vspace{0pt}
+\fcolorbox{hfwgaccent}{white}{%
+  \begin{minipage}[c][0.42in][c]{0.86\linewidth}
+  \centering\tiny\bfseries\color{hfwgaccent}HFWG
+  \end{minipage}%
+}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.78\textwidth}
+\vspace{0pt}
+{\small\sffamily\bfseries\color{hfwgaccent}Fontset Test Series}\hfill
 \ifhfwganon\else
-{\small May 2026}\par
+{\small May 2026}%
 \fi
+\par\vspace{0.35em}
 
-\vspace{2\baselineskip}
-\textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
-\vspace{0.5em}
-\begin{minipage}{0.9\linewidth}
-\small\singlespacing
-\textbf{Abstract}\par\vspace{0.25em}
+\begingroup
+\setbox0=\hbox{\large\bfseries Fontset Test: methods}%
+\ifdim\wd0>\linewidth
+  \noindent\resizebox{\linewidth}{!}{\large\bfseries Fontset Test:
+methods}\par
+\else
+  {\large\bfseries Fontset Test: methods\par}%
+\fi
+\endgroup
+\end{minipage}\hfill
+\par\vspace{0.35em}
+
+\noindent{\scriptsize\bfseries
+Ada Template, Junior Co-Author A, Junior Co-Author B%
+}\par
+{\scriptsize Household Finance Working Group}\par
+
+\vspace{0.45em}
+{\small\bfseries\color{hfwgaccent} Synthetic document for visual
+regression checks\par}
+
+\vspace{0.35em}
+\begin{minipage}{0.78\textwidth}
+\scriptsize\singlespacing
 This fake manuscript tests title-page metadata, body typography,
 citations, headings, mathematical notation, tables, figures, and code
 formatting across the available HFWG template fontsets.
-\par\vspace{0.75em}
-\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
 \end{minipage}
 
-\ifhfwganon\else
-\vspace{1em}
-\begin{minipage}{0.9\linewidth}
-\footnotesize\singlespacing
-\noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
-\textbf{Acknowledgements}\par
-This synthetic acknowledgement is included to test the title-page
-acknowledgement block and its spacing.
-\end{minipage}
-\fi
-
-\end{singlespace}
-\end{center}
-\vfill\null
-\end{titlepage}
-\restoregeometry
+\vspace{0.55em}
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.45em}
 
 \else
 %% -------------------------------------------------------
@@ -1078,7 +1083,40 @@ acknowledgement block and its spacing.
 \fi\fi
 \fi\fi
 
+\ifhfwghfwg
+\renewenvironment{longtable}[2][]{%
+  \par\smallskip\noindent\footnotesize
+  \renewcommand{\caption}[2][]{\textbf{##2}}%
+  \begin{tabular}{#2}%
+}{%
+  \end{tabular}\par\smallskip
+}
+\renewcommand{\endhead}{}
+\renewcommand{\endfirsthead}{}
+\renewcommand{\endfoot}{}
+\renewcommand{\endlastfoot}{}
+\makeatletter
+\renewenvironment{figure}[1][]{%
+  \par\smallskip\noindent\begin{minipage}{\linewidth}\centering
+  \def\@captype{figure}%
+}{%
+  \end{minipage}\par\smallskip
+}
+\makeatother
+\begin{multicols}{2}
+\setlength{\columnsep}{0.24in}
+\raggedcolumns
+\footnotesize
+\setstretch{0.98}
+\setlength{\parindent}{0.85em}
+\setlength{\parskip}{0pt}
+\titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
+\titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
+\titlespacing{\section}{0pt}{0.5em}{0.14em}
+\titlespacing{\subsection}{0pt}{0.38em}{0.1em}
+\else
 \clearpage
+\fi
 \setcounter{page}{1}
 
 % =======================================================
@@ -1086,8 +1124,10 @@ acknowledgement block and its spacing.
 % =======================================================
 
 % Main text column layout toggle
+\ifhfwghfwg\else
 \ifnum\hfwgmaincolumns=2\relax
   \twocolumn
+\fi
 \fi
 
 \ifhfwganon
@@ -1189,6 +1229,41 @@ American Academy of Political and Social Science} 657 (1):208--46.
 
 \end{CSLReferences}
 
+
+\ifhfwghfwg
+\par\vspace{0.65em}
+\noindent\textcolor{hfwgrule}{\rule{\linewidth}{0.45pt}}\par
+\vspace{0.25em}
+{\scriptsize\bfseries\color{hfwgaccent} About the Author}\par
+\vspace{0.2em}
+\begin{minipage}{\linewidth}
+\scriptsize\singlespacing
+\begin{minipage}[c]{0.20\linewidth}
+\colorbox{hfwgaccent!10}{\rule{0pt}{0.58in}\rule{0.58in}{0pt}}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.74\linewidth}
+\textbf{Ada Template, Junior Co-Author A, Junior Co-Author B}\par
+
+Household Finance Working Group\par
+
+
+\end{minipage}
+\end{minipage}\par
+\end{multicols}
+\vfill
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.25em}
+\noindent
+\begin{minipage}[t]{0.24\textwidth}
+\scriptsize\bfseries\color{hfwgaccent}HFWG Blog
+\end{minipage}\hfill
+\begin{minipage}[t]{0.72\textwidth}
+\scriptsize\raggedleft
+Household Finance Working Group. May 2026.
+\end{minipage}\par
+\endgroup
+\restoregeometry
+\fi
 
 % =======================================================
 % REFERENCES

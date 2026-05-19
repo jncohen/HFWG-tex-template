@@ -218,7 +218,7 @@
 % 2. PAGE LAYOUT
 % humanities:  wider, book-like margins
 % methods:     tighter, dense technical report margins
-% hfwg:        slightly generous, branded working paper margins
+% hfwg:        compact, branded blog-post margins
 % default/demography: standard 1-inch
 % =======================================================
 \ifhfwghumanities
@@ -309,6 +309,20 @@
   \catcode94=12    %% caret      (^): superscript operator
   \catcode37=12    %% percent    (%): comment char -- silent data loss if unescaped
 }
+
+\newcommand{\hfwgcompactcolumnssetup}{%
+  \setlength{\columnsep}{0.24in}%
+  \raggedcolumns
+  \footnotesize
+  \setstretch{0.98}%
+  \setlength{\parindent}{0.85em}%
+  \setlength{\parskip}{0pt}%
+  \titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}%
+  \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}%
+  \titlespacing{\section}{0pt}{0.5em}{0.14em}%
+  \titlespacing{\subsection}{0pt}{0.38em}{0.1em}%
+}
+
 
 % =======================================================
 % 4b. SPECIAL CHARACTER HANDLING IN BODY TEXT
@@ -572,61 +586,72 @@ Household Finance Lab\par%
 \singlespacing
 \footnotesize
 \noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2.2pt}}\par
-\vspace{0.35em}
+\vspace{0.45em}
 
-{\small\sffamily\bfseries\color{hfwgaccent}%
-Empirical Snapshot%
-}\hfill
+\noindent
+\begin{minipage}[t]{0.18\textwidth}
+\vspace{0pt}
+\fcolorbox{hfwgaccent}{white}{%
+  \begin{minipage}[c][0.72in][c]{0.86\linewidth}
+  \centering\rule{0pt}{0.68in}
+  \end{minipage}%
+}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.78\textwidth}
+\vspace{0pt}
+{\small\sffamily\bfseries\color{hfwgaccent}Empirical Snapshot}\hfill
 \ifhfwganon\else
 {\small May 19, 2026}%
 \fi
-\par\vspace{0.55em}
+\par\vspace{0.35em}
 
 \begingroup
-\setbox0=\hbox{\Large\bfseries The HFWG Template Turns R Markdown Into
+\setbox0=\hbox{\large\bfseries The HFWG Template Turns R Markdown Into
 Publishable Lab Documents}%
-\ifdim\wd0>\textwidth
-  \noindent\resizebox{\textwidth}{!}{\Large\bfseries The HFWG Template
+\ifdim\wd0>\linewidth
+  \noindent\resizebox{\linewidth}{!}{\large\bfseries The HFWG Template
 Turns R Markdown Into Publishable Lab Documents}\par
 \else
-  {\Large\bfseries The HFWG Template Turns R Markdown Into Publishable
+  {\large\bfseries The HFWG Template Turns R Markdown Into Publishable
 Lab Documents\par}%
 \fi
 \endgroup
-
-\vspace{0.5em}
-
-\noindent
-\begin{minipage}[t]{0.50\textwidth}
-\vspace{0pt}
-{\small\bfseries Students can write in ordinary R Markdown and produce
-polished PDFs and WordPress-ready companion files from one source.}
 \end{minipage}\hfill
-\begin{minipage}[t]{0.44\textwidth}
-\vspace{0pt}
-\includegraphics[width=\linewidth,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
-\vspace{-0.35em}
-{\scriptsize\singlespacing Example rendering workflow for the HFWG
-template. The values are synthetic and are used only to test Snapshot
-layout, figure placement, and WordPress companion output.\par}
-\end{minipage}\par
+\par\vspace{0.35em}
+
+\noindent{\scriptsize\bfseries
+Ada Template%
+}\par
+{\scriptsize Household Finance Lab}\par
 
 \vspace{0.55em}
-\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.45pt}}\par
-\vspace{0.35em}
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.55em}
 
 
 \begin{multicols}{2}
 \setlength{\columnsep}{0.22in}
 \raggedcolumns
-\footnotesize
-\setstretch{0.96}
+\scriptsize
+\setstretch{0.94}
 \setlength{\parindent}{0.85em}
 \setlength{\parskip}{0pt}
-\titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
-\titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
+\titleformat{\section}{\footnotesize\bfseries\color{hfwgaccent}}{}{0pt}{}
+\titleformat{\subsection}{\scriptsize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.45em}{0.12em}
 \titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+\noindent{\bfseries Students can write in ordinary R Markdown and
+produce polished PDFs and WordPress-ready companion files from one
+source.}\par\vspace{0.25em}
+\begin{wrapfigure}{r}{0.50\linewidth}
+\vspace{-0.9em}
+\includegraphics[width=\linewidth,height=0.95in,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
+\vspace{-0.55em}
+{\scriptsize\singlespacing Example rendering workflow for the HFWG
+template. The values are synthetic and are used only to test Snapshot
+layout, figure placement, and WordPress companion output.\par}
+\vspace{-0.65em}
+\end{wrapfigure}
 \setcounter{page}{1}
 
 % =======================================================
@@ -634,8 +659,10 @@ layout, figure placement, and WordPress companion output.\par}
 % =======================================================
 
 % Main text column layout toggle
+\ifhfwghfwg\else
 \ifnum\hfwgmaincolumns=2\relax
   \twocolumn
+\fi
 \fi
 
 \ifhfwganon
@@ -658,6 +685,11 @@ papers, research notes, Snapshots, and blogposts. Without a template,
 every student has to make dozens of small design decisions. With the
 template, those decisions live in one shared system.
 
+Lorem ipsum style filler: Curabitur households vitae augue at luctus.
+Pellentesque habitant morbi tristique senectus et netus et malesuada
+fames ac turpis egestas. Integer porttitor, arcu vitae convallis porta,
+sem neque posuere lectus, vitae dignissim neque nibh non sapien.
+
 \section{Finding}\label{finding}
 
 The core workflow is simple: write once in RStudio, then knit into
@@ -671,6 +703,11 @@ and one featured visualization. That makes it different from a standard
 report, which uses a fuller title page and more traditional academic
 structure.
 
+Nullam non lacus sed lorem sagittis bibendum. Aenean accumsan, nibh in
+tristique dignissim, enim massa tempor lectus, non porta lorem est nec
+justo. Sed vitae sem at ante varius facilisis, and the text continues
+here only to show how a fully built Snapshot fills the page.
+
 \section{Implication}\label{implication}
 
 For students, the practical lesson is that TeX is part of the production
@@ -681,6 +718,11 @@ and inspect the knitted output.
 For the Lab, the benefit is standardization. A research assistant can
 produce a PDF, a WordPress paste file, an image asset folder, and a
 publishing checklist from the same source document.
+
+Praesent euismod, lorem ipsum in spirit if not in content, gives this
+inspection file enough prose to test the page rhythm. Donec vitae nulla
+at mi dictum rhoncus; vestibulum ante ipsum primis in faucibus orci
+luctus et ultrices posuere cubilia curae.
 
 \section{Production note}\label{production-note}
 
@@ -700,15 +742,26 @@ publishing output only.
 \begin{minipage}[c]{0.74\linewidth}
 \textbf{Ada Template}\par
 {Research Associate, Household Finance Lab}\par
+{Household Finance Lab}\par
 {\color{hfwgaccent}hhfinance.commons.gc.cuny.edu}\par
 Writes public-facing notes on reproducible research workflows.
 \end{minipage}
 \end{minipage}\par
-\vspace{0.35em}
-{\scriptsize\itshape\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.}\par
 \end{multicols}
+\vfill
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
+\vspace{0.25em}
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+\scriptsize\bfseries\color{hfwgaccent}HFWG Snapshot
+\end{minipage}\hfill
+\begin{minipage}[t]{0.74\textwidth}
+\scriptsize\raggedleft\itshape
+\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.
+\end{minipage}\par
 \endgroup
 \restoregeometry
+
 
 % =======================================================
 % REFERENCES

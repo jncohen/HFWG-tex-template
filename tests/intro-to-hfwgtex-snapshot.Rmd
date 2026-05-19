@@ -23,6 +23,7 @@ snapshot_feature_caption: |
   companion output.
 snapshot_byline_name: "Ada Template"
 snapshot_byline_title: "Research Associate, Household Finance Lab"
+snapshot_byline_affiliation: "Household Finance Lab"
 snapshot_byline_link: "hhfinance.commons.gc.cuny.edu"
 snapshot_byline_bio: "Writes public-facing notes on reproducible research workflows."
 
@@ -71,17 +72,23 @@ The HFWG template is designed for students and research assistants who already k
 
 This matters because the Lab needs consistent output across working papers, research notes, Snapshots, and blogposts. Without a template, every student has to make dozens of small design decisions. With the template, those decisions live in one shared system.
 
+Lorem ipsum style filler: Curabitur households vitae augue at luctus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer porttitor, arcu vitae convallis porta, sem neque posuere lectus, vitae dignissim neque nibh non sapien.
+
 # Finding
 
 The core workflow is simple: write once in RStudio, then knit into multiple publication formats. The PDF uses the HFWG LaTeX template. The WordPress companion uses conservative HTML that can be pasted into the CUNY Academic Commons editor without depending on special plugins.
 
 The Snapshot format is built for short, visual-forward public communication. Its first page uses a compact header, a lead paragraph, and one featured visualization. That makes it different from a standard report, which uses a fuller title page and more traditional academic structure.
 
+Nullam non lacus sed lorem sagittis bibendum. Aenean accumsan, nibh in tristique dignissim, enim massa tempor lectus, non porta lorem est nec justo. Sed vitae sem at ante varius facilisis, and the text continues here only to show how a fully built Snapshot fills the page.
+
 # Implication
 
 For students, the practical lesson is that TeX is part of the production system, not something they need to edit directly. Their job is to write clear R Markdown, provide accurate YAML metadata, make readable figures, and inspect the knitted output.
 
 For the Lab, the benefit is standardization. A research assistant can produce a PDF, a WordPress paste file, an image asset folder, and a publishing checklist from the same source document.
+
+Praesent euismod, lorem ipsum in spirit if not in content, gives this inspection file enough prose to test the page rhythm. Donec vitae nulla at mi dictum rhoncus; vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
 
 # Production note
 

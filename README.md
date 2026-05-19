@@ -165,7 +165,7 @@ This produces `paper.pdf` in the same folder. If it is your first compile with T
 The `fontset` variable switches between typographic registers. Choose the one that fits your output context.
 
 ```yaml
-fontset: hfwg          # XITS with CUNY Blue accent -- HFWG working papers
+fontset: hfwg          # XITS with CUNY Blue accent -- HFWG blog posts
 fontset: humanities    # EB Garamond -- theory, AJS, Sociological Theory
 fontset: demography    # XITS (Times-family) -- Demography, Social Forces
 fontset: methods       # Source Serif 4 + Fira Code -- SMR, computational work
@@ -177,7 +177,7 @@ Each preset adjusts the body font, margins, line spacing, and section heading st
 | Preset | Body font | Headings | Margins | Spacing | Accent |
 |---|---|---|---|---|---|
 | *(unset)* | Palatino-family | Bold | 1 in | 1.5x | Black — **use for journal submissions** |
-| `hfwg` | XITS / Times | Roman bold + blue rule | 1.15 in | 1.45x | CUNY Blue (`003DA5`) |
+| `hfwg` | XITS / Times | Compact blog masthead + two-column body | 0.6 in | tight single | CUNY Blue (`003DA5`) |
 | `humanities` | EB Garamond | Small caps | 1.3 in | 1.55x | Black |
 | `demography` | XITS / Times | Bold + rule | 1 in | 1.5x | Black |
 | `methods` | Source Serif 4 | Bold + blue rule | 0.9 in | 1.25x | Deep blue |
@@ -604,7 +604,7 @@ More detail, including manual inspection commands such as `Rscript tests/knit-sn
 
 ## 13. Blogposts
 
-Blogposts are public-facing Lab posts that keep the standard HFWG report PDF style while also emitting a WordPress companion file.
+Blogposts are public-facing Lab posts that use the compact HFWG blog PDF style while also emitting a WordPress companion file.
 
 ```yaml
 ---
@@ -613,7 +613,7 @@ subtitle: "A short public-facing report"
 fontset: hfwg
 
 abstract: |
-  This post uses the standard HFWG report layout and also emits a WordPress
+  This post uses the HFWG blog layout and also emits a WordPress
   companion file.
 
 output:
@@ -624,7 +624,7 @@ output:
 ---
 ```
 
-Use Blogposts when the piece should read like a standard Lab report rather than a visual-forward Snapshot. Blogposts are not numbered, so the PDF title page shows the author/institution and date but omits series metadata. The companion options are the same as Snapshots: `wordpress: html`, `wordpress: markdown`, or `wordpress: none`.
+Use Blogposts for generic public-facing posts. The `hfwg` fontset is now the blog-post design: a compact masthead, two-column body, inline figures/tables, author box, and footer. Snapshots use a related one-page system but are built around one featured visualization; HFWG Blog posts are not. For working-paper style PDFs, use `fontset: methods`.
 
 The RStudio handoff is the same as Snapshots: knit once, then use the PDF, WordPress companion file, assets folder, and checklist.
 
