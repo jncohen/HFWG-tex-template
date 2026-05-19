@@ -504,6 +504,8 @@ For reusable Lab visualizations, design the chart so it can be exported in a sma
 
 For raster outputs, use PNG for charts and line art. Export at the pixel dimensions above or at 2x the final display size. For print-only raster figures, keep effective resolution at 300 dpi or higher at the intended printed size. For web and WordPress, pixel dimensions matter more than embedded dpi metadata; make sure labels remain legible when the image is viewed on a phone.
 
+Use the full image canvas. A visualization exported for the Lab should not contain large unused plot margins, empty panels, or excessive whitespace around the data region. Treat the exported image as a designed card: labels, annotations, title, and data marks should occupy the frame deliberately. For Snapshot feature images, the chart should feel full when viewed in the `1080 x 1440 px` portrait frame; if a standard chart leaves too much blank space, redesign it for mobile by using horizontal bars, direct labels, stacked panels, larger type, or annotations rather than simply pasting a landscape plot into a portrait canvas.
+
 ---
 
 ## 11. Preparing for submission

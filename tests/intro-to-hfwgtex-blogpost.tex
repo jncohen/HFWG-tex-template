@@ -260,6 +260,7 @@
 \ifhfwgdemography\usepackage{eso-pic}\else\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi\fi
 \usepackage{float}
 \usepackage{multicol}
+\usepackage{paracol}
 \usepackage{wrapfig}
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
@@ -754,9 +755,9 @@ Household Finance Lab\par%
     }%
   }%
 }%
-%% Fixed upper title placement: the top of the title block sits about one
-%% top-margin below the accent rule, while the remaining metadata breathes below.
-\vspace*{0.65in}%
+%% Fixed upper title placement: keep the title close to the top rule while
+%% leaving the remaining metadata centered in the open field below.
+\vspace*{0.325in}%
 \begin{center}
 \begin{singlespace}
 {\setstretch{0.9}\LARGE\bfseries Using the HFWG TeX Template from R
@@ -886,69 +887,43 @@ of R and R Markdown but have never worked directly with TeX or LaTeX.
 \end{minipage}
 \end{titlepage}
 \else\ifhfwgdemography
-\newgeometry{top=0.9in,bottom=1in,left=0.85in,right=0.85in}
 \begin{titlepage}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(0,\LenToUnit{-0.45in}){%
-      \textcolor{hfwgaccent}{\rule{\paperwidth}{3pt}}%
-    }%
-  }%
-}%
-\begingroup
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
+\vspace*{0.12\textheight}
+\begin{center}
 \begin{singlespace}
 
-{\small\bfseries\MakeUppercase{Demographic Research Note}%
-%
-\hfill
-May 19, 2026}\par
-\vspace{0.45em}
-\noindent\rule{\textwidth}{0.35pt}\par
-
-\vspace{0.11\textheight}
-{\setstretch{0.86}\huge\bfseries Using the HFWG TeX Template from R
+{\setstretch{0.92}\LARGE\bfseries Using the HFWG TeX Template from R
 Markdown\par}
 
 
-\vspace{1.6em}
-\begin{minipage}{0.34\textwidth}
-\scriptsize\bfseries\MakeUppercase{Authors}\par
-\vspace{0.35em}
-\scriptsize\bfseries\MakeUppercase{Affiliation}\par
-\vspace{0.35em}
-\scriptsize\bfseries\MakeUppercase{Document}\par
-\end{minipage}\hfill
-\begin{minipage}{0.62\textwidth}
-\small
-\textbf{Ada Template}\par
-\vspace{0.35em}
-Household Finance Lab\par
-\vspace{0.35em}
-Demographic Research Note\par
-\end{minipage}
+\vspace{2.2em}
 
-\vspace{1.8em}
-\noindent\rule{\textwidth}{0.35pt}\par
+\hfwgauthorblock
+
+\par\vspace{1.5\baselineskip}
+\hfwgseriesblock
+
+\ifhfwganon\else
+\vspace{0.35em}
+{\small May 19, 2026}\par
+\fi
+
+\vspace{2.2\baselineskip}
+\noindent\rule{0.35\textwidth}{0.4pt}\par
 \vspace{0.65em}
-\begin{minipage}{\textwidth}
-\small
-\textbf{Abstract.} This post explains what the HFWG TeX template does
-and how it fits into an R Markdown workflow. It is written for students
-who know the basics of R and R Markdown but have never worked directly
-with TeX or LaTeX.
+\begin{minipage}{0.78\textwidth}
+\small\singlespacing
+\textbf{Abstract}\par\vspace{0.3em}
+This post explains what the HFWG TeX template does and how it fits into
+an R Markdown workflow. It is written for students who know the basics
+of R and R Markdown but have never worked directly with TeX or LaTeX.
 \end{minipage}
-\vspace{0.65em}
-\par\noindent\rule{\textwidth}{0.35pt}
 
 \end{singlespace}
-\endgroup
+\end{center}
 \vfill
-\noindent{\scriptsize\MakeUppercase{Demography fontset specimen}}\hfill{\scriptsize hfwgtex}\par
 \end{titlepage}
-\restoregeometry
 \else
 \begin{titlepage}
 \thispagestyle{empty}

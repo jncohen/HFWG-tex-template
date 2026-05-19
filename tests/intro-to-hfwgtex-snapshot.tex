@@ -260,6 +260,7 @@
 \ifhfwgdemography\usepackage{eso-pic}\else\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi\fi
 \usepackage{float}
 \usepackage{multicol}
+\usepackage{paracol}
 \usepackage{wrapfig}
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
@@ -632,21 +633,8 @@ Ada Template%
 
 \newlength{\hfwgsnapshotfeatureheight}
 \setlength{\hfwgsnapshotfeatureheight}{2.95in}
-\noindent\makebox[\textwidth][r]{%
-  \begin{minipage}[t]{0.50\textwidth}
-  \vspace{0pt}
-  \centering
-  \includegraphics[width=\linewidth,height=2.45in,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
-  \vspace{-0.35em}
-  {\scriptsize\singlespacing Example rendering workflow for the HFWG
-template. The values are synthetic and are used only to test Snapshot
-layout, figure placement, and WordPress companion output.\par}
-  \end{minipage}%
-}\par
-\vspace{-\hfwgsnapshotfeatureheight}
-\begin{multicols}{2}
+\begin{paracol}{2}
 \setlength{\columnsep}{0.22in}
-\raggedcolumns
 \footnotesize
 \setstretch{0.98}
 \setlength{\parindent}{0.85em}
@@ -655,13 +643,24 @@ layout, figure placement, and WordPress companion output.\par}
 \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.45em}{0.12em}
 \titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+\switchcolumn[1]
+\noindent
+\begin{minipage}[t][\hfwgsnapshotfeatureheight][t]{\linewidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\linewidth,height=2.45in,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
+\vspace{-0.25em}
+{\scriptsize\singlespacing Example rendering workflow for the HFWG
+template. The values are synthetic and are used only to test Snapshot
+layout, figure placement, and WordPress companion output.\par}
+\end{minipage}\par
+\switchcolumn[0]
 \newcounter{hfwgsnapshotsection}
 \let\hfwgsnapshotoldsection\section
 \renewcommand{\section}[1]{%
   \stepcounter{hfwgsnapshotsection}%
-  \ifnum\value{hfwgsnapshotsection}=3\relax
-    \columnbreak
-    \vspace*{\hfwgsnapshotfeatureheight}%
+  \ifnum\value{hfwgsnapshotsection}=4\relax
+    \switchcolumn[1]%
   \fi
   \hfwgsnapshotoldsection{#1}%
 }
@@ -745,6 +744,8 @@ luctus et ultrices posuere cubilia curae.
 This synthetic manual inspection file tests layout, figure handling, and
 publishing output only.
 
+\switchcolumn[1]
+\vspace*{\fill}
 \par\vspace{0.55em}
 \noindent\textcolor{hfwgrule}{\rule{\linewidth}{0.45pt}}\par
 \vspace{0.25em}
@@ -763,7 +764,7 @@ publishing output only.
 Writes public-facing notes on reproducible research workflows.
 \end{minipage}
 \end{minipage}\par
-\end{multicols}
+\end{paracol}
 \vfill
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
 \vspace{0.25em}

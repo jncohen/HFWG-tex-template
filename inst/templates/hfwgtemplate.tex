@@ -285,6 +285,7 @@ $endif$
 \ifhfwgdemography\usepackage{eso-pic}\else\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi\fi
 \usepackage{float}
 \usepackage{multicol}
+\usepackage{paracol}
 \usepackage{wrapfig}
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
@@ -890,9 +891,9 @@ $else$
     }%
   }%
 }%
-%% Fixed upper title placement: the top of the title block sits about one
-%% top-margin below the accent rule, while the remaining metadata breathes below.
-\vspace*{0.65in}%
+%% Fixed upper title placement: keep the title close to the top rule while
+%% leaving the remaining metadata centered in the open field below.
+\vspace*{0.325in}%
 \begin{center}
 \begin{singlespace}
 {\setstretch{0.9}\LARGE\bfseries $title$\par}
@@ -1053,78 +1054,52 @@ $endif$
 $endif$
 \end{titlepage}
 \else\ifhfwgdemography
-\newgeometry{top=0.9in,bottom=1in,left=0.85in,right=0.85in}
 \begin{titlepage}
 \thispagestyle{empty}
-\AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(0,\LenToUnit{-0.45in}){%
-      \textcolor{hfwgaccent}{\rule{\paperwidth}{3pt}}%
-    }%
-  }%
-}%
-\begingroup
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
+\vspace*{0.12\textheight}
+\begin{center}
 \begin{singlespace}
 
-{\small\bfseries\MakeUppercase{$if(series)$$series$$else$Demographic Research Note$endif$}%
-$if(number)$\enspace\textbar\enspace No.\,$number$$endif$%
-\hfill
-$if(date)$$date$$endif$}\par
-\vspace{0.45em}
-\noindent\rule{\textwidth}{0.35pt}\par
-
-\vspace{0.11\textheight}
-{\setstretch{0.86}\huge\bfseries $title$\par}
+{\setstretch{0.92}\LARGE\bfseries $title$\par}
 
 $if(subtitle)$
-\vspace{0.28em}
-{\Large $subtitle$\par}
+\vspace{0.35em}
+{\large $subtitle$\par}
 $endif$
 
-\vspace{1.6em}
-\begin{minipage}{0.34\textwidth}
-\scriptsize\bfseries\MakeUppercase{Authors}\par
-\vspace{0.35em}
-\scriptsize\bfseries\MakeUppercase{Affiliation}\par
-\vspace{0.35em}
-\scriptsize\bfseries\MakeUppercase{Document}\par
-\end{minipage}\hfill
-\begin{minipage}{0.62\textwidth}
-\small
-$if(author)$
-$for(author)$
-$if(author.name)$\textbf{$author.name$}$else$\textbf{$author$}$endif$$sep$; $endfor$\par
-$endif$
-\vspace{0.35em}
-$if(institution)$$institution$\par$else$--\par$endif$
-\vspace{0.35em}
-$if(series)$$series$$else$Demographic Research Note$endif$$if(number)$, No.\,$number$$endif$\par
-\end{minipage}
+\vspace{2.2em}
 
-\vspace{1.8em}
+\hfwgauthorblock
+
+\par\vspace{1.5\baselineskip}
+\hfwgseriesblock
+
+$if(date)$
+\ifhfwganon\else
+\vspace{0.35em}
+{\small $date$}\par
+\fi
+$endif$
+
 $if(abstract)$
-\noindent\rule{\textwidth}{0.35pt}\par
+\vspace{2.2\baselineskip}
+\noindent\rule{0.35\textwidth}{0.4pt}\par
 \vspace{0.65em}
-\begin{minipage}{\textwidth}
-\small
-\textbf{Abstract.} $abstract$
+\begin{minipage}{0.78\textwidth}
+\small\singlespacing
+\textbf{Abstract}\par\vspace{0.3em}
+$abstract$
 $if(keywords)$
-\par\vspace{0.45em}
-\textbf{Keywords.} $for(keywords)$$keywords$$sep$; $endfor$
+\par\vspace{0.6em}
+\textbf{Keywords:} $for(keywords)$$keywords$$sep$; $endfor$
 $endif$
 \end{minipage}
-\vspace{0.65em}
-\par\noindent\rule{\textwidth}{0.35pt}
 $endif$
 
 \end{singlespace}
-\endgroup
+\end{center}
 \vfill
-\noindent{\scriptsize\MakeUppercase{Demography fontset specimen}}\hfill{\scriptsize hfwgtex}\par
 \end{titlepage}
-\restoregeometry
 \else
 \begin{titlepage}
 \thispagestyle{empty}
@@ -1201,22 +1176,9 @@ $if(snapshot)$
 $if(snapshot_feature)$
 \newlength{\hfwgsnapshotfeatureheight}
 \setlength{\hfwgsnapshotfeatureheight}{2.95in}
-\noindent\makebox[\textwidth][r]{%
-  \begin{minipage}[t]{0.50\textwidth}
-  \vspace{0pt}
-  \centering
-  \includegraphics[width=\linewidth,height=2.45in,keepaspectratio]{$snapshot_feature$}
-$if(snapshot_feature_caption)$
-  \vspace{-0.35em}
-  {\scriptsize\singlespacing $snapshot_feature_caption$\par}
 $endif$
-  \end{minipage}%
-}\par
-\vspace{-\hfwgsnapshotfeatureheight}
-$endif$
-\begin{multicols}{2}
+\begin{paracol}{2}
 \setlength{\columnsep}{0.22in}
-\raggedcolumns
 \footnotesize
 \setstretch{0.98}
 \setlength{\parindent}{0.85em}
@@ -1225,17 +1187,26 @@ $endif$
 \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.45em}{0.12em}
 \titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+\switchcolumn[1]
+$if(snapshot_feature)$
+\noindent
+\begin{minipage}[t][\hfwgsnapshotfeatureheight][t]{\linewidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=\linewidth,height=2.45in,keepaspectratio]{$snapshot_feature$}
+$if(snapshot_feature_caption)$
+\vspace{-0.25em}
+{\scriptsize\singlespacing $snapshot_feature_caption$\par}
+$endif$
+\end{minipage}\par
+$endif$
+\switchcolumn[0]
 \newcounter{hfwgsnapshotsection}
 \let\hfwgsnapshotoldsection\section
 \renewcommand{\section}[1]{%
   \stepcounter{hfwgsnapshotsection}%
-  \ifnum\value{hfwgsnapshotsection}=3\relax
-    \columnbreak
-$if(snapshot_feature)$
-    \vspace*{\hfwgsnapshotfeatureheight}%
-$else$
-    \vspace*{0.5\baselineskip}%
-$endif$
+  \ifnum\value{hfwgsnapshotsection}=4\relax
+    \switchcolumn[1]%
   \fi
   \hfwgsnapshotoldsection{#1}%
 }
@@ -1307,6 +1278,8 @@ $endif$
 $body$
 
 $if(snapshot)$
+\switchcolumn[1]
+\vspace*{\fill}
 \par\vspace{0.55em}
 \noindent\textcolor{hfwgrule}{\rule{\linewidth}{0.45pt}}\par
 \vspace{0.25em}
@@ -1329,7 +1302,7 @@ $if(snapshot_byline_link)${\color{hfwgaccent}$snapshot_byline_link$}\par$endif$
 $if(snapshot_byline_bio)$$snapshot_byline_bio$$endif$
 \end{minipage}
 \end{minipage}\par
-\end{multicols}
+\end{paracol}
 \vfill
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
 \vspace{0.25em}
