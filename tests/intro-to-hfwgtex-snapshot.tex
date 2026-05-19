@@ -259,6 +259,8 @@
 %% Loading it conditionally keeps default/humanities/demography free of the dependency.
 \ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi
 \usepackage{float}
+\usepackage{multicol}
+\usepackage{wrapfig}
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
 \usepackage{array}
@@ -555,72 +557,68 @@ Documents: A Snapshot test for PDF and WordPress output},
 \newcommand{\hfwgseriesblock}{%
 {\small\setlength{\parskip}{1pt}%
 Household Finance Lab\par%
-Snapshot\enspace\ensuremath{\cdot}\enspace No.\,1\par%
+%
 }%
 }
 
 %% -------------------------------------------------------
-%% SNAPSHOT: compact publication header.
-%% The body begins on the first page after this header; use this for
-%% short public-facing Lab outputs that also have a WordPress companion.
+%% SNAPSHOT: one-page, compact public-facing layout.
 %% -------------------------------------------------------
+\newgeometry{top=0.55in,bottom=0.55in,left=0.6in,right=0.6in}
 \thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
-\vspace{0.6em}
+\begingroup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\singlespacing
+\footnotesize
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2.2pt}}\par
+\vspace{0.35em}
 
 {\small\sffamily\bfseries\color{hfwgaccent}%
 Empirical Snapshot%
-}\par
-\vspace{0.75em}
+}\hfill
+\ifhfwganon\else
+{\small May 19, 2026}%
+\fi
+\par\vspace{0.55em}
 
-{\setstretch{0.95}\LARGE\bfseries The HFWG Template Turns R Markdown
+{\setstretch{0.88}\Large\bfseries The HFWG Template Turns R Markdown
 Into Publishable Lab Documents\par}
 
+\vspace{0.18em}
+{\normalsize\bfseries\color{hfwgaccent} A Snapshot test for PDF and
+WordPress output\par}
+
+\vspace{0.45em}
+{\small\bfseries Students can write in ordinary R Markdown and produce
+polished PDFs and WordPress-ready companion files from one source.}
+\par
+
+\vspace{0.45em}
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.45pt}}\par
 \vspace{0.35em}
-{\large\color{hfwgaccent} A Snapshot test for PDF and WordPress
-output\par}
-
-\vspace{1em}
-
-\begin{singlespace}
-\hfwgauthorblock
-
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-
-\ifhfwganon\else
-{\small May 18, 2026}\par
-\fi
-\end{singlespace}
-
-\vspace{1.25em}
-\begin{minipage}{0.92\linewidth}
-\small\singlespacing
-\noindent\textbf{Lead}\par\vspace{0.25em}
-Students can write in ordinary R Markdown and use the HFWG template to
-produce polished PDFs and WordPress-ready companion files. The template
-keeps TeX out of the student's way while preserving consistent Lab
-typography, title metadata, figures, tables, and publishing handoffs.
-\end{minipage}
-
-\vspace{1.25em}
-\begin{center}
-\includegraphics[width=0.92\linewidth,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
-\par\vspace{0.35em}
-\begin{minipage}{0.92\linewidth}
-\footnotesize\singlespacing
-Example rendering workflow for the HFWG template. The values are
-synthetic and are used only to test Snapshot layout, figure placement,
-and WordPress companion output.
-\end{minipage}
-\end{center}
-
-\vspace{1.5em}
-\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.5pt}}\par
-\vspace{1.5em}
 
 
-\vspace{0.5em}
+\begin{multicols}{2}
+\setlength{\columnsep}{0.22in}
+\raggedcolumns
+\footnotesize
+\setstretch{0.96}
+\setlength{\parindent}{0.85em}
+\setlength{\parskip}{0pt}
+\titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
+\titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
+\titlespacing{\section}{0pt}{0.45em}{0.12em}
+\titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+\begin{wrapfigure}{r}{0.43\linewidth}
+\vspace{-0.9em}
+\includegraphics[width=0.43\linewidth,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
+\vspace{-0.6em}
+{\scriptsize\singlespacing Example rendering workflow for the HFWG
+template. The values are synthetic and are used only to test Snapshot
+layout, figure placement, and WordPress companion output.\par}
+\vspace{-1.0em}
+\end{wrapfigure}
 \setcounter{page}{1}
 
 % =======================================================
@@ -676,11 +674,31 @@ For the Lab, the benefit is standardization. A research assistant can
 produce a PDF, a WordPress paste file, an image asset folder, and a
 publishing checklist from the same source document.
 
-\section{Methodological footer}\label{methodological-footer}
+\section{Production note}\label{production-note}
 
-This Snapshot is a synthetic manual inspection file. It tests layout,
-figure handling, and publishing output only. The figure values are
-invented and should not be interpreted as empirical results.
+This synthetic manual inspection file tests layout, figure handling, and
+publishing output only.
+
+\par\vspace{0.45em}
+\noindent\fcolorbox{hfwgrule}{white}{%
+  \begin{minipage}{0.92\linewidth}
+  \scriptsize\singlespacing
+  \begin{minipage}[c]{0.25\linewidth}
+    \fcolorbox{hfwgrule}{white}{\rule{0pt}{0.55in}\rule{0.48in}{0pt}}
+    \end{minipage}\hfill
+  \begin{minipage}[c]{0.68\linewidth}
+  \textbf{Household Finance Lab}\par
+  Public research note\par
+  hhfinance.commons.gc.cuny.edu\par
+  Short lab update on reproducible publishing workflows.
+  \end{minipage}
+  \end{minipage}%
+}\par
+\vspace{0.35em}
+{\scriptsize\itshape\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.}\par
+\end{multicols}
+\endgroup
+\restoregeometry
 
 % =======================================================
 % REFERENCES

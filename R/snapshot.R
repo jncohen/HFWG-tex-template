@@ -38,6 +38,7 @@ snapshot_pdf <- function(...,
     ...,
     template = template,
     latex_engine = latex_engine,
+    document_type = "snapshot",
     companion = wordpress,
     companion_file = wordpress_file,
     companion_assets = wordpress_assets,
@@ -84,6 +85,7 @@ blogpost_pdf <- function(...,
     ...,
     template = template,
     latex_engine = latex_engine,
+    document_type = "blogpost",
     companion = wordpress,
     companion_file = wordpress_file,
     companion_assets = wordpress_assets,
@@ -94,6 +96,7 @@ blogpost_pdf <- function(...,
 companion_pdf_document <- function(...,
                                    template,
                                    latex_engine,
+                                   document_type = NULL,
                                    companion,
                                    companion_file = NULL,
                                    companion_assets = TRUE,
@@ -103,11 +106,16 @@ companion_pdf_document <- function(...,
          call. = FALSE)
   }
 
-  format <- rmarkdown::pdf_document(
-    ...,
-    template = template,
-    latex_engine = latex_engine
-  )
+  dots <- list(...)
+  dots$template <- template
+  dots$latex_engine <- latex_engine
+  if (!is.null(document_type)) {
+    dots$pandoc_args <- c(dots$pandoc_args %||% character(),
+                          "--metadata",
+                          paste0(document_type, "=true"))
+  }
+
+  format <- do.call(rmarkdown::pdf_document, dots)
 
   previous_post_processor <- format$post_processor
 
@@ -227,6 +235,21 @@ copy_wordpress_assets <- function(companion_file, input_file, companion) {
       next
     }
 
+    src_ext <- tolower(tools::file_ext(src))
+    if (identical(src_ext, "pdf")) {
+      png_name <- paste0(tools::file_path_sans_ext(basename(src)), ".png")
+      dest_name <- unique_asset_name(png_name, copied)
+      dest <- file.path(assets_dir, dest_name)
+      if (convert_pdf_asset_to_png(src, dest)) {
+        copied <- c(copied, dest_name)
+        replacements[[ref]] <- file.path(basename(assets_dir), dest_name)
+      } else {
+        warning("Could not convert PDF image asset to PNG for WordPress: ",
+                src, call. = FALSE)
+      }
+      next
+    }
+
     dest_name <- unique_asset_name(basename(src), copied)
     copied <- c(copied, dest_name)
     dest <- file.path(assets_dir, dest_name)
@@ -239,6 +262,7 @@ copy_wordpress_assets <- function(companion_file, input_file, companion) {
     for (ref in names(replacements)) {
       text <- gsub(ref, replacements[[ref]], text, fixed = TRUE)
     }
+    text <- normalize_wordpress_image_tags(text)
     writeLines(text, companion_file, useBytes = TRUE)
   }
 
@@ -253,6 +277,20 @@ image_references <- function(text, companion) {
   html_refs <- sub("^.*src=[\"']([^\"']+)[\"'].*$", "\\1", html_refs,
                    perl = TRUE)
 
+  embed <- gregexpr("<embed[^>]+src=[\"'][^\"']+[\"']", text,
+                    ignore.case = TRUE, perl = TRUE)
+  embed_refs <- regmatches(text, embed)
+  embed_refs <- unlist(embed_refs, use.names = FALSE)
+  embed_refs <- sub("^.*src=[\"']([^\"']+)[\"'].*$", "\\1", embed_refs,
+                    perl = TRUE)
+
+  object <- gregexpr("<object[^>]+data=[\"'][^\"']+[\"']", text,
+                     ignore.case = TRUE, perl = TRUE)
+  object_refs <- regmatches(text, object)
+  object_refs <- unlist(object_refs, use.names = FALSE)
+  object_refs <- sub("^.*data=[\"']([^\"']+)[\"'].*$", "\\1", object_refs,
+                     perl = TRUE)
+
   md_refs <- character()
   if (identical(companion, "markdown")) {
     md <- gregexpr("!\\[[^]]*\\]\\([^)]+\\)", text, perl = TRUE)
@@ -262,7 +300,14 @@ image_references <- function(text, companion) {
                    perl = TRUE)
   }
 
-  unique(c(html_refs, md_refs))
+  unique(c(html_refs, embed_refs, object_refs, md_refs))
+}
+
+normalize_wordpress_image_tags <- function(text) {
+  text <- gsub("<embed([^>]+src=[\"'][^\"']+\\.(png|jpe?g|gif|webp)[\"'][^>]*)/?>",
+               "<img\\1 />", text, ignore.case = TRUE, perl = TRUE)
+  gsub("<img([^>]*)/[[:space:]]*/>", "<img\\1 />", text,
+       ignore.case = TRUE, perl = TRUE)
 }
 
 is_local_asset_ref <- function(refs) {
@@ -307,6 +352,42 @@ unique_asset_name <- function(name, existing) {
   }
 }
 
+convert_pdf_asset_to_png <- function(src, dest) {
+  if (requireNamespace("pdftools", quietly = TRUE)) {
+    out <- pdftools::pdf_convert(src, format = "png", pages = 1,
+                                 filenames = dest, dpi = 160, verbose = FALSE)
+    return(length(out) && file.exists(dest))
+  }
+
+  pdftoppm <- Sys.which("pdftoppm")
+  if (nzchar(pdftoppm)) {
+    prefix <- tempfile("hfwgtex-pdf-image-")
+    status <- system2(pdftoppm,
+                      c("-png", "-singlefile", "-r", "160", src, prefix),
+                      stdout = FALSE, stderr = FALSE)
+    candidate <- paste0(prefix, ".png")
+    if (identical(status, 0L) && file.exists(candidate)) {
+      file.copy(candidate, dest, overwrite = TRUE)
+      unlink(candidate)
+      return(file.exists(dest))
+    }
+  }
+
+  magick <- Sys.which("magick")
+  if (nzchar(magick)) {
+    status <- system2(magick,
+                      c("-density", "160", paste0(src, "[0]"), dest),
+                      stdout = FALSE, stderr = FALSE)
+    return(identical(status, 0L) && file.exists(dest))
+  }
+
+  FALSE
+}
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+
 write_wordpress_checklist <- function(output_file,
                                       companion_file,
                                       assets_dir = NULL,
@@ -327,7 +408,7 @@ write_wordpress_checklist <- function(output_file,
     "4. Replace local image paths with Media Library image URLs if needed.",
     "5. Set the post title, excerpt, categories, tags, and featured image.",
     "6. Preview the post on desktop and mobile before publishing.",
-    "7. Attach or link the PDF as the archival/download version.",
+    "7. Confirm the post images are PNG/JPG assets; link the PDF separately only if needed.",
     "",
     paste0("PDF: ", normalizePath(output_file, winslash = "/",
                                   mustWork = FALSE)),

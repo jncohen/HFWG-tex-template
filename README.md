@@ -182,6 +182,8 @@ Each preset adjusts the body font, margins, line spacing, and section heading st
 | `demography` | XITS / Times | Bold + rule | 1 in | 1.5x | Black |
 | `methods` | Source Serif 4 | Bold + blue rule | 0.9 in | 1.25x | Deep blue |
 
+**Proposed next preset: `gov70`.** A "1970s government" set would use plain report typography, black rules, form-like metadata blocks, muted federal colors (`2F4F3E`, `8A6F2A`, `B23A2E`), tight line spacing, tabular labels, and restrained all-caps/small-caps headings. It would be useful for public briefs that should feel archival, institutional, and official rather than journal-like or branded.
+
 **pdfLaTeX fallback.** The bundled fonts require XeLaTeX or LuaLaTeX, which R Markdown uses by default when the fonts are present. If you are using pdfLaTeX, the template falls back gracefully to TeX distribution fonts and emits a warning in the log.
 
 **Accent color override.** Any fontset's accent color can be overridden with a hex value (no `#`):
@@ -569,9 +571,11 @@ snapshot_feature: "figures/education-wealth.png"
 snapshot_feature_caption: |
   Median household net worth by educational attainment, Survey of Consumer
   Finances, 2022. Dollar amounts are shown in 2022 dollars.
+snapshot_byline_name: "Household Finance Lab"
+snapshot_byline_title: "Empirical Snapshot"
+snapshot_byline_link: "hhfinance.commons.gc.cuny.edu"
+snapshot_byline_bio: "One-line author or Lab bio."
 
-series: "Snapshot"
-number: 1
 accent: 0066CC
 fontset: hfwg
 
@@ -590,9 +594,9 @@ output:
 
 When knitted in RStudio, this writes the PDF plus a companion file named like `paper-wordpress.html`, an optional `paper-wordpress-assets/` folder, and an optional `paper-wordpress-checklist.txt` handoff file. Use `wordpress: markdown` to create `paper-wordpress.md`, or `wordpress: none` to suppress the companion file.
 
-For the CUNY Academic Commons, `wordpress: html` is the recommended default. It produces conservative paste-ready HTML and does not require Markdown, table, PDF, shortcode, or page-builder plugins to be active.
+For the CUNY Academic Commons, `wordpress: html` is the recommended default. It produces conservative paste-ready HTML and does not require Markdown, table, PDF, shortcode, or page-builder plugins to be active. Local PDF figure assets are converted to PNG for the companion file when `pdftools`, Poppler's `pdftoppm`, or ImageMagick's `magick` is available.
 
-The Snapshot PDF header uses the abstract as the lead paragraph. Put the main 900-1,050 word Snapshot body below the YAML in the fixed sequence: context, finding, implication, and methodological footer.
+The Snapshot PDF uses the abstract as a one-line bold lead, wraps text around the featured image, and sets the body in two compact columns. Aim for a short one-page body in the sequence: context, finding, and implication. Methods language belongs elsewhere, not in the Snapshot PDF.
 
 More detail, including manual inspection commands such as `Rscript tests/knit-snapshot.R`, is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 
@@ -606,8 +610,6 @@ Blogposts are public-facing Lab posts that keep the standard HFWG report PDF sty
 ---
 title: "A Standard Lab Post"
 subtitle: "A short public-facing report"
-series: "Blogpost"
-number: 1
 fontset: hfwg
 
 abstract: |
@@ -622,7 +624,7 @@ output:
 ---
 ```
 
-Use Blogposts when the piece should read like a standard Lab report rather than a visual-forward Snapshot. The companion options are the same as Snapshots: `wordpress: html`, `wordpress: markdown`, or `wordpress: none`.
+Use Blogposts when the piece should read like a standard Lab report rather than a visual-forward Snapshot. Blogposts are not numbered, so the PDF title page shows the author/institution and date but omits series metadata. The companion options are the same as Snapshots: `wordpress: html`, `wordpress: markdown`, or `wordpress: none`.
 
 The RStudio handoff is the same as Snapshots: knit once, then use the PDF, WordPress companion file, assets folder, and checklist.
 

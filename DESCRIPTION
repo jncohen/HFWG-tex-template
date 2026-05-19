@@ -11,6 +11,8 @@ Description: Pandoc/Quarto LaTeX template for academic manuscripts produced
 License: MIT + file LICENSE
 Imports:
     rmarkdown
+Suggests:
+    pdftools
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

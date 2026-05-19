@@ -7,8 +7,6 @@ author:
   - name: "Household Finance Lab"
 
 institution: "Household Finance Lab"
-series: "Snapshot"
-number: 1
 
 surname: "HFWG"
 runningtitle: "HFWG Template Snapshot"
@@ -24,12 +22,13 @@ snapshot_feature_caption: |
   Example rendering workflow for the HFWG template. The values are synthetic
   and are used only to test Snapshot layout, figure placement, and WordPress
   companion output.
+snapshot_byline_name: "Household Finance Lab"
+snapshot_byline_title: "Public research note"
+snapshot_byline_link: "hhfinance.commons.gc.cuny.edu"
+snapshot_byline_bio: "Short lab update on reproducible publishing workflows."
 
 abstract: |
-  Students can write in ordinary R Markdown and use the HFWG template to
-  produce polished PDFs and WordPress-ready companion files. The template keeps
-  TeX out of the student's way while preserving consistent Lab typography,
-  title metadata, figures, tables, and publishing handoffs.
+  Students can write in ordinary R Markdown and produce polished PDFs and WordPress-ready companion files from one source.
 
 output:
   hfwgtex::snapshot_pdf:
@@ -85,6 +84,6 @@ For students, the practical lesson is that TeX is part of the production system,
 
 For the Lab, the benefit is standardization. A research assistant can produce a PDF, a WordPress paste file, an image asset folder, and a publishing checklist from the same source document.
 
-# Methodological footer
+# Production note
 
-This Snapshot is a synthetic manual inspection file. It tests layout, figure handling, and publishing output only. The figure values are invented and should not be interpreted as empirical results.
+This synthetic manual inspection file tests layout, figure handling, and publishing output only.

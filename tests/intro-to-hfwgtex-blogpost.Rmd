@@ -7,8 +7,6 @@ author:
   - name: "Household Finance Lab"
 
 institution: "Household Finance Lab"
-series: "Blogpost"
-number: 1
 
 surname: "HFWG"
 runningtitle: "Using the HFWG TeX Template"
