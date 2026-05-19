@@ -192,8 +192,8 @@ Each preset adjusts the body font, margins, line spacing, and section heading st
 | *(unset)* | Palatino-family | Bold | 1 in | 1.5x | Black — **use for journal submissions** |
 | `hfwg` | XITS / Times | Compact blog masthead + two-column body | 0.6 in | tight single | CUNY Blue (`003DA5`) |
 | `humanities` | EB Garamond | Small caps | 1.3 in | 1.55x | Black |
-| `demography` | XITS / Times | Bold + rule | 1 in | 1.5x | Black |
-| `methods` | Source Serif 4 | Bold + blue rule | 0.9 in | 1.25x | Deep blue |
+| `demography` | XITS / Times | Standard working-paper title page | 1 in | 1.5x | Black |
+| `methods` | Source Serif 4 | Accent-rule methods title page | 0.9 in | 1.25x | Deep blue |
 
 **Proposed next preset: `gov70`.** A "1970s government" set would use plain report typography, black rules, form-like metadata blocks, muted federal colors (`2F4F3E`, `8A6F2A`, `B23A2E`), tight line spacing, tabular labels, and restrained all-caps/small-caps headings. It would be useful for public briefs that should feel archival, institutional, and official rather than journal-like or branded.
 
@@ -265,7 +265,9 @@ author:
   - name: "Maria Garcia"
 ```
 
-**Methods preset title page.** When `fontset: methods`, the title page uses a left-aligned layout with a full-width accent rule, rather than the centered layout used by the other presets.
+**Methods preset title page.** When `fontset: methods`, the title page uses a centered upper title block with full-width accent rules. The title sits close to the top rule; author, series, date, and abstract metadata breathe below it.
+
+**Demography preset title page.** When `fontset: demography`, the title page uses a restrained working-paper format: centered title, author block, institution/series/date, and abstract. It is intentionally conventional and does not use a designed masthead.
 
 ---
 
@@ -591,7 +593,6 @@ Use `snapshot: true` and the `hfwgtex::snapshot_pdf` output format:
 ```yaml
 ---
 title: "Bachelor's Degree Completion Marks the Largest Wealth Divide"
-subtitle: "Survey of Consumer Finances, 2022"
 snapshot: true
 snapshot_label: "Empirical Snapshot"
 snapshot_abstract_label: "Lead"
@@ -601,7 +602,7 @@ snapshot_feature_caption: |
   Median household net worth by educational attainment, Survey of Consumer
   Finances, 2022. Dollar amounts are shown in 2022 dollars.
 snapshot_byline_name: "Household Finance Lab"
-snapshot_byline_title: "Empirical Snapshot"
+snapshot_byline_title: "Research Associate"
 snapshot_byline_link: "hhfinance.commons.gc.cuny.edu"
 snapshot_byline_bio: "One-line author or Lab bio."
 
@@ -625,7 +626,7 @@ When knitted in RStudio, this writes the PDF plus a companion file named like `p
 
 For the CUNY Academic Commons, `wordpress: html` is the recommended default. It produces conservative paste-ready HTML and does not require Markdown, table, PDF, shortcode, or page-builder plugins to be active. Local PDF figure assets are converted to PNG for the companion file when `pdftools`, Poppler's `pdftoppm`, or ImageMagick's `magick` is available.
 
-The Snapshot PDF uses the abstract as a one-line bold lead and sets the body in two compact columns. Aim for a short one-page body in the sequence: context, finding, and implication. Methods language belongs elsewhere, not in the Snapshot PDF.
+The Snapshot PDF uses the abstract as a one-line bold lead. The page body is a structured two-column composition: the left column carries the main text from top to bottom, while the right column functions as a rail with the featured visualization at the top, any continuation text in the middle, and the author box near the bottom. Aim for a short one-page body in the sequence: context, finding, and implication. Methods language belongs elsewhere, not in the Snapshot PDF.
 
 **Featured visualization sizing.** Build Snapshot visualizations in the mobile-first portrait standard from the figure guidelines above: `1080 x 1440 px` (`3:4`). When displayed at phone width, this shape occupies roughly two-thirds of a modern phone screen, giving the visual enough vertical presence for mobile reading while remaining usable in the PDF.
 
@@ -644,7 +645,6 @@ Blogposts are public-facing Lab posts that use the compact HFWG blog PDF style w
 ```yaml
 ---
 title: "A Standard Lab Post"
-subtitle: "A short public-facing report"
 fontset: hfwg
 
 abstract: |
@@ -659,7 +659,7 @@ output:
 ---
 ```
 
-Use Blogposts for generic public-facing posts. The `hfwg` fontset is now the blog-post design: a compact masthead, two-column body, inline figures/tables, author box, and footer. Snapshots use a related one-page system but are built around one featured visualization; HFWG Blog posts are not. For working-paper style PDFs, use `fontset: methods`.
+Use Blogposts for generic public-facing posts. The `hfwg` fontset is now the blog-post design: a compact masthead, title/byline block, two-column body, inline figures/tables, author box, and footer. Blogposts do not render a subtitle in the masthead; use the `abstract` field only if a short deck or excerpt is useful. Snapshots use a related one-page system but are built around one featured visualization; HFWG Blog posts are not. For working-paper style PDFs, use `fontset: methods`.
 
 The RStudio handoff is the same as Snapshots: knit once, then use the PDF, WordPress companion file, assets folder, and checklist.
 
@@ -674,7 +674,7 @@ More detail is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 | Variable | Type | Description |
 |---|---|---|
 | `title` | string | Document title (required) |
-| `subtitle` | string | Subtitle, rendered below title |
+| `subtitle` | string | Subtitle for conventional title-page formats; not rendered in Snapshot or Blogpost mastheads |
 | `date` | string | Date string on title page |
 | `surname` | string | Author surname for running header |
 | `runningtitle` | string | Short title for running header |
@@ -698,7 +698,7 @@ More detail is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 | Output format | Description |
 |---|---|
 | `hfwgtex::snapshot_pdf` | Snapshot PDF plus optional WordPress companion |
-| `hfwgtex::blogpost_pdf` | Standard HFWG report PDF plus optional WordPress companion |
+| `hfwgtex::blogpost_pdf` | HFWG blog-post PDF plus optional WordPress companion |
 
 | Output option | Values | Description |
 |---|---|---|
