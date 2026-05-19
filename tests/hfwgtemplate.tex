@@ -284,6 +284,8 @@ $endif$
 %% Loading it conditionally keeps default/humanities/demography free of the dependency.
 \ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi
 \usepackage{float}
+\usepackage{multicol}
+\usepackage{wrapfig}
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
 \usepackage{array}
@@ -794,77 +796,57 @@ $if(series)$$series$$if(number)$\enspace\ensuremath{\cdot}\enspace No.\,$number$
 
 $if(snapshot)$
 %% -------------------------------------------------------
-%% SNAPSHOT: compact publication header.
-%% The body begins on the first page after this header; use this for
-%% short public-facing Lab outputs that also have a WordPress companion.
+%% SNAPSHOT: one-page, compact public-facing layout.
 %% -------------------------------------------------------
+\newgeometry{top=0.55in,bottom=0.55in,left=0.6in,right=0.6in}
 \thispagestyle{empty}
-\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}\par
-\vspace{0.6em}
+\begingroup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\singlespacing
+\footnotesize
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{2.2pt}}\par
+\vspace{0.35em}
 
 {\small\sffamily\bfseries\color{hfwgaccent}%
 $if(snapshot_label)$$snapshot_label$$else$Empirical Snapshot$endif$%
-}\par
-\vspace{0.75em}
-
-{\setstretch{0.95}\LARGE\bfseries $title$\par}
-
-$if(subtitle)$
-\vspace{0.35em}
-{\large\color{hfwgaccent} $subtitle$\par}
-$endif$
-
-\vspace{1em}
-
-\begin{singlespace}
-\hfwgauthorblock
-
-\par\vspace{2\baselineskip}
-\hfwgseriesblock
-
+}\hfill
 $if(date)$
 \ifhfwganon\else
-{\small $date$}\par
+{\small $date$}%
 \fi
 $endif$
-\end{singlespace}
+\par\vspace{0.55em}
+
+{\setstretch{0.88}\Large\bfseries $title$\par}
+
+$if(subtitle)$
+\vspace{0.18em}
+{\normalsize\bfseries\color{hfwgaccent} $subtitle$\par}
+$endif$
 
 $if(abstract)$
-\vspace{1.25em}
-\begin{minipage}{0.92\linewidth}
-\small\singlespacing
-\noindent\textbf{$if(snapshot_abstract_label)$$snapshot_abstract_label$$else$Lead$endif$}\par\vspace{0.25em}
-$abstract$
+\vspace{0.45em}
+{\small\bfseries $abstract$}
 $if(keywords)$
-\par\vspace{0.75em}
+\par\vspace{0.25em}
 \noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
 $endif$
-\end{minipage}
+\par
 $endif$
 
-$if(snapshot_feature)$
-\vspace{1.25em}
-\begin{center}
-\includegraphics[width=0.92\linewidth,keepaspectratio]{$snapshot_feature$}
-$if(snapshot_feature_caption)$
-\par\vspace{0.35em}
-\begin{minipage}{0.92\linewidth}
-\footnotesize\singlespacing
-$snapshot_feature_caption$
-\end{minipage}
-$endif$
-\end{center}
-$endif$
-
-\vspace{1.5em}
-\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.5pt}}\par
-\vspace{1.5em}
+\vspace{0.45em}
+\noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.45pt}}\par
+\vspace{0.35em}
 
 $else$
 \ifhfwgmethods
 %% -------------------------------------------------------
 %% METHODS: centered title page with accent rules
+%% Top and bottom bars at 1in from page edge.
+%% All content vertically centered between the two bars.
 %% -------------------------------------------------------
+\newgeometry{top=1in,bottom=1in,left=1.15in,right=1.15in}
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
@@ -881,19 +863,21 @@ $else$
     }%
   }%
 }%
-\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
+%% Keep the title in the upper region; center the remaining metadata below it.
+\vspace*{1in}%
 \begin{center}
 \begin{singlespace}
-
-
 {\setstretch{0.9}\LARGE\bfseries $title$\par}
 
 $if(subtitle)$
-\vspace{0.5em}
+\vspace{0.35em}
 {\large\color{hfwgaccent} $subtitle$\par}
 $endif$
-
-\vspace{2em}
+\end{singlespace}
+\end{center}
+\vfill
+\begin{center}
+\begin{singlespace}
 
 \hfwgauthorblock
 
@@ -906,13 +890,8 @@ $if(date)$
 \fi
 $endif$
 
-\end{singlespace}
-\end{center}
-
-\vspace{2\baselineskip}
-
 $if(abstract)$
-\begin{center}
+\vspace{2\baselineskip}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
@@ -924,33 +903,33 @@ $if(keywords)$
 \noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
 $endif$
 \end{minipage}
-\end{center}
-\vspace{1em}
 $endif$
 
 $if(acknowledgements)$
 \ifhfwganon\else
-\begin{center}
+\vspace{1em}
 \begin{minipage}{0.9\linewidth}
 \footnotesize\singlespacing
 \noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
 \textbf{Acknowledgements}\par
 $acknowledgements$
 \end{minipage}
-\end{center}
-\vspace{1em}
 \fi
 $endif$
 
-\vfill
+\end{singlespace}
+\end{center}
+\vfill\null
 \end{titlepage}
+\restoregeometry
 
 \else\ifhfwghfwg
 %% -------------------------------------------------------
 %% HFWG: branded working-paper title page
-%% Title, then subtitle, then tight author+affiliation+
-%% institution+series+date block, then abstract.
+%% Top and bottom bars at 1in from page edge.
+%% All content vertically centered between the two bars.
 %% -------------------------------------------------------
+\newgeometry{top=1in,bottom=1in,left=1in,right=1in}
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
@@ -967,23 +946,37 @@ $endif$
     }%
   }%
 }%
-\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
+%% Blogposts keep the title close to the top rule; working papers center title-page content.
+$if(blogpost)$
+\vspace*{1in}%
+$else$
+\vspace*{3pt}%
+\null\vfill
+$endif$
 \begin{center}
 \begin{singlespace}
 
 {\setstretch{0.9}\LARGE\bfseries $title$\par}
 
 $if(subtitle)$
-\vspace{0.5em}
+\vspace{0.18em}
 {\large\color{hfwgaccent} $subtitle$\par}
 $endif$
 
+$if(blogpost)$
+\vfill
+$else$
 \vspace{2em}
+$endif$
 
 \hfwgauthorblock
 
+$if(blogpost)$
+\par\vspace{1.25\baselineskip}
+$else$
 \par\vspace{2\baselineskip}
 \hfwgseriesblock
+$endif$
 
 $if(date)$
 \ifhfwganon\else
@@ -991,13 +984,8 @@ $if(date)$
 \fi
 $endif$
 
-\end{singlespace}
-\end{center}
-
-\vspace{2\baselineskip}
-
 $if(abstract)$
-\begin{center}
+\vspace{2\baselineskip}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
@@ -1009,31 +997,108 @@ $if(keywords)$
 \noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
 $endif$
 \end{minipage}
-\end{center}
-\vspace{1em}
 $endif$
 
 $if(acknowledgements)$
 \ifhfwganon\else
-\begin{center}
+\vspace{1em}
 \begin{minipage}{0.9\linewidth}
 \footnotesize\singlespacing
 \noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
 \textbf{Acknowledgements}\par
 $acknowledgements$
 \end{minipage}
-\end{center}
-\vspace{1em}
 \fi
 $endif$
 
-\vfill
+\end{singlespace}
+\end{center}
+\vfill\null
 \end{titlepage}
+\restoregeometry
 
 \else
 %% -------------------------------------------------------
-%% DEFAULT / HUMANITIES / DEMOGRAPHY: centered title page
+%% DEFAULT / HUMANITIES / DEMOGRAPHY: distinct title pages
 %% -------------------------------------------------------
+\ifhfwghumanities
+\begin{titlepage}
+\thispagestyle{empty}
+\vspace*{0.08\textheight}
+\noindent\rule{0.42\textwidth}{0.4pt}\par
+\vspace{2.2em}
+{\setstretch{0.92}\huge\scshape $title$\par}
+$if(subtitle)$
+\vspace{0.35em}
+{\Large\itshape $subtitle$\par}
+$endif$
+\vspace{2.5em}
+\begin{singlespace}
+\hfwgauthorblock
+\par\vspace{1.6\baselineskip}
+\hfwgseriesblock
+$if(date)$
+\ifhfwganon\else
+\vspace{0.4em}
+{\small $date$}\par
+\fi
+$endif$
+\end{singlespace}
+\vfill
+$if(abstract)$
+\begin{minipage}{0.72\textwidth}
+\small\singlespacing
+\noindent\rule{0.25\textwidth}{0.35pt}\par
+\textsc{Abstract}\par\vspace{0.3em}
+$abstract$
+$if(keywords)$
+\par\vspace{0.8em}
+\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
+$endif$
+\end{minipage}
+$endif$
+\end{titlepage}
+\else\ifhfwgdemography
+\begin{titlepage}
+\thispagestyle{empty}
+\vspace*{0.11\textheight}
+\noindent\rule{\textwidth}{0.8pt}\par
+\vspace{0.5em}
+\noindent{\small\bfseries $if(series)$$series$$else$Demographic Research Note$endif$$if(number)$ \enspace No.\,$number$$endif$}\hfill{\small $if(date)$$date$$endif$}\par
+\vspace{0.5em}
+\noindent\rule{\textwidth}{0.35pt}\par
+\vspace{3em}
+\begin{center}
+{\setstretch{0.9}\LARGE\bfseries $title$\par}
+$if(subtitle)$
+\vspace{0.3em}
+{\large $subtitle$\par}
+$endif$
+\vspace{2em}
+\begin{singlespace}
+\hfwgauthorblock
+\par\vspace{1.4\baselineskip}
+$if(institution)$
+{\small $institution$}\par
+$endif$
+\end{singlespace}
+\vspace{2em}
+$if(abstract)$
+\begin{minipage}{0.82\textwidth}
+\small\singlespacing
+\textbf{Abstract}\par\vspace{0.25em}
+$abstract$
+$if(keywords)$
+\par\vspace{0.8em}
+\noindent\textbf{Keywords: }$for(keywords)$$keywords$$sep$, $endfor$
+$endif$
+\end{minipage}
+$endif$
+\end{center}
+\vfill
+\noindent\rule{\textwidth}{0.35pt}
+\end{titlepage}
+\else
 \begin{titlepage}
 \thispagestyle{empty}
 
@@ -1102,10 +1167,32 @@ $endif$
 \end{center}
 \end{titlepage}
 \fi\fi
+\fi\fi
 $endif$
 
 $if(snapshot)$
-\vspace{0.5em}
+\begin{multicols}{2}
+\setlength{\columnsep}{0.22in}
+\raggedcolumns
+\footnotesize
+\setstretch{0.96}
+\setlength{\parindent}{0.85em}
+\setlength{\parskip}{0pt}
+\titleformat{\section}{\normalsize\bfseries\color{hfwgaccent}}{}{0pt}{}
+\titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
+\titlespacing{\section}{0pt}{0.45em}{0.12em}
+\titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+$if(snapshot_feature)$
+\begin{wrapfigure}{r}{0.43\linewidth}
+\vspace{-0.9em}
+\includegraphics[width=0.43\linewidth,keepaspectratio]{$snapshot_feature$}
+$if(snapshot_feature_caption)$
+\vspace{-0.6em}
+{\scriptsize\singlespacing $snapshot_feature_caption$\par}
+$endif$
+\vspace{-1.0em}
+\end{wrapfigure}
+$endif$
 $else$
 \clearpage
 $endif$
@@ -1129,6 +1216,33 @@ $endif$
 \fi
 
 $body$
+
+$if(snapshot)$
+\par\vspace{0.45em}
+\noindent\fcolorbox{hfwgrule}{white}{%
+  \begin{minipage}{0.92\linewidth}
+  \scriptsize\singlespacing
+  \begin{minipage}[c]{0.25\linewidth}
+  $if(snapshot_author_image)$
+  \includegraphics[width=\linewidth,keepaspectratio]{$snapshot_author_image$}
+  $else$
+  \fcolorbox{hfwgrule}{white}{\rule{0pt}{0.55in}\rule{0.48in}{0pt}}
+  $endif$
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.68\linewidth}
+  \textbf{$if(snapshot_byline_name)$$snapshot_byline_name$$else$$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$, $endfor$$endif$}\par
+  $if(snapshot_byline_title)$$snapshot_byline_title$\par$endif$
+  $if(snapshot_byline_link)$$snapshot_byline_link$\par$endif$
+  $if(snapshot_byline_bio)$$snapshot_byline_bio$$endif$
+  \end{minipage}
+  \end{minipage}%
+}\par
+\vspace{0.35em}
+{\scriptsize\itshape\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.}\par
+\end{multicols}
+\endgroup
+\restoregeometry
+$endif$
 
 % =======================================================
 % REFERENCES

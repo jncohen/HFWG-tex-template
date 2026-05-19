@@ -1,6 +1,5 @@
 ---
 title: "The HFWG Template Turns R Markdown Into Publishable Lab Documents"
-subtitle: "A Snapshot test for PDF and WordPress output"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
 author:
@@ -22,10 +21,10 @@ snapshot_feature_caption: |
   Example rendering workflow for the HFWG template. The values are synthetic
   and are used only to test Snapshot layout, figure placement, and WordPress
   companion output.
-snapshot_byline_name: "Household Finance Lab"
-snapshot_byline_title: "Public research note"
+snapshot_byline_name: "Ada Template"
+snapshot_byline_title: "Research Associate, Household Finance Lab"
 snapshot_byline_link: "hhfinance.commons.gc.cuny.edu"
-snapshot_byline_bio: "Short lab update on reproducible publishing workflows."
+snapshot_byline_bio: "Writes public-facing notes on reproducible research workflows."
 
 abstract: |
   Students can write in ordinary R Markdown and produce polished PDFs and WordPress-ready companion files from one source.

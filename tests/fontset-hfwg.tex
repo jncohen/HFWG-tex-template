@@ -263,9 +263,9 @@
 % 3. GRAPHICS + FLOATS
 % =======================================================
 \usepackage{graphicx}
-%% eso-pic is only needed for the methods and hfwg title-page bars.
-%% Loading it conditionally keeps default/humanities/demography free of the dependency.
-\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi
+%% eso-pic is only needed for title-page bars.
+%% Loading it conditionally keeps default/humanities free of the dependency.
+\ifhfwgdemography\usepackage{eso-pic}\else\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi\fi
 \usepackage{float}
 \usepackage{multicol}
 \usepackage{wrapfig}
@@ -782,8 +782,9 @@ Fontset Test Series\enspace\ensuremath{\cdot}\enspace No.\,2\par%
     }%
   }%
 }%
-%% Keep the title in the upper region; center the remaining metadata below it.
-\vspace*{1in}%
+%% Fixed upper title placement: the top of the title block sits about one
+%% top-margin below the accent rule, while the remaining metadata breathes below.
+\vspace*{0.65in}%
 \begin{center}
 \begin{singlespace}
 {\setstretch{0.9}\LARGE\bfseries Fontset Test: hfwg\par}
@@ -859,9 +860,8 @@ acknowledgement block and its spacing.
     }%
   }%
 }%
-%% Blogposts keep the title close to the top rule; working papers center title-page content.
-\vspace*{3pt}%
-\null\vfill
+%% Fixed upper title placement for both working papers and blogposts.
+\vspace*{0.65in}%
 \begin{center}
 \begin{singlespace}
 
@@ -871,7 +871,7 @@ acknowledgement block and its spacing.
 {\large\color{hfwgaccent} Synthetic document for visual regression
 checks\par}
 
-\vspace{2em}
+\vfill
 
 \hfwgauthorblock
 
@@ -948,40 +948,72 @@ formatting across the available HFWG template fontsets.
 \end{minipage}
 \end{titlepage}
 \else\ifhfwgdemography
+\newgeometry{top=0.9in,bottom=1in,left=0.85in,right=0.85in}
 \begin{titlepage}
 \thispagestyle{empty}
-\vspace*{0.11\textheight}
-\noindent\rule{\textwidth}{0.8pt}\par
-\vspace{0.5em}
-\noindent{\small\bfseries Fontset Test
-Series \enspace No.\,2}\hfill{\small May 2026}\par
-\vspace{0.5em}
-\noindent\rule{\textwidth}{0.35pt}\par
-\vspace{3em}
-\begin{center}
-{\setstretch{0.9}\LARGE\bfseries Fontset Test: hfwg\par}
-\vspace{0.3em}
-{\large Synthetic document for visual regression checks\par}
-\vspace{2em}
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    \put(0,\LenToUnit{-0.45in}){%
+      \textcolor{hfwgaccent}{\rule{\paperwidth}{3pt}}%
+    }%
+  }%
+}%
+\begingroup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
 \begin{singlespace}
-\hfwgauthorblock
-\par\vspace{1.4\baselineskip}
-{\small Household Finance Working Group}\par
-\end{singlespace}
-\vspace{2em}
-\begin{minipage}{0.82\textwidth}
-\small\singlespacing
-\textbf{Abstract}\par\vspace{0.25em}
-This fake manuscript tests title-page metadata, body typography,
-citations, headings, mathematical notation, tables, figures, and code
-formatting across the available HFWG template fontsets.
-\par\vspace{0.8em}
-\noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
+
+{\small\bfseries\MakeUppercase{Fontset Test Series}%
+\enspace\textbar\enspace No.\,2%
+\hfill
+May 2026}\par
+\vspace{0.45em}
+\noindent\rule{\textwidth}{0.35pt}\par
+
+\vspace{0.11\textheight}
+{\setstretch{0.86}\huge\bfseries Fontset Test: hfwg\par}
+
+\vspace{0.28em}
+{\Large Synthetic document for visual regression checks\par}
+
+\vspace{1.6em}
+\begin{minipage}{0.34\textwidth}
+\scriptsize\bfseries\MakeUppercase{Authors}\par
+\vspace{0.35em}
+\scriptsize\bfseries\MakeUppercase{Affiliation}\par
+\vspace{0.35em}
+\scriptsize\bfseries\MakeUppercase{Document}\par
+\end{minipage}\hfill
+\begin{minipage}{0.62\textwidth}
+\small
+\textbf{Ada Template}; \textbf{Junior Co-Author A}; \textbf{Junior
+Co-Author B}\par
+\vspace{0.35em}
+Household Finance Working Group\par
+\vspace{0.35em}
+Fontset Test Series, No.\,2\par
 \end{minipage}
-\end{center}
+
+\vspace{1.8em}
+\noindent\rule{\textwidth}{0.35pt}\par
+\vspace{0.65em}
+\begin{minipage}{\textwidth}
+\small
+\textbf{Abstract.} This fake manuscript tests title-page metadata, body
+typography, citations, headings, mathematical notation, tables, figures,
+and code formatting across the available HFWG template fontsets.
+\par\vspace{0.45em}
+\textbf{Keywords.} font testing; R Markdown; LaTeX template
+\end{minipage}
+\vspace{0.65em}
+\par\noindent\rule{\textwidth}{0.35pt}
+
+\end{singlespace}
+\endgroup
 \vfill
-\noindent\rule{\textwidth}{0.35pt}
+\noindent{\scriptsize\MakeUppercase{Demography fontset specimen}}\hfill{\scriptsize hfwgtex}\par
 \end{titlepage}
+\restoregeometry
 \else
 \begin{titlepage}
 \thispagestyle{empty}

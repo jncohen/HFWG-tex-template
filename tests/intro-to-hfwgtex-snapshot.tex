@@ -255,9 +255,9 @@
 % 3. GRAPHICS + FLOATS
 % =======================================================
 \usepackage{graphicx}
-%% eso-pic is only needed for the methods and hfwg title-page bars.
-%% Loading it conditionally keeps default/humanities/demography free of the dependency.
-\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi
+%% eso-pic is only needed for title-page bars.
+%% Loading it conditionally keeps default/humanities free of the dependency.
+\ifhfwgdemography\usepackage{eso-pic}\else\ifhfwgmethods\usepackage{eso-pic}\else\ifhfwghfwg\usepackage{eso-pic}\fi\fi\fi
 \usepackage{float}
 \usepackage{multicol}
 \usepackage{wrapfig}
@@ -395,9 +395,9 @@
 %% Multiple authors are semicolon-separated (PDF/XMP convention).
 \hypersetup{
   pdftitle    = {The HFWG Template Turns R Markdown Into Publishable Lab
-Documents: A Snapshot test for PDF and WordPress output},
+Documents},
   pdfauthor   = {Household Finance Lab},
-  pdfsubject  = {A Snapshot test for PDF and WordPress output},
+  pdfsubject  = {},
   pdfkeywords = {}
 }
 
@@ -582,19 +582,36 @@ Empirical Snapshot%
 \fi
 \par\vspace{0.55em}
 
-{\setstretch{0.88}\Large\bfseries The HFWG Template Turns R Markdown
-Into Publishable Lab Documents\par}
+\begingroup
+\setbox0=\hbox{\Large\bfseries The HFWG Template Turns R Markdown Into
+Publishable Lab Documents}%
+\ifdim\wd0>\textwidth
+  \noindent\resizebox{\textwidth}{!}{\Large\bfseries The HFWG Template
+Turns R Markdown Into Publishable Lab Documents}\par
+\else
+  {\Large\bfseries The HFWG Template Turns R Markdown Into Publishable
+Lab Documents\par}%
+\fi
+\endgroup
 
-\vspace{0.18em}
-{\normalsize\bfseries\color{hfwgaccent} A Snapshot test for PDF and
-WordPress output\par}
+\vspace{0.5em}
 
-\vspace{0.45em}
+\noindent
+\begin{minipage}[t]{0.50\textwidth}
+\vspace{0pt}
 {\small\bfseries Students can write in ordinary R Markdown and produce
 polished PDFs and WordPress-ready companion files from one source.}
-\par
+\end{minipage}\hfill
+\begin{minipage}[t]{0.44\textwidth}
+\vspace{0pt}
+\includegraphics[width=\linewidth,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
+\vspace{-0.35em}
+{\scriptsize\singlespacing Example rendering workflow for the HFWG
+template. The values are synthetic and are used only to test Snapshot
+layout, figure placement, and WordPress companion output.\par}
+\end{minipage}\par
 
-\vspace{0.45em}
+\vspace{0.55em}
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.45pt}}\par
 \vspace{0.35em}
 
@@ -610,15 +627,6 @@ polished PDFs and WordPress-ready companion files from one source.}
 \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.45em}{0.12em}
 \titlespacing{\subsection}{0pt}{0.35em}{0.1em}
-\begin{wrapfigure}{r}{0.43\linewidth}
-\vspace{-0.9em}
-\includegraphics[width=0.43\linewidth,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
-\vspace{-0.6em}
-{\scriptsize\singlespacing Example rendering workflow for the HFWG
-template. The values are synthetic and are used only to test Snapshot
-layout, figure placement, and WordPress companion output.\par}
-\vspace{-1.0em}
-\end{wrapfigure}
 \setcounter{page}{1}
 
 % =======================================================
@@ -679,21 +687,23 @@ publishing checklist from the same source document.
 This synthetic manual inspection file tests layout, figure handling, and
 publishing output only.
 
-\par\vspace{0.45em}
-\noindent\fcolorbox{hfwgrule}{white}{%
-  \begin{minipage}{0.92\linewidth}
-  \scriptsize\singlespacing
-  \begin{minipage}[c]{0.25\linewidth}
-    \fcolorbox{hfwgrule}{white}{\rule{0pt}{0.55in}\rule{0.48in}{0pt}}
-    \end{minipage}\hfill
-  \begin{minipage}[c]{0.68\linewidth}
-  \textbf{Household Finance Lab}\par
-  Public research note\par
-  hhfinance.commons.gc.cuny.edu\par
-  Short lab update on reproducible publishing workflows.
-  \end{minipage}
-  \end{minipage}%
-}\par
+\par\vspace{0.55em}
+\noindent\textcolor{hfwgrule}{\rule{\linewidth}{0.45pt}}\par
+\vspace{0.25em}
+{\scriptsize\bfseries\color{hfwgaccent} About the Author}\par
+\vspace{0.2em}
+\begin{minipage}{\linewidth}
+\scriptsize\singlespacing
+\begin{minipage}[c]{0.20\linewidth}
+\colorbox{hfwgaccent!10}{\rule{0pt}{0.58in}\rule{0.58in}{0pt}}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.74\linewidth}
+\textbf{Ada Template}\par
+{Research Associate, Household Finance Lab}\par
+{\color{hfwgaccent}hhfinance.commons.gc.cuny.edu}\par
+Writes public-facing notes on reproducible research workflows.
+\end{minipage}
+\end{minipage}\par
 \vspace{0.35em}
 {\scriptsize\itshape\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.}\par
 \end{multicols}
