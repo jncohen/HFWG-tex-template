@@ -743,7 +743,10 @@ Fontset Test Series\enspace\ensuremath{\cdot}\enspace No.\,4\par%
 \ifhfwgmethods
 %% -------------------------------------------------------
 %% METHODS: centered title page with accent rules
+%% Top and bottom bars at 1in from page edge.
+%% All content vertically centered between the two bars.
 %% -------------------------------------------------------
+\newgeometry{top=1in,bottom=1in,left=1.15in,right=1.15in}
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
@@ -760,10 +763,11 @@ Fontset Test Series\enspace\ensuremath{\cdot}\enspace No.\,4\par%
     }%
   }%
 }%
-\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
+%% Push past the 4pt top bar, then center all content between the bars.
+\vspace*{4pt}%
+\null\vfill
 \begin{center}
 \begin{singlespace}
-
 
 {\setstretch{0.9}\LARGE\bfseries Fontset Test: demography\par}
 
@@ -782,12 +786,7 @@ checks\par}
 {\small May 2026}\par
 \fi
 
-\end{singlespace}
-\end{center}
-
 \vspace{2\baselineskip}
-
-\begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
@@ -799,11 +798,9 @@ formatting across the available HFWG template fontsets.
 \par\vspace{0.75em}
 \noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
 \end{minipage}
-\end{center}
-\vspace{1em}
 
 \ifhfwganon\else
-\begin{center}
+\vspace{1em}
 \begin{minipage}{0.9\linewidth}
 \footnotesize\singlespacing
 \noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
@@ -811,19 +808,21 @@ formatting across the available HFWG template fontsets.
 This synthetic acknowledgement is included to test the title-page
 acknowledgement block and its spacing.
 \end{minipage}
-\end{center}
-\vspace{1em}
 \fi
 
-\vfill
+\end{singlespace}
+\end{center}
+\vfill\null
 \end{titlepage}
+\restoregeometry
 
 \else\ifhfwghfwg
 %% -------------------------------------------------------
 %% HFWG: branded working-paper title page
-%% Title, then subtitle, then tight author+affiliation+
-%% institution+series+date block, then abstract.
+%% Top and bottom bars at 1in from page edge.
+%% All content vertically centered between the two bars.
 %% -------------------------------------------------------
+\newgeometry{top=1in,bottom=1in,left=1in,right=1in}
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
@@ -840,7 +839,9 @@ acknowledgement block and its spacing.
     }%
   }%
 }%
-\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
+%% Push past the 3pt top bar, then center all content between the bars.
+\vspace*{3pt}%
+\null\vfill
 \begin{center}
 \begin{singlespace}
 
@@ -861,12 +862,7 @@ checks\par}
 {\small May 2026}\par
 \fi
 
-\end{singlespace}
-\end{center}
-
 \vspace{2\baselineskip}
-
-\begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
@@ -878,11 +874,9 @@ formatting across the available HFWG template fontsets.
 \par\vspace{0.75em}
 \noindent\textbf{Keywords: }font testing, R Markdown, LaTeX template
 \end{minipage}
-\end{center}
-\vspace{1em}
 
 \ifhfwganon\else
-\begin{center}
+\vspace{1em}
 \begin{minipage}{0.9\linewidth}
 \footnotesize\singlespacing
 \noindent\textcolor{hfwgaccent}{\rule{0.25\textwidth}{0.4pt}}\par
@@ -890,12 +884,13 @@ formatting across the available HFWG template fontsets.
 This synthetic acknowledgement is included to test the title-page
 acknowledgement block and its spacing.
 \end{minipage}
-\end{center}
-\vspace{1em}
 \fi
 
-\vfill
+\end{singlespace}
+\end{center}
+\vfill\null
 \end{titlepage}
+\restoregeometry
 
 \else
 %% -------------------------------------------------------
@@ -1047,14 +1042,14 @@ Graduate & 325000 & 0.17 \\
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{fontset-demography_files/figure-latex/figure-example-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{fontset-demography_files/fontset-demography_files/figure-latex/figure-example-1.pdf}}
 
 \section{Conclusion}\label{conclusion}
 
 The final section gives section headings, spacing, references, and
 running headers a little more room to show themselves.
 
-\phantomsection\label{refs}
+\protect\phantomsection\label{refs}
 \begin{CSLReferences}{1}{1}
 \bibitem[\citeproctext]{ref-burnham2002}
 Burnham, Kenneth P., and David R. Anderson. 2002. \emph{Model Selection

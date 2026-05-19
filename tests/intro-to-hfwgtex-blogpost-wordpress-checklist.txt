@@ -8,6 +8,6 @@ WordPress publishing checklist: Using the HFWG TeX Template from R Markdown
 6. Preview the post on desktop and mobile before publishing.
 7. Attach or link the PDF as the archival/download version.
 
-PDF: C:/Users/JCohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-blogpost.pdf
-Companion: C:/Users/JCohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-blogpost-wordpress.html
+PDF: C:/Users/jcohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-blogpost.pdf
+Companion: C:/Users/jcohen/Documents/GitHub/HFWG-tex-template/tests/intro-to-hfwgtex-blogpost-wordpress.html
 Assets: none detected

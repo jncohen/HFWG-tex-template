@@ -718,7 +718,10 @@ Blogpost\enspace\ensuremath{\cdot}\enspace No.\,1\par%
 \ifhfwgmethods
 %% -------------------------------------------------------
 %% METHODS: centered title page with accent rules
+%% Top and bottom bars at 1in from page edge.
+%% All content vertically centered between the two bars.
 %% -------------------------------------------------------
+\newgeometry{top=1in,bottom=1in,left=1.15in,right=1.15in}
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
@@ -735,10 +738,11 @@ Blogpost\enspace\ensuremath{\cdot}\enspace No.\,1\par%
     }%
   }%
 }%
-\vspace*{\dimexpr 1in+4pt-\voffset-\topmargin-\headheight-\headsep\relax}
+%% Push past the 4pt top bar, then center all content between the bars.
+\vspace*{4pt}%
+\null\vfill
 \begin{center}
 \begin{singlespace}
-
 
 {\setstretch{0.9}\LARGE\bfseries Using the HFWG TeX Template from R
 Markdown\par}
@@ -757,12 +761,7 @@ Markdown\par}
 {\small May 18, 2026}\par
 \fi
 
-\end{singlespace}
-\end{center}
-
 \vspace{2\baselineskip}
-
-\begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
@@ -772,19 +771,21 @@ This post explains what the HFWG TeX template does and how it fits into
 an R Markdown workflow. It is written for students who know the basics
 of R and R Markdown but have never worked directly with TeX or LaTeX.
 \end{minipage}
+
+
+\end{singlespace}
 \end{center}
-\vspace{1em}
-
-
-\vfill
+\vfill\null
 \end{titlepage}
+\restoregeometry
 
 \else\ifhfwghfwg
 %% -------------------------------------------------------
 %% HFWG: branded working-paper title page
-%% Title, then subtitle, then tight author+affiliation+
-%% institution+series+date block, then abstract.
+%% Top and bottom bars at 1in from page edge.
+%% All content vertically centered between the two bars.
 %% -------------------------------------------------------
+\newgeometry{top=1in,bottom=1in,left=1in,right=1in}
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
@@ -801,7 +802,9 @@ of R and R Markdown but have never worked directly with TeX or LaTeX.
     }%
   }%
 }%
-\vspace*{\dimexpr 1in+3pt-\voffset-\topmargin-\headheight-\headsep\relax}
+%% Push past the 3pt top bar, then center all content between the bars.
+\vspace*{3pt}%
+\null\vfill
 \begin{center}
 \begin{singlespace}
 
@@ -822,12 +825,7 @@ Markdown\par}
 {\small May 18, 2026}\par
 \fi
 
-\end{singlespace}
-\end{center}
-
 \vspace{2\baselineskip}
-
-\begin{center}
 \textcolor{hfwgrule}{\rule{0.35\textwidth}{0.5pt}}\par
 \vspace{0.5em}
 \begin{minipage}{0.9\linewidth}
@@ -837,12 +835,13 @@ This post explains what the HFWG TeX template does and how it fits into
 an R Markdown workflow. It is written for students who know the basics
 of R and R Markdown but have never worked directly with TeX or LaTeX.
 \end{minipage}
+
+
+\end{singlespace}
 \end{center}
-\vspace{1em}
-
-
-\vfill
+\vfill\null
 \end{titlepage}
+\restoregeometry
 
 \else
 %% -------------------------------------------------------
@@ -1023,6 +1022,7 @@ pieces are \texttt{title}, \texttt{author}, \texttt{fontset}, and the
 A fontset is a preset design style. It changes the document's typography
 and layout.
 
+{\def\LTcaptype{} % do not increment counter
 \begin{longtable}[]{@{}ll@{}}
 \toprule\noalign{}
 Fontset & Best use \\
@@ -1038,6 +1038,7 @@ feel \\
 \texttt{methods} & Technical reports with code and compact spacing \\
 unset & Plain journal-submission style \\
 \end{longtable}
+}
 
 For most Lab documents, start with:
 
@@ -1076,7 +1077,7 @@ For example, this code creates a small figure:
 
 \begin{figure}
 \centering
-\pandocbounded{\includegraphics[keepaspectratio]{intro-to-hfwgtex-blogpost_files/figure-latex/example-figure-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Example bar chart produced from R code.}]{intro-to-hfwgtex-blogpost_files/intro-to-hfwgtex-blogpost_files/figure-latex/example-figure-1.pdf}}
 \caption{Example bar chart produced from R code.}
 \end{figure}
 
@@ -1104,6 +1105,7 @@ For that workflow, use \texttt{hfwgtex::blogpost\_pdf}:
 
 When you click \textbf{Knit}, the package creates several files:
 
+{\def\LTcaptype{} % do not increment counter
 \begin{longtable}[]{@{}ll@{}}
 \toprule\noalign{}
 File & Purpose \\
@@ -1116,6 +1118,7 @@ File & Purpose \\
 \texttt{-wordpress-assets/} & Images used by the WordPress companion \\
 \texttt{-wordpress-checklist.txt} & A short publishing checklist \\
 \end{longtable}
+}
 
 The HTML output is designed to be conservative. It does not assume that
 special WordPress plugins are active. In most cases, the research
