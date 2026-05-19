@@ -491,6 +491,19 @@ Key chunk options:
 
 PDF and EPS figures produce the sharpest output. PNG and JPEG also work -- use at least 300 dpi for print quality.
 
+### Visualization export sizes
+
+For reusable Lab visualizations, design the chart so it can be exported in a small set of standard aspect ratios rather than relying on one crop everywhere.
+
+| Use | Aspect ratio | Recommended pixels | Notes |
+|---|---:|---:|---|
+| Master analytic chart | `4:3` | `1600 x 1200` | Best default for PDF, tablets, and adaptation into other formats |
+| Desktop / web article | `16:9` | `1600 x 900` | Use for wide WordPress embeds, presentations, and desktop-first pages |
+| Tablet / PDF | `4:3` | `1600 x 1200` | Use when the figure must remain readable in print-like layouts |
+| Phone / Snapshot feature | `3:4` | `1080 x 1440` | Portrait format; occupies roughly two-thirds of a phone screen at phone width |
+
+For raster outputs, use PNG for charts and line art. Export at the pixel dimensions above or at 2x the final display size. For print-only raster figures, keep effective resolution at 300 dpi or higher at the intended printed size. For web and WordPress, pixel dimensions matter more than embedded dpi metadata; make sure labels remain legible when the image is viewed on a phone.
+
 ---
 
 ## 11. Preparing for submission
@@ -609,7 +622,11 @@ When knitted in RStudio, this writes the PDF plus a companion file named like `p
 
 For the CUNY Academic Commons, `wordpress: html` is the recommended default. It produces conservative paste-ready HTML and does not require Markdown, table, PDF, shortcode, or page-builder plugins to be active. Local PDF figure assets are converted to PNG for the companion file when `pdftools`, Poppler's `pdftoppm`, or ImageMagick's `magick` is available.
 
-The Snapshot PDF uses the abstract as a one-line bold lead, wraps text around the featured image, and sets the body in two compact columns. Aim for a short one-page body in the sequence: context, finding, and implication. Methods language belongs elsewhere, not in the Snapshot PDF.
+The Snapshot PDF uses the abstract as a one-line bold lead and sets the body in two compact columns. Aim for a short one-page body in the sequence: context, finding, and implication. Methods language belongs elsewhere, not in the Snapshot PDF.
+
+**Featured visualization sizing.** Build Snapshot visualizations in the mobile-first portrait standard from the figure guidelines above: `1080 x 1440 px` (`3:4`). When displayed at phone width, this shape occupies roughly two-thirds of a modern phone screen, giving the visual enough vertical presence for mobile reading while remaining usable in the PDF.
+
+A Snapshot with `snapshot_feature` reserves the top of the right column for the featured visualization. On standard letter paper, the reserved feature zone is designed to occupy roughly the top 40% of the usable right-column body area after the header separator, including the caption. In the current template this is implemented as a `2.95in` right-column feature block, with the image itself capped at `2.45in` high and centered in the feature zone. The body text begins immediately in the left column; the right-column body begins below the feature zone. This keeps Snapshots visually centered on one sizable visualization without subdividing the page into nested columns.
 
 More detail, including manual inspection commands such as `Rscript tests/knit-snapshot.R`, is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 

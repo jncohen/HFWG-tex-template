@@ -46,12 +46,12 @@ knitr::opts_chunk$set(
   echo = FALSE,
   message = FALSE,
   warning = FALSE,
-  fig.width = 6,
-  fig.height = 3.5
+  fig.width = 4.5,
+  fig.height = 6
 )
 
-png("intro-to-hfwgtex-snapshot-feature.png", width = 1200, height = 700, res = 160)
-par(mar = c(4, 4, 2, 1))
+png("intro-to-hfwgtex-snapshot-feature.png", width = 1080, height = 1440, res = 180)
+par(mar = c(5, 5, 3, 2))
 values <- c(1, 2, 4, 5)
 names(values) <- c("Write", "Knit", "PDF", "WordPress")
 barplot(

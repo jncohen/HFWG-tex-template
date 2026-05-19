@@ -8,6 +8,7 @@ snapshot: true
 snapshot_label: "Empirical Snapshot"
 snapshot_feature: "figures/featured-visualization.png"
 snapshot_feature_caption: "One-sentence caption naming the measure, population, data source, and year."
+# Build featured visualizations at 1080 x 1440 px (3:4 portrait).
 
 snapshot_byline_name: "Your Name"
 snapshot_byline_title: "Title or Role"
