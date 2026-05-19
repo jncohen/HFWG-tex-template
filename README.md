@@ -596,6 +596,7 @@ snapshot: true
 snapshot_label: "Empirical Snapshot"
 snapshot_abstract_label: "Lead"
 snapshot_feature: "figures/education-wealth.png"
+snapshot_feature_height: "2.95in"
 snapshot_feature_caption: |
   Median household net worth by educational attainment, Survey of Consumer
   Finances, 2022. Dollar amounts are shown in 2022 dollars.
@@ -628,7 +629,9 @@ The Snapshot PDF uses the abstract as a one-line bold lead and sets the body in 
 
 **Featured visualization sizing.** Build Snapshot visualizations in the mobile-first portrait standard from the figure guidelines above: `1080 x 1440 px` (`3:4`). When displayed at phone width, this shape occupies roughly two-thirds of a modern phone screen, giving the visual enough vertical presence for mobile reading while remaining usable in the PDF.
 
-A Snapshot with `snapshot_feature` reserves the top of the right column for the featured visualization. On standard letter paper, the reserved feature zone is designed to occupy roughly the top 40% of the usable right-column body area after the header separator, including the caption. In the current template this is implemented as a `2.95in` right-column feature block, with the image itself capped at `2.45in` high and centered in the feature zone. The body text begins immediately in the left column; the right-column body begins below the feature zone. This keeps Snapshots visually centered on one sizable visualization without subdividing the page into nested columns.
+A Snapshot with `snapshot_feature` reserves the top of the right column for the featured visualization. On standard letter paper, the reserved feature zone is designed to occupy roughly the top 40% of the usable right-column body area after the header separator, including the caption. The default is `snapshot_feature_height: "2.95in"`; the image itself is capped at about 0.5 inches less than that to leave caption room. The body text begins immediately in the left column; the right column begins with the feature zone and reserves its lower rail for the author box.
+
+**Snapshot fitting procedure.** After knitting, inspect the page rhythm. If the left-column text runs out early or the page feels visually underfilled, increase `snapshot_feature_height` in small increments, such as `"3.15in"`, `"3.35in"`, or `"3.50in"`. If the author box or footer feels crowded, reduce it toward `"2.70in"`. Treat this as a normal production adjustment: the goal is to strategically fill the one-page layout while keeping the feature visualization dominant, the left text column full, and the right rail balanced. Do not use the height setting to compensate for a chart with excessive internal whitespace; first redesign the visualization so it fills its own canvas.
 
 More detail, including manual inspection commands such as `Rscript tests/knit-snapshot.R`, is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 
@@ -687,6 +690,7 @@ More detail is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 | `snapshot_label` | Publication type label; defaults to `Empirical Snapshot` |
 | `snapshot_abstract_label` | Label above the lead paragraph; defaults to `Lead` |
 | `snapshot_feature` | Optional path to a featured visualization image |
+| `snapshot_feature_height` | Right-column feature-zone height; defaults to `2.95in` |
 | `snapshot_feature_caption` | Optional caption below the featured visualization |
 
 ### Publishing output formats

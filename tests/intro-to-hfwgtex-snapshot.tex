@@ -632,7 +632,9 @@ Ada Template%
 
 
 \newlength{\hfwgsnapshotfeatureheight}
+\newlength{\hfwgsnapshotimageheight}
 \setlength{\hfwgsnapshotfeatureheight}{2.95in}
+\setlength{\hfwgsnapshotimageheight}{\dimexpr\hfwgsnapshotfeatureheight-0.50in\relax}
 \begin{paracol}{2}
 \setlength{\columnsep}{0.22in}
 \footnotesize
@@ -648,7 +650,7 @@ Ada Template%
 \begin{minipage}[t][\hfwgsnapshotfeatureheight][t]{\linewidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth,height=2.45in,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
+\includegraphics[width=\linewidth,height=\hfwgsnapshotimageheight,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
 \vspace{-0.25em}
 {\scriptsize\singlespacing Example rendering workflow for the HFWG
 template. The values are synthetic and are used only to test Snapshot

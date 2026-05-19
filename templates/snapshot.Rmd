@@ -7,6 +7,7 @@ institution: "Household Finance Working Group"
 snapshot: true
 snapshot_label: "Empirical Snapshot"
 snapshot_feature: "figures/featured-visualization.png"
+snapshot_feature_height: "2.95in"
 snapshot_feature_caption: "One-sentence caption naming the measure, population, data source, and year."
 # Build featured visualizations at 1080 x 1440 px (3:4 portrait).
 

@@ -18,6 +18,7 @@ snapshot: true
 snapshot_label: "Empirical Snapshot"
 snapshot_abstract_label: "Lead"
 snapshot_feature: "intro-to-hfwgtex-snapshot-feature.png"
+snapshot_feature_height: "2.95in"
 snapshot_feature_caption: |
   Example rendering workflow for the HFWG template. The values are synthetic
   and are used only to test Snapshot layout, figure placement, and WordPress
