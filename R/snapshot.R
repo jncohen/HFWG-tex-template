@@ -253,8 +253,12 @@ copy_wordpress_assets <- function(companion_file, input_file, companion) {
     dest_name <- unique_asset_name(basename(src), copied)
     copied <- c(copied, dest_name)
     dest <- file.path(assets_dir, dest_name)
-    file.copy(src, dest, overwrite = TRUE)
+    src_norm <- normalizePath(src, winslash = "/", mustWork = FALSE)
+    dest_norm <- normalizePath(dest, winslash = "/", mustWork = FALSE)
     replacements[[ref]] <- file.path(basename(assets_dir), dest_name)
+    if (!identical(src_norm, dest_norm)) {
+      file.copy(src, dest, overwrite = TRUE)
+    }
   }
 
   replacements <- replacements[nzchar(replacements)]

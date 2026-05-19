@@ -289,6 +289,7 @@ $endif$
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
 \usepackage{array}
+\usepackage{adjustbox}
 \usepackage{caption}
 
 \captionsetup{
@@ -675,7 +676,7 @@ $header-includes$
   }
 \else\ifhfwghfwg
   \renewcommand{\headrule}{%
-    {\color{hfwgrule}\hrule width\headwidth height\headrulewidth}%
+    {\color{hfwgrule}\hrule width\textwidth height\headrulewidth}%
     \vskip-\headrulewidth%
   }
 \fi\fi
@@ -849,10 +850,8 @@ $endif$
   {\large\bfseries $title$\par}%
 \fi
 \endgroup
-\end{minipage}\hfill
-\par\vspace{0.35em}
-
-\noindent{\scriptsize\bfseries
+\vspace{0.3em}
+{\scriptsize\bfseries
 $if(snapshot_byline_name)$$snapshot_byline_name$$else$$for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$, $endfor$$endif$%
 }\par
 $if(snapshot_byline_affiliation)$
@@ -860,6 +859,8 @@ $if(snapshot_byline_affiliation)$
 $else$
 $if(institution)${\scriptsize $institution$}\par$endif$
 $endif$
+\end{minipage}\hfill
+\par
 
 \vspace{0.55em}
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
@@ -957,6 +958,7 @@ $endif$
 %% inline figures, author box, and footer. Use methods for working papers.
 %% -------------------------------------------------------
 \newgeometry{top=0.55in,bottom=0.55in,left=0.6in,right=0.6in}
+\setlength{\headwidth}{\textwidth}
 \thispagestyle{empty}
 \begingroup
 \setlength{\parindent}{0pt}
@@ -967,15 +969,15 @@ $endif$
 \vspace{0.45em}
 
 \noindent
-\begin{minipage}[t]{0.18\textwidth}
+\begin{minipage}[t]{0.20\textwidth}
 \vspace{0pt}
 \fcolorbox{hfwgaccent}{white}{%
-  \begin{minipage}[c][0.42in][c]{0.86\linewidth}
-  \centering\tiny\bfseries\color{hfwgaccent}HFWG
+  \begin{minipage}[c][0.86in][c]{0.88\linewidth}
+  \centering\scriptsize\bfseries\color{hfwgaccent}\strut
   \end{minipage}%
 }
 \end{minipage}\hfill
-\begin{minipage}[t]{0.78\textwidth}
+\begin{minipage}[t]{0.76\textwidth}
 \vspace{0pt}
 {\small\sffamily\bfseries\color{hfwgaccent}$if(series)$$series$$else$HFWG Blog$endif$}\hfill
 $if(date)$
@@ -993,30 +995,19 @@ $endif$
   {\large\bfseries $title$\par}%
 \fi
 \endgroup
-\end{minipage}\hfill
-\par\vspace{0.35em}
 
-\noindent{\scriptsize\bfseries
+\vspace{0.3em}
+{\scriptsize\bfseries
 $for(author)$$if(author.name)$$author.name$$else$$author$$endif$$sep$, $endfor$%
 }\par
 $if(institution)$
 {\scriptsize $institution$}\par
 $endif$
 
-$if(subtitle)$
-\vspace{0.45em}
-{\small\bfseries\color{hfwgaccent} $subtitle$\par}
-$endif$
-
-$if(abstract)$
-\vspace{0.35em}
-\begin{minipage}{0.78\textwidth}
-\scriptsize\singlespacing
-$abstract$
 \end{minipage}
-$endif$
+\par
 
-\vspace{0.55em}
+\vspace{0.5em}
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
 \vspace{0.45em}
 
@@ -1207,39 +1198,59 @@ $endif$
 $endif$
 
 $if(snapshot)$
+$if(snapshot_feature)$
+\newlength{\hfwgsnapshotfeatureheight}
+\setlength{\hfwgsnapshotfeatureheight}{2.18in}
+\noindent\makebox[\textwidth][r]{%
+  \begin{minipage}[t]{0.50\textwidth}
+  \vspace{0pt}
+  \includegraphics[width=\linewidth,height=1.72in,keepaspectratio]{$snapshot_feature$}
+$if(snapshot_feature_caption)$
+  \vspace{-0.35em}
+  {\scriptsize\singlespacing $snapshot_feature_caption$\par}
+$endif$
+  \end{minipage}%
+}\par
+\vspace{-\hfwgsnapshotfeatureheight}
+$endif$
 \begin{multicols}{2}
 \setlength{\columnsep}{0.22in}
 \raggedcolumns
-\scriptsize
-\setstretch{0.94}
+\footnotesize
+\setstretch{0.98}
 \setlength{\parindent}{0.85em}
 \setlength{\parskip}{0pt}
-\titleformat{\section}{\footnotesize\bfseries\color{hfwgaccent}}{}{0pt}{}
-\titleformat{\subsection}{\scriptsize\bfseries}{}{0pt}{}
+\titleformat{\section}{\small\bfseries\color{hfwgaccent}}{}{0pt}{}
+\titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.45em}{0.12em}
 \titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+\newcounter{hfwgsnapshotsection}
+\let\hfwgsnapshotoldsection\section
+\renewcommand{\section}[1]{%
+  \stepcounter{hfwgsnapshotsection}%
+  \ifnum\value{hfwgsnapshotsection}=3\relax
+    \columnbreak
+$if(snapshot_feature)$
+    \vspace*{\hfwgsnapshotfeatureheight}%
+$else$
+    \vspace*{0.5\baselineskip}%
+$endif$
+  \fi
+  \hfwgsnapshotoldsection{#1}%
+}
 $if(abstract)$
 \noindent{\bfseries $abstract$}\par\vspace{0.25em}
-$endif$
-$if(snapshot_feature)$
-\begin{wrapfigure}{r}{0.50\linewidth}
-\vspace{-0.9em}
-\includegraphics[width=\linewidth,height=0.95in,keepaspectratio]{$snapshot_feature$}
-$if(snapshot_feature_caption)$
-\vspace{-0.55em}
-{\scriptsize\singlespacing $snapshot_feature_caption$\par}
-$endif$
-\vspace{-0.65em}
-\end{wrapfigure}
 $endif$
 $else$
 \ifhfwghfwg
 \renewenvironment{longtable}[2][]{%
   \par\smallskip\noindent\footnotesize
   \renewcommand{\caption}[2][]{\textbf{##2}}%
+  \begin{adjustbox}{max width=\linewidth}%
   \begin{tabular}{#2}%
 }{%
-  \end{tabular}\par\smallskip
+  \end{tabular}%
+  \end{adjustbox}\par\smallskip
 }
 \renewcommand{\endhead}{}
 \renewcommand{\endfirsthead}{}
@@ -1264,6 +1275,9 @@ $else$
 \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.5em}{0.14em}
 \titlespacing{\subsection}{0pt}{0.38em}{0.1em}
+$if(abstract)$
+\noindent{\scriptsize\bfseries $abstract$}\par\vspace{0.45em}
+$endif$
 \else
 \clearpage
 \fi

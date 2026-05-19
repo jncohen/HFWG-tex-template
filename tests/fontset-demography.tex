@@ -272,6 +272,7 @@
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
 \usepackage{array}
+\usepackage{adjustbox}
 \usepackage{caption}
 
 \captionsetup{
@@ -636,7 +637,7 @@ regression checks},
   }
 \else\ifhfwghfwg
   \renewcommand{\headrule}{%
-    {\color{hfwgrule}\hrule width\headwidth height\headrulewidth}%
+    {\color{hfwgrule}\hrule width\textwidth height\headrulewidth}%
     \vskip-\headrulewidth%
   }
 \fi\fi
@@ -841,6 +842,7 @@ acknowledgement block and its spacing.
 %% inline figures, author box, and footer. Use methods for working papers.
 %% -------------------------------------------------------
 \newgeometry{top=0.55in,bottom=0.55in,left=0.6in,right=0.6in}
+\setlength{\headwidth}{\textwidth}
 \thispagestyle{empty}
 \begingroup
 \setlength{\parindent}{0pt}
@@ -851,15 +853,15 @@ acknowledgement block and its spacing.
 \vspace{0.45em}
 
 \noindent
-\begin{minipage}[t]{0.18\textwidth}
+\begin{minipage}[t]{0.20\textwidth}
 \vspace{0pt}
 \fcolorbox{hfwgaccent}{white}{%
-  \begin{minipage}[c][0.42in][c]{0.86\linewidth}
-  \centering\tiny\bfseries\color{hfwgaccent}HFWG
+  \begin{minipage}[c][0.86in][c]{0.88\linewidth}
+  \centering\scriptsize\bfseries\color{hfwgaccent}\strut
   \end{minipage}%
 }
 \end{minipage}\hfill
-\begin{minipage}[t]{0.78\textwidth}
+\begin{minipage}[t]{0.76\textwidth}
 \vspace{0pt}
 {\small\sffamily\bfseries\color{hfwgaccent}Fontset Test Series}\hfill
 \ifhfwganon\else
@@ -876,27 +878,17 @@ demography}\par
   {\large\bfseries Fontset Test: demography\par}%
 \fi
 \endgroup
-\end{minipage}\hfill
-\par\vspace{0.35em}
 
-\noindent{\scriptsize\bfseries
+\vspace{0.3em}
+{\scriptsize\bfseries
 Ada Template, Sam Sample%
 }\par
 {\scriptsize Household Finance Working Group}\par
 
-\vspace{0.45em}
-{\small\bfseries\color{hfwgaccent} Synthetic document for visual
-regression checks\par}
-
-\vspace{0.35em}
-\begin{minipage}{0.78\textwidth}
-\scriptsize\singlespacing
-This fake manuscript tests title-page metadata, body typography,
-citations, headings, mathematical notation, tables, figures, and code
-formatting across the available HFWG template fontsets.
 \end{minipage}
+\par
 
-\vspace{0.55em}
+\vspace{0.5em}
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
 \vspace{0.45em}
 
@@ -1069,9 +1061,11 @@ acknowledgement block and its spacing.
 \renewenvironment{longtable}[2][]{%
   \par\smallskip\noindent\footnotesize
   \renewcommand{\caption}[2][]{\textbf{##2}}%
+  \begin{adjustbox}{max width=\linewidth}%
   \begin{tabular}{#2}%
 }{%
-  \end{tabular}\par\smallskip
+  \end{tabular}%
+  \end{adjustbox}\par\smallskip
 }
 \renewcommand{\endhead}{}
 \renewcommand{\endfirsthead}{}
@@ -1096,6 +1090,10 @@ acknowledgement block and its spacing.
 \titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.5em}{0.14em}
 \titlespacing{\subsection}{0pt}{0.38em}{0.1em}
+\noindent{\scriptsize\bfseries This fake manuscript tests title-page
+metadata, body typography, citations, headings, mathematical notation,
+tables, figures, and code formatting across the available HFWG template
+fontsets.}\par\vspace{0.45em}
 \else
 \clearpage
 \fi

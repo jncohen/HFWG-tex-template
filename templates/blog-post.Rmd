@@ -1,6 +1,5 @@
 ---
 title: "Clear Public-Facing Blog Post Title"
-subtitle: "Optional one-sentence deck"
 author: "Your Name"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 

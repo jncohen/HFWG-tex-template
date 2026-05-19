@@ -264,6 +264,7 @@
 \usepackage{longtable,booktabs}
 \usepackage{pdflscape}
 \usepackage{array}
+\usepackage{adjustbox}
 \usepackage{caption}
 
 \captionsetup{
@@ -472,7 +473,7 @@ Documents},
   }
 \else\ifhfwghfwg
   \renewcommand{\headrule}{%
-    {\color{hfwgrule}\hrule width\headwidth height\headrulewidth}%
+    {\color{hfwgrule}\hrule width\textwidth height\headrulewidth}%
     \vskip-\headrulewidth%
   }
 \fi\fi
@@ -616,42 +617,56 @@ Turns R Markdown Into Publishable Lab Documents}\par
 Lab Documents\par}%
 \fi
 \endgroup
-\end{minipage}\hfill
-\par\vspace{0.35em}
-
-\noindent{\scriptsize\bfseries
+\vspace{0.3em}
+{\scriptsize\bfseries
 Ada Template%
 }\par
 {\scriptsize Household Finance Lab}\par
+\end{minipage}\hfill
+\par
 
 \vspace{0.55em}
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
 \vspace{0.55em}
 
 
+\newlength{\hfwgsnapshotfeatureheight}
+\setlength{\hfwgsnapshotfeatureheight}{2.18in}
+\noindent\makebox[\textwidth][r]{%
+  \begin{minipage}[t]{0.50\textwidth}
+  \vspace{0pt}
+  \includegraphics[width=\linewidth,height=1.72in,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
+  \vspace{-0.35em}
+  {\scriptsize\singlespacing Example rendering workflow for the HFWG
+template. The values are synthetic and are used only to test Snapshot
+layout, figure placement, and WordPress companion output.\par}
+  \end{minipage}%
+}\par
+\vspace{-\hfwgsnapshotfeatureheight}
 \begin{multicols}{2}
 \setlength{\columnsep}{0.22in}
 \raggedcolumns
-\scriptsize
-\setstretch{0.94}
+\footnotesize
+\setstretch{0.98}
 \setlength{\parindent}{0.85em}
 \setlength{\parskip}{0pt}
-\titleformat{\section}{\footnotesize\bfseries\color{hfwgaccent}}{}{0pt}{}
-\titleformat{\subsection}{\scriptsize\bfseries}{}{0pt}{}
+\titleformat{\section}{\small\bfseries\color{hfwgaccent}}{}{0pt}{}
+\titleformat{\subsection}{\footnotesize\bfseries}{}{0pt}{}
 \titlespacing{\section}{0pt}{0.45em}{0.12em}
 \titlespacing{\subsection}{0pt}{0.35em}{0.1em}
+\newcounter{hfwgsnapshotsection}
+\let\hfwgsnapshotoldsection\section
+\renewcommand{\section}[1]{%
+  \stepcounter{hfwgsnapshotsection}%
+  \ifnum\value{hfwgsnapshotsection}=3\relax
+    \columnbreak
+    \vspace*{\hfwgsnapshotfeatureheight}%
+  \fi
+  \hfwgsnapshotoldsection{#1}%
+}
 \noindent{\bfseries Students can write in ordinary R Markdown and
 produce polished PDFs and WordPress-ready companion files from one
 source.}\par\vspace{0.25em}
-\begin{wrapfigure}{r}{0.50\linewidth}
-\vspace{-0.9em}
-\includegraphics[width=\linewidth,height=0.95in,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
-\vspace{-0.55em}
-{\scriptsize\singlespacing Example rendering workflow for the HFWG
-template. The values are synthetic and are used only to test Snapshot
-layout, figure placement, and WordPress companion output.\par}
-\vspace{-0.65em}
-\end{wrapfigure}
 \setcounter{page}{1}
 
 % =======================================================

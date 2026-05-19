@@ -1,6 +1,5 @@
 ---
 title: "Using the HFWG TeX Template from R Markdown"
-subtitle: "A gentle introduction for new R users"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
 author:
