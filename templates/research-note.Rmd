@@ -1,18 +1,18 @@
 ---
 title: "Descriptive Title Naming the Pattern and Data Source"
 subtitle: "Optional short scope statement"
-author: "Your Name"
+author:
+  - name: "Your Name"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    email: "you@example.edu"
+    web: "https://example.edu"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
 institution: "Household Finance Working Group"
 series: "Research Note"
 surname: "Surname"
 runningtitle: "Short Running Title"
-
-author_dept: "Department of Sociology"
-author_inst: "Queens College, City University of New York"
-author_email: "you@example.edu"
-author_web: "https://example.edu"
 
 abstract: |
   Write five sentences: problem motivation, data and sample, analytic approach, main finding, and scope statement.

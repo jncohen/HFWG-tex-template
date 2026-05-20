@@ -112,7 +112,14 @@ Create a new R Markdown file (`paper.Rmd`) with this minimal YAML header:
 ---
 title: "My Paper Title"
 subtitle: "Optional subtitle"
-author: "Your Name"
+author:
+  - name: "Your Name"
+    dept: "Department of X"
+    inst: "Your University"
+    addr: "Street Address, City, State ZIP"
+    email: "you@university.edu"
+    web: "https://yourwebsite.edu"
+    orcid: "0000-0000-0000-0000"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
 institution: "Household Finance Working Group"
@@ -121,13 +128,6 @@ number: 1
 
 surname: "LastName"
 runningtitle: "Short Running Title"
-
-author_dept:  "Department of X"
-author_inst:  "Your University"
-author_addr:  "Street Address, City, State ZIP"
-author_email: "you@university.edu"
-author_web:   "https://yourwebsite.edu"
-author_orcid: "0000-0000-0000-0000"
 
 abstract: |
   Your abstract here (150-250 words recommended).
@@ -232,13 +232,12 @@ runningtitle: "Organizational Basis of Wage Inequality"
 
 author:
   - name: "Joseph N. Cohen"
-
-author_dept:  "Department of Sociology"
-author_inst:  "Queens College, City University of New York"
-author_addr:  "65-30 Kissena Blvd., Queens, NY 11367, USA"
-author_email: "joseph.cohen@qc.cuny.edu"
-author_web:   "https://jncohen.commons.gc.cuny.edu"
-author_orcid: "0000-0002-6197-4453"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    addr: "65-30 Kissena Blvd., Queens, NY 11367, USA"
+    email: "joseph.cohen@qc.cuny.edu"
+    web: "https://jncohen.commons.gc.cuny.edu"
+    orcid: "0000-0002-6197-4453"
 
 abstract: |
   This paper examines how organizational characteristics shape
@@ -256,13 +255,20 @@ acknowledgements: |
 
 **Running header.** Renders as `Surname: Running Title` when both `surname` and `runningtitle` are set, `Running Title` alone when only `runningtitle` is set, and the document `title` when neither is set.
 
-**Multiple authors.** Add additional `- name:` entries under `author:`. Contact details appear once below all author names -- they are intended for the corresponding author.
+**Author details.** For per-author contact details, use the short field names shown above: `dept`, `inst`, `addr`, `email`, `web`, and `orcid`. The template does not read older per-author names such as `institution` or `address`; use `inst` and `addr` instead. For a single shared corresponding-author block, you may also use the top-level fallback variables `author_dept`, `author_inst`, `author_addr`, `author_email`, `author_web`, and `author_orcid`.
+
+**Multiple authors.** Add additional `- name:` entries under `author:`. If each author has different details, put those details under the relevant author.
 
 ```yaml
 author:
   - name: "Jane Doe"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    email: "jane.doe@example.edu"
   - name: "John Smith"
+    inst: "Graduate Center, City University of New York"
   - name: "Maria Garcia"
+    inst: "Baruch College, City University of New York"
 ```
 
 **Methods preset title page.** When `fontset: methods`, the title page uses a centered upper title block with full-width accent rules. The title sits close to the top rule; author, series, date, and abstract metadata breathe below it.
@@ -550,9 +556,9 @@ runningtitle: "Organizational Basis of Wage Inequality"
 
 author:
   - name: "Joseph N. Cohen"
-author_dept:  "Department of Sociology"
-author_inst:  "Queens College, City University of New York"
-author_email: "joseph.cohen@qc.cuny.edu"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    email: "joseph.cohen@qc.cuny.edu"
 
 abstract: |
   [Your abstract here.]
@@ -709,16 +715,31 @@ More detail is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 
 ### Author block
 
-`author:` takes a list of `- name:` entries. Contact details are top-level variables and appear once below all author names.
+`author:` takes either a string or a list of `- name:` entries. For per-author metadata, place these short field names under the relevant author:
+
+```yaml
+author:
+  - name: "Jane Doe"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    addr: "65-30 Kissena Blvd., Queens, NY 11367"
+    email: "jane@university.edu"
+    web: "https://jane.example.edu"
+    orcid: "0000-0000-0000-0001"
+```
+
+Use `inst` rather than `institution`, and `addr` rather than `address`, inside `author:` entries. Older per-author `institution` and `address` fields are ignored by the title-page author block.
+
+For a single shared corresponding-author block, use these top-level fallback variables:
 
 | Variable | Description |
 |---|---|
-| `author_dept` | Department |
-| `author_inst` | Institution |
-| `author_addr` | Street address |
-| `author_email` | Email (rendered in monospace) |
-| `author_web` | Website (Markdown link syntax: `[label](url)`) |
-| `author_orcid` | ORCID identifier |
+| `author_dept` | Shared department |
+| `author_inst` | Shared institution |
+| `author_addr` | Shared street address |
+| `author_email` | Shared email (rendered in monospace) |
+| `author_web` | Shared website (Markdown link syntax: `[label](url)`) |
+| `author_orcid` | Shared ORCID identifier |
 
 ### Typography and layout
 
@@ -758,14 +779,15 @@ fontset: humanities
 
 author:
   - name: "Jane Doe"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    addr: "65-30 Kissena Blvd., Queens, NY 11367"
+    email: "jane@university.edu"
+    web: "https://jane.example.edu"
+    orcid: "0000-0000-0000-0001"
   - name: "John Smith"
-
-author_dept:  "Department of Sociology"
-author_inst:  "Queens College, City University of New York"
-author_addr:  "65-30 Kissena Blvd., Queens, NY 11367"
-author_email: "jane@university.edu"
-author_web:   "https://jane.example.edu"
-author_orcid: "0000-0000-0000-0001"
+    inst: "Graduate Center, City University of New York"
+    email: "john.smith@example.edu"
 
 abstract: |
   This paper examines... [150-250 words recommended]

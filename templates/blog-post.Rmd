@@ -1,6 +1,11 @@
 ---
 title: "Clear Public-Facing Blog Post Title"
-author: "Your Name"
+author:
+  - name: "Your Name"
+    dept: "Department of Sociology"
+    inst: "Queens College, City University of New York"
+    email: "you@example.edu"
+    web: "https://hhfinance.commons.gc.cuny.edu"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
 institution: "Household Finance Working Group"
@@ -10,10 +15,6 @@ runningtitle: "Short Running Title"
 
 author_title: "Title or Role"
 author_bio: "One-line author bio for the byline box."
-author_dept: "Department of Sociology"
-author_inst: "Queens College, City University of New York"
-author_email: "you@example.edu"
-author_web: "https://hhfinance.commons.gc.cuny.edu"
 
 abstract: |
   Optional short deck or excerpt. Use this only if it helps the reader understand the post before the body begins.

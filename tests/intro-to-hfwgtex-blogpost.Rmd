@@ -4,6 +4,9 @@ date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
 author:
   - name: "Ada Template"
+    dept: "Household Finance Lab"
+    inst: "Queens College, City University of New York"
+    email: "ada.template@example.edu"
 
 institution: "Household Finance Lab"
 author_title: "Research Associate, Household Finance Lab"
@@ -87,6 +90,9 @@ title: "My First HFWG Report"
 subtitle: "A short example"
 author:
   - name: "Your Name"
+    dept: "Department or Lab"
+    inst: "Institution"
+    email: "you@example.edu"
 
 institution: "Household Finance Lab"
 series: "Research Note"
