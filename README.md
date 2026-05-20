@@ -665,7 +665,7 @@ output:
 ---
 ```
 
-Use Blogposts for generic public-facing posts. The `hfwg` fontset is now the blog-post design: a compact masthead, title/byline block, two-column body, inline figures/tables, author box, and footer. Blogposts do not render a subtitle in the masthead; use the `abstract` field only if a short deck or excerpt is useful. Snapshots use a related one-page system but are built around one featured visualization; HFWG Blog posts are not. For working-paper style PDFs, use `fontset: methods`.
+Use Blogposts for generic public-facing posts. The `hfwg` fontset is now the blog-post design: a compact masthead, title/byline block, two-column body, inline figures/tables, author box, and footer. Blogposts do not render a subtitle in the masthead; use the `abstract` field only if a short deck or excerpt is useful. Snapshots use a related one-page system but are built around one featured visualization; Blogposts are not. For working-paper style PDFs, use `fontset: methods`.
 
 The RStudio handoff is the same as Snapshots: knit once, then use the PDF, WordPress companion file, assets folder, and checklist.
 

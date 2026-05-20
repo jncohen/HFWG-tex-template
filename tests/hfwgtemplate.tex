@@ -825,15 +825,7 @@ $if(snapshot)$
 \vspace{0.45em}
 
 \noindent
-\begin{minipage}[t]{0.18\textwidth}
-\vspace{0pt}
-\fcolorbox{hfwgaccent}{white}{%
-  \begin{minipage}[c][0.72in][c]{0.86\linewidth}
-  \centering\rule{0pt}{0.68in}
-  \end{minipage}%
-}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.78\textwidth}
+\begin{minipage}[t]{\textwidth}
 \vspace{0pt}
 {\small\sffamily\bfseries\color{hfwgaccent}$if(snapshot_label)$$snapshot_label$$else$Empirical Snapshot$endif$}\hfill
 $if(date)$
@@ -970,17 +962,9 @@ $endif$
 \vspace{0.45em}
 
 \noindent
-\begin{minipage}[t]{0.20\textwidth}
+\begin{minipage}[t]{\textwidth}
 \vspace{0pt}
-\fcolorbox{hfwgaccent}{white}{%
-  \begin{minipage}[c][0.86in][c]{0.88\linewidth}
-  \centering\scriptsize\bfseries\color{hfwgaccent}\strut
-  \end{minipage}%
-}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.76\textwidth}
-\vspace{0pt}
-{\small\sffamily\bfseries\color{hfwgaccent}$if(series)$$series$$else$HFWG Blog$endif$}\hfill
+{\small\sffamily\bfseries\color{hfwgaccent}$if(series)$$series$$else$TeX Notes$endif$}\hfill
 $if(date)$
 \ifhfwganon\else
 {\small $date$}%
@@ -1310,7 +1294,7 @@ $if(snapshot_byline_bio)$$snapshot_byline_bio$$endif$
 \vspace{0.25em}
 \noindent
 \begin{minipage}[t]{0.22\textwidth}
-\scriptsize\bfseries\color{hfwgaccent}HFWG Snapshot
+\scriptsize\bfseries\color{hfwgaccent}TeX Snapshot
 \end{minipage}\hfill
 \begin{minipage}[t]{0.74\textwidth}
 \scriptsize\raggedleft\itshape
@@ -1351,7 +1335,7 @@ $if(author_bio)$$author_bio$$endif$
 \vspace{0.25em}
 \noindent
 \begin{minipage}[t]{0.24\textwidth}
-\scriptsize\bfseries\color{hfwgaccent}HFWG Blog
+\scriptsize\bfseries\color{hfwgaccent}TeX Notes
 \end{minipage}\hfill
 \begin{minipage}[t]{0.72\textwidth}
 \scriptsize\raggedleft

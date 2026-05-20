@@ -714,10 +714,10 @@
 {\setlength{\parskip}{1pt}%
 \textbf{Ada Template}\par
 {\small%
+Household Finance Lab\par%
+Queens College, City University of New York\par%
 %
-%
-%
-%
+\href{mailto:ada.template@example.edu}{\nolinkurl{ada.template@example.edu}}\par%
 %
 %
 }}%
@@ -775,7 +775,7 @@ Markdown\par}
 \hfwgseriesblock
 
 \ifhfwganon\else
-{\small May 19, 2026}\par
+{\small May 20, 2026}\par
 \fi
 
 \vspace{2\baselineskip}
@@ -814,19 +814,11 @@ of R and R Markdown but have never worked directly with TeX or LaTeX.
 \vspace{0.45em}
 
 \noindent
-\begin{minipage}[t]{0.20\textwidth}
+\begin{minipage}[t]{\textwidth}
 \vspace{0pt}
-\fcolorbox{hfwgaccent}{white}{%
-  \begin{minipage}[c][0.86in][c]{0.88\linewidth}
-  \centering\scriptsize\bfseries\color{hfwgaccent}\strut
-  \end{minipage}%
-}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.76\textwidth}
-\vspace{0pt}
-{\small\sffamily\bfseries\color{hfwgaccent}HFWG Blog}\hfill
+{\small\sffamily\bfseries\color{hfwgaccent}TeX Notes}\hfill
 \ifhfwganon\else
-{\small May 19, 2026}%
+{\small May 20, 2026}%
 \fi
 \par\vspace{0.35em}
 
@@ -873,7 +865,7 @@ Markdown\par}
 \hfwgseriesblock
 \ifhfwganon\else
 \vspace{0.4em}
-{\small May 19, 2026}\par
+{\small May 20, 2026}\par
 \fi
 \end{singlespace}
 \vfill
@@ -906,7 +898,7 @@ Markdown\par}
 
 \ifhfwganon\else
 \vspace{0.35em}
-{\small May 19, 2026}\par
+{\small May 20, 2026}\par
 \fi
 
 \vspace{2.2\baselineskip}
@@ -951,7 +943,7 @@ Markdown\par}
 %%   date: "`r format(Sys.Date(), '%B %d, %Y')`"
 \ifhfwganon\else
 \vspace{0.5em}
-{\small May 19, 2026}\par
+{\small May 20, 2026}\par
 \fi
 
 }
@@ -1115,6 +1107,9 @@ Here is a small example:
 \FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"A short example"}
 \FunctionTok{author}\KeywordTok{:}
 \AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ }\StringTok{"Your Name"}
+\AttributeTok{    }\FunctionTok{dept}\KeywordTok{:}\AttributeTok{ }\StringTok{"Department or Lab"}
+\AttributeTok{    }\FunctionTok{inst}\KeywordTok{:}\AttributeTok{ }\StringTok{"Institution"}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ }\StringTok{"you@example.edu"}
 
 \FunctionTok{institution}\KeywordTok{:}\AttributeTok{ }\StringTok{"Household Finance Lab"}
 \FunctionTok{series}\KeywordTok{:}\AttributeTok{ }\StringTok{"Research Note"}
@@ -1337,11 +1332,11 @@ Lab readers.
 \vspace{0.25em}
 \noindent
 \begin{minipage}[t]{0.24\textwidth}
-\scriptsize\bfseries\color{hfwgaccent}HFWG Blog
+\scriptsize\bfseries\color{hfwgaccent}TeX Notes
 \end{minipage}\hfill
 \begin{minipage}[t]{0.72\textwidth}
 \scriptsize\raggedleft
-Household Finance Lab. May 19, 2026.
+Household Finance Lab. May 20, 2026.
 \end{minipage}\par
 \endgroup
 \restoregeometry

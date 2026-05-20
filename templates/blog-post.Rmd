@@ -8,8 +8,8 @@ author:
     web: "https://hhfinance.commons.gc.cuny.edu"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 
-institution: "Household Finance Working Group"
-series: "HFWG Blog"
+institution: "TeX Working Group"
+series: "TeX Notes"
 surname: "Surname"
 runningtitle: "Short Running Title"
 
