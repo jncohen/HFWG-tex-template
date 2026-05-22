@@ -1157,12 +1157,6 @@ $endif$
 $endif$
 
 $if(snapshot)$
-$if(snapshot_feature)$
-\newlength{\hfwgsnapshotfeatureheight}
-\newlength{\hfwgsnapshotimageheight}
-\setlength{\hfwgsnapshotfeatureheight}{$if(snapshot_feature_height)$$snapshot_feature_height$$else$2.95in$endif$}
-\setlength{\hfwgsnapshotimageheight}{\dimexpr\hfwgsnapshotfeatureheight-0.50in\relax}
-$endif$
 \begin{paracol}{2}
 \setlength{\columnsep}{0.22in}
 \footnotesize
@@ -1176,10 +1170,10 @@ $endif$
 \switchcolumn[1]
 $if(snapshot_feature)$
 \noindent
-\begin{minipage}[t][\hfwgsnapshotfeatureheight][t]{\linewidth}
+\begin{minipage}[t]{\linewidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth,height=\hfwgsnapshotimageheight,keepaspectratio]{$snapshot_feature$}
+\includegraphics[width=\linewidth]{$snapshot_feature$}
 $if(snapshot_feature_caption)$
 \vspace{-0.25em}
 {\scriptsize\singlespacing $snapshot_feature_caption$\par}
@@ -1191,7 +1185,7 @@ $endif$
 \let\hfwgsnapshotoldsection\section
 \renewcommand{\section}[1]{%
   \stepcounter{hfwgsnapshotsection}%
-  \ifnum\value{hfwgsnapshotsection}=4\relax
+  \ifnum\value{hfwgsnapshotsection}=$if(snapshot_switch_section)$$snapshot_switch_section$$else$3$endif$\relax
     \switchcolumn[1]%
   \fi
   \hfwgsnapshotoldsection{#1}%
