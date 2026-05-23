@@ -1288,11 +1288,11 @@ $if(snapshot_byline_bio)$$snapshot_byline_bio$$endif$
 \vspace{0.25em}
 \noindent
 \begin{minipage}[t]{0.22\textwidth}
-\scriptsize\bfseries\color{hfwgaccent}TeX Snapshot
+\scriptsize\bfseries\color{hfwgaccent}$if(snapshot_footer_label)$$snapshot_footer_label$$else$Snapshot$endif$
 \end{minipage}\hfill
 \begin{minipage}[t]{0.74\textwidth}
 \scriptsize\raggedleft\itshape
-\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.
+$if(snapshot_data_note)$$snapshot_data_note$$else$Data: 2022 Survey of Consumer Finances. For more information, visit: hhfinance.commons.gc.cuny.edu$endif$
 \end{minipage}\par
 \endgroup
 \restoregeometry

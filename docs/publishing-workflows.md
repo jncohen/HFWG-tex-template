@@ -23,6 +23,9 @@ number: 1
 accent: 0066CC
 fontset: hfwg
 
+snapshot_footer_label: "Snapshot"
+snapshot_data_note: "Data: 2022 Survey of Consumer Finances. For more information, visit: hhfinance.commons.gc.cuny.edu"
+
 abstract: |
   Households headed by college graduates hold substantially more wealth than
   households without a bachelor's degree, and the largest visible break occurs
@@ -35,6 +38,8 @@ output:
     wordpress_checklist: true
 ---
 ```
+
+`snapshot_footer_label` controls the bold label in the lower-left footer (default: `"Snapshot"`). `snapshot_data_note` is the plain-text note in the lower-right footer — update it to match the data source and URL for each Snapshot.
 
 The PDF uses a compact first-page header rather than a full manuscript title page. The abstract is treated as the lead paragraph. The optional `snapshot_feature` image is placed immediately below the lead.
 

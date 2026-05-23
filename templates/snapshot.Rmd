@@ -18,6 +18,9 @@ snapshot_byline_link: "https://hhfinance.commons.gc.cuny.edu"
 snapshot_byline_bio: "One-line bio describing the author's relevant expertise."
 # snapshot_author_image: "images/author.png"
 
+snapshot_footer_label: "Snapshot"
+snapshot_data_note: "Data: 2022 Survey of Consumer Finances. For more information, visit: hhfinance.commons.gc.cuny.edu"
+
 abstract: |
   Write the lead in one short paragraph: the finding, its magnitude, who is affected, and why it matters.
 
