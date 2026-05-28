@@ -762,28 +762,21 @@ Fontset Test Series\enspace\ensuremath{\cdot}\enspace No.\,3\par%
 %% -------------------------------------------------------
 %% METHODS: centered title page with accent rules
 %% Top and bottom bars at 1in from page edge.
-%% All content vertically centered between the two bars.
+%% The top rule is in the page flow so its gap to the title is explicit.
 %% -------------------------------------------------------
 \newgeometry{top=1in,bottom=1in,left=1.15in,right=1.15in}
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{%
-    \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{-1in}){%
-      \raisebox{-4pt}[0pt][0pt]{%
-        \textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}%
-      }%
-    }%
-  }%
   \AtPageLowerLeft{%
     \put(\LenToUnit{\dimexpr 1in+\oddsidemargin\relax},\LenToUnit{1in}){%
       \textcolor{hfwgaccent}{\rule{\textwidth}{2pt}}%
     }%
   }%
 }%
-%% Fixed upper title placement: keep the title close to the top rule while
-%% leaving the remaining metadata centered in the open field below.
-\vspace*{0.325in}%
+\noindent\textcolor{hfwgaccent}{\rule{\textwidth}{4pt}}\par
+%% Explicit rule-to-title gap; set to half the prior rendered distance.
+\vspace{1.0in}%
 \begin{center}
 \begin{singlespace}
 {\setstretch{0.9}\LARGE\bfseries Fontset Test: humanities\par}
