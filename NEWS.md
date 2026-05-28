@@ -15,6 +15,12 @@
 ## Snapshot PDF support
 
 - Added `snapshot: true` template support for compact first-page Snapshot headers.
+- Added Snapshot footer and replication-link fields:
+  - `snapshot_license`
+  - `snapshot_license_text`
+  - `snapshot_data_note`
+  - `snapshot_code_url`
+  - `snapshot_github_url`
 - Added Snapshot metadata fields:
   - `snapshot_label`
   - `snapshot_abstract_label`

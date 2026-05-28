@@ -27,3 +27,6 @@ That creates the files expected by these starters:
 Working papers use the `methods` fontset. Snapshots and Blog Posts use their
 dedicated output formats because they have different page architecture and web
 handoff needs.
+
+The Snapshot starter includes editable footer fields for the license declaration
+and data/source note, plus an optional GitHub/code URL below the author box.

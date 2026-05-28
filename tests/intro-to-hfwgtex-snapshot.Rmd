@@ -28,6 +28,9 @@ snapshot_byline_title: "Research Associate, Household Finance Lab"
 snapshot_byline_affiliation: "Household Finance Lab"
 snapshot_byline_link: "hhfinance.commons.gc.cuny.edu"
 snapshot_byline_bio: "Writes public-facing notes on reproducible research workflows."
+snapshot_code_url: "https://github.com/jncohen/HFWG-tex-template"
+snapshot_license: "cc-by-nc-sa-4.0"
+snapshot_data_note: "Data: synthetic template test data. For more information, visit: hhfinance.commons.gc.cuny.edu"
 
 abstract: |
   Students can write in ordinary R Markdown and produce polished PDFs and WordPress-ready companion files from one source.

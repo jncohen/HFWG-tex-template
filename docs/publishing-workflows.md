@@ -23,8 +23,9 @@ number: 1
 accent: 0066CC
 fontset: hfwg
 
-snapshot_footer_label: "Snapshot"
+snapshot_license: "cc-by-nc-sa-4.0"
 snapshot_data_note: "Data: 2022 Survey of Consumer Finances. For more information, visit: hhfinance.commons.gc.cuny.edu"
+snapshot_code_url: "https://github.com/your-org/your-repo"
 
 abstract: |
   Households headed by college graduates hold substantially more wealth than
@@ -39,7 +40,7 @@ output:
 ---
 ```
 
-`snapshot_footer_label` controls the bold label in the lower-left footer (default: `"Snapshot"`). `snapshot_data_note` is the plain-text note in the lower-right footer — update it to match the data source and URL for each Snapshot.
+`snapshot_license` controls the lower-left footer license declaration. The default is `cc-by-nc-sa-4.0`; supported presets are `cc-by-4.0`, `cc-by-sa-4.0`, `cc-by-nc-4.0`, `cc-by-nc-sa-4.0`, `cc0-1.0`, `all-rights-reserved`, and `none`. Use `snapshot_license_text` for custom license wording. `snapshot_data_note` controls the lower-right footer note; update it to match the data source and URL for each Snapshot. `snapshot_code_url` optionally adds `Download the code: <URL>` below the About the Author box.
 
 The PDF uses a compact first-page header rather than a full manuscript title page. The abstract is treated as the lead paragraph. The optional `snapshot_feature` image is placed immediately below the lead.
 

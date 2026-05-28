@@ -320,6 +320,26 @@ $endif$
 % =======================================================
 \usepackage{etoolbox}
 
+$if(snapshot)$
+$if(snapshot_license_text)$
+\def\hfwgsnapshotlicense{$snapshot_license_text$}
+$else$
+$if(snapshot_license)$
+\def\hfwgsnapshotlicensekey{$snapshot_license$}
+$else$
+\def\hfwgsnapshotlicensekey{cc-by-nc-sa-4.0}
+$endif$
+\def\hfwgsnapshotlicense{CC BY-NC-SA 4.0}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-4.0}{\def\hfwgsnapshotlicense{CC BY 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-sa-4.0}{\def\hfwgsnapshotlicense{CC BY-SA 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-nc-4.0}{\def\hfwgsnapshotlicense{CC BY-NC 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-nc-sa-4.0}{\def\hfwgsnapshotlicense{CC BY-NC-SA 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc0-1.0}{\def\hfwgsnapshotlicense{CC0 1.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{all-rights-reserved}{\def\hfwgsnapshotlicense{All rights reserved}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{none}{\def\hfwgsnapshotlicense{}}{}
+$endif$
+$endif$
+
 \AtBeginEnvironment{longtable}{
   \small
   \singlespacing
@@ -1157,12 +1177,6 @@ $endif$
 $endif$
 
 $if(snapshot)$
-$if(snapshot_feature)$
-\newlength{\hfwgsnapshotfeatureheight}
-\newlength{\hfwgsnapshotimageheight}
-\setlength{\hfwgsnapshotfeatureheight}{$if(snapshot_feature_height)$$snapshot_feature_height$$else$2.95in$endif$}
-\setlength{\hfwgsnapshotimageheight}{\dimexpr\hfwgsnapshotfeatureheight-0.50in\relax}
-$endif$
 \begin{paracol}{2}
 \setlength{\columnsep}{0.22in}
 \footnotesize
@@ -1176,10 +1190,10 @@ $endif$
 \switchcolumn[1]
 $if(snapshot_feature)$
 \noindent
-\begin{minipage}[t][\hfwgsnapshotfeatureheight][t]{\linewidth}
+\begin{minipage}[t]{\linewidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth,height=\hfwgsnapshotimageheight,keepaspectratio]{$snapshot_feature$}
+\includegraphics[width=\linewidth]{$snapshot_feature$}
 $if(snapshot_feature_caption)$
 \vspace{-0.25em}
 {\scriptsize\singlespacing $snapshot_feature_caption$\par}
@@ -1191,7 +1205,7 @@ $endif$
 \let\hfwgsnapshotoldsection\section
 \renewcommand{\section}[1]{%
   \stepcounter{hfwgsnapshotsection}%
-  \ifnum\value{hfwgsnapshotsection}=4\relax
+  \ifnum\value{hfwgsnapshotsection}=$if(snapshot_switch_section)$$snapshot_switch_section$$else$3$endif$\relax
     \switchcolumn[1]%
   \fi
   \hfwgsnapshotoldsection{#1}%
@@ -1288,17 +1302,27 @@ $if(snapshot_byline_link)${\color{hfwgaccent}$snapshot_byline_link$}\par$endif$
 $if(snapshot_byline_bio)$$snapshot_byline_bio$$endif$
 \end{minipage}
 \end{minipage}\par
+$if(snapshot_code_url)$
+\vspace{0.35em}
+{\scriptsize\singlespacing Download the code: {\color{hfwgaccent}$snapshot_code_url$}\par}
+$else$
+$if(snapshot_github_url)$
+\vspace{0.35em}
+{\scriptsize\singlespacing Download the code: {\color{hfwgaccent}$snapshot_github_url$}\par}
+$endif$
+$endif$
 \end{paracol}
 \vfill
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
-\vspace{0.25em}
+\vspace{0.15em}
 \noindent
-\begin{minipage}[t]{0.22\textwidth}
-\scriptsize\bfseries\color{hfwgaccent}TeX Snapshot
+\begin{minipage}[t]{0.47\textwidth}
+\scriptsize\raggedright\itshape
+\hfwgsnapshotlicense
 \end{minipage}\hfill
-\begin{minipage}[t]{0.74\textwidth}
+\begin{minipage}[t]{0.47\textwidth}
 \scriptsize\raggedleft\itshape
-\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.
+$if(snapshot_data_note)$$snapshot_data_note$$else$Data: 2022 Survey of Consumer Finances. For more information, visit: hhfinance.commons.gc.cuny.edu$endif$
 \end{minipage}\par
 \endgroup
 \restoregeometry

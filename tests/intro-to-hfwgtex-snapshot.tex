@@ -295,6 +295,16 @@
 % =======================================================
 \usepackage{etoolbox}
 
+\def\hfwgsnapshotlicensekey{cc-by-nc-sa-4.0}
+\def\hfwgsnapshotlicense{CC BY-NC-SA 4.0}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-4.0}{\def\hfwgsnapshotlicense{CC BY 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-sa-4.0}{\def\hfwgsnapshotlicense{CC BY-SA 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-nc-4.0}{\def\hfwgsnapshotlicense{CC BY-NC 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc-by-nc-sa-4.0}{\def\hfwgsnapshotlicense{CC BY-NC-SA 4.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{cc0-1.0}{\def\hfwgsnapshotlicense{CC0 1.0}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{all-rights-reserved}{\def\hfwgsnapshotlicense{All rights reserved}}{}
+\ifdefstring{\hfwgsnapshotlicensekey}{none}{\def\hfwgsnapshotlicense{}}{}
+
 \AtBeginEnvironment{longtable}{
   \small
   \singlespacing
@@ -595,7 +605,7 @@ Household Finance Lab\par%
 \vspace{0pt}
 {\small\sffamily\bfseries\color{hfwgaccent}Empirical Snapshot}\hfill
 \ifhfwganon\else
-{\small May 20, 2026}%
+{\small May 28, 2026}%
 \fi
 \par\vspace{0.35em}
 
@@ -623,10 +633,6 @@ Ada Template%
 \vspace{0.55em}
 
 
-\newlength{\hfwgsnapshotfeatureheight}
-\newlength{\hfwgsnapshotimageheight}
-\setlength{\hfwgsnapshotfeatureheight}{2.95in}
-\setlength{\hfwgsnapshotimageheight}{\dimexpr\hfwgsnapshotfeatureheight-0.50in\relax}
 \begin{paracol}{2}
 \setlength{\columnsep}{0.22in}
 \footnotesize
@@ -639,10 +645,10 @@ Ada Template%
 \titlespacing{\subsection}{0pt}{0.35em}{0.1em}
 \switchcolumn[1]
 \noindent
-\begin{minipage}[t][\hfwgsnapshotfeatureheight][t]{\linewidth}
+\begin{minipage}[t]{\linewidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth,height=\hfwgsnapshotimageheight,keepaspectratio]{intro-to-hfwgtex-snapshot-feature.png}
+\includegraphics[width=\linewidth]{intro-to-hfwgtex-snapshot-feature.png}
 \vspace{-0.25em}
 {\scriptsize\singlespacing Example rendering workflow for the HFWG
 template. The values are synthetic and are used only to test Snapshot
@@ -653,7 +659,7 @@ layout, figure placement, and WordPress companion output.\par}
 \let\hfwgsnapshotoldsection\section
 \renewcommand{\section}[1]{%
   \stepcounter{hfwgsnapshotsection}%
-  \ifnum\value{hfwgsnapshotsection}=4\relax
+  \ifnum\value{hfwgsnapshotsection}=3\relax
     \switchcolumn[1]%
   \fi
   \hfwgsnapshotoldsection{#1}%
@@ -758,17 +764,21 @@ publishing output only.
 Writes public-facing notes on reproducible research workflows.
 \end{minipage}
 \end{minipage}\par
+\vspace{0.35em}
+{\scriptsize\singlespacing Download the code: {\color{hfwgaccent}\url{https://github.com/jncohen/HFWG-tex-template}}\par}
 \end{paracol}
 \vfill
 \noindent\textcolor{hfwgrule}{\rule{\textwidth}{0.7pt}}\par
-\vspace{0.25em}
+\vspace{0.15em}
 \noindent
-\begin{minipage}[t]{0.22\textwidth}
-\scriptsize\bfseries\color{hfwgaccent}TeX Snapshot
+\begin{minipage}[t]{0.47\textwidth}
+\scriptsize\raggedright\itshape
+\hfwgsnapshotlicense
 \end{minipage}\hfill
-\begin{minipage}[t]{0.74\textwidth}
+\begin{minipage}[t]{0.47\textwidth}
 \scriptsize\raggedleft\itshape
-\textbf{Data:} 2022 \emph{Survey of Consumer Finances.} For more information, visit: \href{https://hhfinance.commons.gc.cuny.edu}{hhfinance.commons.gc.cuny.edu}.
+Data: synthetic template test data. For more information, visit:
+hhfinance.commons.gc.cuny.edu
 \end{minipage}\par
 \endgroup
 \restoregeometry

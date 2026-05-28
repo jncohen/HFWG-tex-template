@@ -611,6 +611,9 @@ snapshot_byline_name: "Household Finance Lab"
 snapshot_byline_title: "Research Associate"
 snapshot_byline_link: "hhfinance.commons.gc.cuny.edu"
 snapshot_byline_bio: "One-line author or Lab bio."
+snapshot_code_url: "https://github.com/your-org/your-repo"
+snapshot_license: "cc-by-nc-sa-4.0"
+snapshot_data_note: "Data: 2022 Survey of Consumer Finances. For more information, visit: hhfinance.commons.gc.cuny.edu"
 
 accent: 0066CC
 fontset: hfwg
@@ -633,6 +636,8 @@ When knitted in RStudio, this writes the PDF plus a companion file named like `p
 For the CUNY Academic Commons, `wordpress: html` is the recommended default. It produces conservative paste-ready HTML and does not require Markdown, table, PDF, shortcode, or page-builder plugins to be active. Local PDF figure assets are converted to PNG for the companion file when `pdftools`, Poppler's `pdftoppm`, or ImageMagick's `magick` is available.
 
 The Snapshot PDF uses the abstract as a one-line bold lead. The page body is a structured two-column composition: the left column carries the main text from top to bottom, while the right column functions as a rail with the featured visualization at the top, any continuation text in the middle, and the author box near the bottom. Aim for a short one-page body in the sequence: context, finding, and implication. Methods language belongs elsewhere, not in the Snapshot PDF.
+
+**Snapshot footer and code link.** The lower-left footer is a license declaration. Set `snapshot_license` to one of `cc-by-nc-sa-4.0` (default), `cc-by-4.0`, `cc-by-sa-4.0`, `cc-by-nc-4.0`, `cc0-1.0`, `all-rights-reserved`, or `none`. For custom wording, use `snapshot_license_text`. The lower-right footer is controlled by `snapshot_data_note`; update it for the data source, year, and public URL used in the Snapshot. To add a line below the About the Author box, set `snapshot_code_url` to the GitHub or replication repository URL. If `snapshot_code_url` is absent, the line is omitted.
 
 **Featured visualization sizing.** Build Snapshot visualizations in the mobile-first portrait standard from the figure guidelines above: `1080 x 1440 px` (`3:4`). When displayed at phone width, this shape occupies roughly two-thirds of a modern phone screen, giving the visual enough vertical presence for mobile reading while remaining usable in the PDF.
 
@@ -698,6 +703,11 @@ More detail is in [docs/publishing-workflows.md](docs/publishing-workflows.md).
 | `snapshot_feature` | Optional path to a featured visualization image |
 | `snapshot_feature_height` | Right-column feature-zone height; defaults to `2.95in` |
 | `snapshot_feature_caption` | Optional caption below the featured visualization |
+| `snapshot_code_url` | Optional GitHub or replication URL rendered below the author box |
+| `snapshot_github_url` | Optional alias for `snapshot_code_url` |
+| `snapshot_license` | Lower-left footer license preset; defaults to `cc-by-nc-sa-4.0` |
+| `snapshot_license_text` | Custom lower-left footer license text |
+| `snapshot_data_note` | Lower-right footer data/source note |
 
 ### Publishing output formats
 
