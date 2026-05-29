@@ -796,12 +796,12 @@ $if(author.name)$%
 {\setlength{\parskip}{1pt}%
 \textbf{$author.name$}\par
 {\small%
-$if(author.dept)$$author.dept$\par$endif$%
-$if(author.inst)$$author.inst$\par$endif$%
-$if(author.addr)$$author.addr$\par$endif$%
-$if(author.email)$$author.email$\par$endif$%
-$if(author.web)$$author.web$\par$endif$%
-$if(author.orcid)$ORCID: $author.orcid$\par$endif$%
+$if(author.dept)$$author.dept$\par$else$$if(author_dept)$$author_dept$\par$endif$$endif$%
+$if(author.inst)$$author.inst$\par$else$$if(author_inst)$$author_inst$\par$endif$$endif$%
+$if(author.addr)$$author.addr$\par$else$$if(author_addr)$$author_addr$\par$endif$$endif$%
+$if(author.email)$$author.email$\par$else$$if(author_email)$$author_email$\par$endif$$endif$%
+$if(author.web)$$author.web$\par$else$$if(author_web)$$author_web$\par$endif$$endif$%
+$if(author.orcid)$ORCID: $author.orcid$\par$else$$if(author_orcid)$ORCID: $author_orcid$\par$endif$$endif$%
 }}%
 $else$%
 %% String author (legacy / Quarto path): name + top-level author_* variables.
